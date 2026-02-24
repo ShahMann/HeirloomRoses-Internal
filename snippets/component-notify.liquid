@@ -1,0 +1,15 @@
+<notify-container class="{% if product.selected_or_first_available_variant.available %}hide{% endif %}">
+  <notify-button>
+    <button
+      type="button"
+      class="btn btn--full btn--primary notify"
+      data-var-id="{{ product.selected_or_first_available_variant.id }}"
+      data-product-title="{{ product.title }}"
+      data-variant-title="{{ product.selected_or_first_available_variant.title }}"
+    >
+      <span data-notify-btn-text>
+        {{ button_text }}
+      </span>
+    </button>
+  </notify-button>
+</notify-container>
