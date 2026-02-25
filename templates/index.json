@@ -6,8 +6,7 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */
-{
+ */{
   "sections": {
     "hero_jVaWmY": {
       "type": "hero",
@@ -16,15 +15,15 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<h3>New Year.</h3><h3>New Garden.</h3>",
+            "text": "<p>Browse our latest products</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
-            "type_preset": "h1",
+            "type_preset": "h2",
             "font": "var(--font-body--family)",
-            "font_size": "3rem",
-            "line_height": "tight",
-            "letter_spacing": "tight",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
             "color": "var(--color-foreground-heading)",
@@ -38,147 +37,46 @@
           },
           "blocks": {}
         },
-        "text_wAaLbp": {
-          "type": "text",
-          "name": "t:names.text",
+        "button_H9gpTf": {
+          "type": "button",
+          "name": "t:names.button",
           "settings": {
-            "text": "<p>To celebrate, enjoy 20% off everything sitewide.</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "custom",
-            "font": "var(--font-body--family)",
-            "font_size": "1.5rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "group_FxJwkg": {
-          "type": "group",
-          "name": "t:names.group",
-          "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
+            "label": "Shop all",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button-secondary",
             "width": "fit-content",
             "custom_width": 100,
             "width_mobile": "fit-content",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "button_6A4Wm6": {
-              "type": "button",
-              "name": "t:names.button",
-              "settings": {
-                "label": "START SHOPPING",
-                "link": "shopify://collections/all",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "button_6A4Wm6"
-          ]
-        },
-        "text_B8XFmx": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<p>We make things that work better and last longer. Our products solve real problems with clean design and honest materials.</p>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "right",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 100,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "custom_width_mobile": 100
           },
           "blocks": {}
         }
       },
       "block_order": [
         "text_YLPk4p",
-        "text_wAaLbp",
-        "group_FxJwkg",
-        "text_B8XFmx"
+        "button_H9gpTf"
       ],
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/hp_-_Lady_of_SHalott.jpg",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
         "media_type_1_mobile": "image",
         "media_type_2_mobile": "image",
-        "link": "",
         "open_in_new_tab": false,
         "content_direction": "column",
         "vertical_on_mobile": true,
         "horizontal_alignment": "space-between",
         "vertical_alignment": "flex-end",
         "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "flex-start",
-        "gap": 16,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "flex-end",
+        "gap": 24,
         "section_width": "page-width",
-        "section_height": "custom",
-        "section_height_custom": 78,
+        "section_height": "medium",
+        "section_height_custom": 50,
         "color_scheme": "scheme-6",
         "toggle_overlay": true,
         "overlay_color": "#12121266",
@@ -186,7 +84,7 @@
         "gradient_direction": "to bottom",
         "blurred_reflection": false,
         "reflection_opacity": 75,
-        "padding-block-start": 60,
+        "padding-block-start": 100,
         "padding-block-end": 72
       }
     },
@@ -287,7 +185,7 @@
             "border_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
-            "padding-inline-start": 10,
+            "padding-inline-start": 0,
             "padding-inline-end": 0
           },
           "blocks": {
@@ -354,51 +252,12 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "buy_buttons_h4WqGM": {
-              "type": "buy-buttons",
-              "name": "t:names.product_buy_buttons",
-              "settings": {
-                "stacking": true,
-                "show_pickup_availability": true,
-                "gift_card_form": true,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "quantity": {
-                  "type": "quantity",
-                  "disabled": true,
-                  "static": true,
-                  "settings": {},
-                  "blocks": {}
-                },
-                "add-to-cart": {
-                  "type": "add-to-cart",
-                  "static": true,
-                  "settings": {
-                    "style_class": "button-secondary"
-                  },
-                  "blocks": {}
-                },
-                "accelerated-checkout": {
-                  "type": "accelerated-checkout",
-                  "disabled": true,
-                  "static": true,
-                  "settings": {},
-                  "blocks": {}
-                }
-              },
-              "block_order": []
             }
           },
           "block_order": [
             "product_card_gallery_677WP3",
             "product_title_YXxMTj",
-            "price_JQzVV4",
-            "buy_buttons_h4WqGM"
+            "price_JQzVV4"
           ]
         }
       },

@@ -25,6 +25,7 @@
     </div>
     {% content_for 'blocks' %}
   {% endcapture %}
+
   {% render 'group', children: children, settings: block_settings, shopify_attributes: block.shopify_attributes %}
 </div>
 
@@ -112,9 +113,6 @@
     },
     {
       "type": "product-description"
-    },
-    {
-      "type": "product-characteristics"
     },
     {
       "type": "review"

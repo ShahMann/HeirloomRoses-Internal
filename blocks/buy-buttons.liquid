@@ -25,11 +25,6 @@
     if variant.available
       assign can_add_to_cart = true
       assign add_to_cart_text = 'products.product.add_to_cart' | t
-
-      # Pre-order template support: override button label when using a preorder template
-      if template contains 'preorder'
-        assign add_to_cart_text = 'Pre-order'
-      endif
     elsif inventory_managed and inventory_quantity <= 0 and inventory_policy == 'deny' or quantity_rule_soldout
       assign can_add_to_cart = false
       assign add_to_cart_text = 'products.product.sold_out' | t
@@ -235,31 +230,6 @@
             form_obj: form
           %}
         </div>
-        <pre-order-and-notify>
-          {%- render 'component-notify', product: product, button_text: 'Subscribe for Notification' -%}
-          <custom-app-message></custom-app-message>
-          <script
-            type="text/javascript"
-            data-preorder-data
-          >
-            [
-              {
-                "productId": {{ product.id }},
-                "handle": "{{ product.handle }}",
-                "variants": [
-                  {%- for variant in product.variants -%}
-                    {
-                      "available": {{ variant.available }},
-                      "variantId": {{ variant.id }},
-                      "sku": "{{ variant.sku }}",
-                      "config": {}
-                    }{%- unless forloop.last -%},{%- endunless -%}
-                  {%- endfor -%}
-                ]
-              }
-            ]
-          </script>
-        </pre-order-and-notify>
       {%- endform -%}
     </product-form-component>
   {%- else -%}
