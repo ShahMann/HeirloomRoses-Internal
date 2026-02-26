@@ -21,6 +21,9 @@
     size-style
     {{ block_settings.style_class }}
     {{ block_settings.style_class }}--{{ block.id }}
+     {%- if block_settings.button_spacing_enable -%}
+      {{ block_settings.button_spacing_class }}
+    {%- endif -%}
   "
   style="{% render 'size-style', settings: block_settings %}"
   {%- if block_settings.open_in_new_tab -%}

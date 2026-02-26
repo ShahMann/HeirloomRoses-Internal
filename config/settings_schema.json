@@ -206,6 +206,52 @@
           },
           {
             "type": "header",
+            "content": "t:names.tertiary_button"
+          },
+          {
+            "type": "color",
+            "id": "tertiary_button_background",
+            "label": "t:settings.background",
+            "default": "#FFFFFF",
+            "alpha": true
+          },
+          {
+            "type": "color",
+            "id": "tertiary_button_text",
+            "label": "t:settings.text",
+            "default": "#000000",
+            "alpha": true
+          },
+          {
+            "type": "color",
+            "id": "tertiary_button_border",
+            "label": "t:settings.borders",
+            "default": "#000000",
+            "alpha": true
+          },
+          {
+            "type": "color",
+            "id": "tertiary_button_hover_background",
+            "label": "t:settings.hover_background",
+            "default": "#FFFFFF",
+            "alpha": true
+          },
+          {
+            "type": "color",
+            "id": "tertiary_button_hover_text",
+            "label": "t:settings.hover_text",
+            "default": "#000000",
+            "alpha": true
+          },
+          {
+            "type": "color",
+            "id": "tertiary_button_hover_border",
+            "label": "t:settings.hover_borders",
+            "default": "#000000",
+            "alpha": true
+          },
+          {
+            "type": "header",
             "content": "t:names.inputs"
           },
           {
@@ -1585,6 +1631,22 @@
         "default": "default"
       },
       {
+      "type": "select",
+        "id": "button_spacing_primary",
+        "label": "t:settings.button_spacing",
+        "options": [
+          {
+            "value": "small",
+            "label": "t:options.small"
+          },
+          {
+            "value": "large",
+            "label": "t:options.large"
+          }
+        ],
+        "default": "small"
+      },
+      {
         "type": "header",
         "content": "t:options.button_secondary"
       },
@@ -1639,6 +1701,94 @@
           }
         ],
         "default": "default"
+      },
+      {
+      "type": "select",
+        "id": "button_spacing_secondary",
+        "label": "t:settings.button_spacing",
+        "options": [
+          {
+            "value": "small",
+            "label": "t:options.small"
+          },
+          {
+            "value": "large",
+            "label": "t:options.large"
+          }
+        ],
+        "default": "small"
+      },
+      {
+        "type": "header",
+        "content": "t:options.button_tertiary"
+      },
+      {
+        "type": "range",
+        "id": "tertiary_button_border_width",
+        "min": 0,
+        "max": 4,
+        "step": 1,
+        "unit": "px",
+        "label": "t:settings.border_width",
+        "default": 1
+      },
+      {
+        "type": "range",
+        "id": "button_border_radius_tertiary",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "t:settings.border_radius",
+        "default": 100
+      },
+      {
+        "type": "select",
+        "id": "type_font_button_tertiary",
+        "label": "t:settings.font",
+        "options": [
+          {
+            "value": "body",
+            "label": "t:options.body"
+          },
+          {
+            "value": "accent",
+            "label": "t:options.accent"
+          }
+        ],
+        "default": "body"
+      },
+      {
+        "type": "select",
+        "id": "button_text_case_tertiary",
+        "label": "t:settings.button_text_case",
+        "options": [
+          {
+            "value": "default",
+            "label": "t:options.default"
+          },
+          {
+            "value": "uppercase",
+            "label": "t:options.uppercase"
+          }
+        ],
+        "default": "default"
+      },
+      {
+      "type": "select",
+        "id": "button_spacing_tertiary",
+        "label": "t:settings.button_spacing",
+        "options": [
+          {
+            "value": "small",
+            "label": "t:options.small"
+          },
+          {
+            "value": "large",
+            "label": "t:options.large"
+          }
+        ],
+        "default": "small"
       },
       {
         "type": "header",

@@ -1,0 +1,299 @@
+{% comment %} Custom Block {% endcomment %}
+<div class="quiz-block-banner-position position-{{ block.settings.position }}">
+  <div
+    class="quiz-block-banner-card"
+    style="background: {{ block.settings.background_color }}; color: {{ block.settings.text_color }};"
+    {{ block.shopify_attributes }}
+  >
+    <div class="quiz-block-banner-card__content">
+      <div class="quiz-block-banner-card__icon">✺</div>
+
+      <div class="quiz-block-banner-card__text">
+        {% if block.settings.heading != blank %}
+          <h3 class="quiz-block-banner-heading quiz-block-banner-heading--{{ block.settings.heading_font }}">{{ block.settings.heading }} →</h3>
+        {% endif %}
+
+        {% if block.settings.description != blank %}
+          <p class="quiz-block-banner-description quiz-block-banner-description--{{ block.settings.description_font }}">{{ block.settings.description }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if block.settings.link != blank %}
+      <a href="{{ block.settings.link }}" class="quiz-block-banner-card__link"></a>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+.quiz-block-banner-position {
+  position: absolute;
+  width: 100%;
+  max-width: 100%;
+  pointer-events: none;
+}
+
+.quiz-block-banner-card {
+  position: relative;
+  max-width: 523px;
+  padding: 24px 28px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  pointer-events: auto;
+}
+
+.quiz-block-banner-card__content {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.quiz-block-banner-card__icon {
+  font-size: 68px;
+}
+
+.quiz-block-banner-heading {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.quiz-block-banner-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.quiz-block-banner-heading--body {
+  font-family: var(--font-body--family);
+  font-style: var(--font-body--style);
+  font-weight: var(--font-body--weight);
+}
+
+.quiz-block-banner-heading--subheading {
+  font-family: var(--font-subheading--family);
+  font-style: var(--font-subheading--style);
+  font-weight: var(--font-subheading--weight);
+}
+
+.quiz-block-banner-heading--heading {
+  font-family: var(--font-heading--family);
+  font-style: var(--font-heading--style);
+  font-weight: var(--font-heading--weight);
+}
+
+.quiz-block-banner-heading--accent {
+  font-family: var(--font-accent--family);
+  font-style: var(--font-accent--style);
+  font-weight: var(--font-accent--weight);
+}
+
+.quiz-block-banner-description--body {
+  font-family: var(--font-body--family);
+  font-style: var(--font-body--style);
+  font-weight: var(--font-body--weight);
+}
+
+.quiz-block-banner-description--subheading {
+  font-family: var(--font-subheading--family);
+  font-style: var(--font-subheading--style);
+  font-weight: var(--font-subheading--weight);
+}
+
+.quiz-block-banner-description--heading {
+  font-family: var(--font-heading--family);
+  font-style: var(--font-heading--style);
+  font-weight: var(--font-heading--weight);
+}
+
+.quiz-block-banner-description--accent {
+  font-family: var(--font-accent--family);
+  font-style: var(--font-accent--style);
+  font-weight: var(--font-accent--weight);
+}
+
+.quiz-block-banner-card__link {
+  position: absolute;
+  inset: 0;
+}
+
+/* POSITION CLASSES */
+
+/* TOP */
+.position-top-left {
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.position-top-center {
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.position-top-right {
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* MIDDLE */
+.position-middle-left {
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: flex-start;
+}
+
+.position-center {
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+}
+
+.position-middle-right {
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* BOTTOM */
+.position-bottom-left {
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.position-bottom-center {
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.position-bottom-right {
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+{% endstylesheet %}
+
+
+{% schema %}
+{
+  "name": "t:names.quiz_block_banner",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Flower Finder Quiz"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "options": [
+        {
+          "value": "body",
+          "label": "t:options.body"
+        },
+        {
+          "value": "subheading",
+          "label": "t:options.subheading"
+        },
+        {
+          "value": "heading",
+          "label": "t:options.heading"
+        },
+        {
+          "value": "accent",
+          "label": "t:options.accent"
+        }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Not sure which rose to choose? In just a few questions, we’ll guide you to the right fit—so you can plant with confidence."
+    },
+    {
+      "type": "select",
+      "id": "description_font",
+      "label": "Description font",
+      "options": [
+        {
+          "value": "body",
+          "label": "t:options.body"
+        },
+        {
+          "value": "subheading",
+          "label": "t:options.subheading"
+        },
+        {
+          "value": "heading",
+          "label": "t:options.heading"
+        },
+        {
+          "value": "accent",
+          "label": "t:options.accent"
+        }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Position",
+      "options": [
+        { "value": "top-left", "label": "Top Left" },
+        { "value": "top-center", "label": "Top Center" },
+        { "value": "top-right", "label": "Top Right" },
+        { "value": "middle-left", "label": "Middle Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "middle-right", "label": "Middle Right" },
+        { "value": "bottom-left", "label": "Bottom Left" },
+        { "value": "bottom-center", "label": "Bottom Center" },
+        { "value": "bottom-right", "label": "Bottom Right" }
+      ],
+      "default": "bottom-right"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ef426f"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.quiz_block_banner",
+      "category": "t:categories.decorative"
+    }
+  ]
+}
+{% endschema %}

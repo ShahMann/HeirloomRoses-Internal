@@ -465,8 +465,10 @@
     --style-border-radius-inputs: {{ settings.inputs_border_radius }}px;
     --style-border-radius-buttons-primary: {{ settings.button_border_radius_primary }}px;
     --style-border-radius-buttons-secondary: {{ settings.button_border_radius_secondary }}px;
+    --style-border-radius-buttons-tertiary: {{ settings.button_border_radius_tertiary }}px;
     --style-border-width-primary: {{ settings.primary_button_border_width }}px;
     --style-border-width-secondary: {{ settings.secondary_button_border_width }}px;
+    --style-border-width-tertiary: {{ settings.tertiary_button_border_width }}px;
     --style-border-width-inputs: {{ settings.input_border_width }}px;
     --style-border-radius-popover: {{ settings.popover_border_radius }}px;
     --style-border-popover: {{ settings.popover_border_width }}px {{ settings.popover_border }} rgb(var(--color-border-rgb) / {{ settings.popover_border_opacity }}%);
@@ -593,11 +595,18 @@
     /* Button font-family */
     --button-font-family-primary: var(--font-{{ settings.type_font_button_primary }}--family);
     --button-font-family-secondary: var(--font-{{ settings.type_font_button_secondary }}--family);
+    --button-font-family-tertiary: var(--font-{{ settings.type_font_button_tertiary }}--family);
 
     /* Button text case */
     --button-text-case: {{ settings.button_text_case }};
     --button-text-case-primary: {{ settings.button_text_case_primary }};
     --button-text-case-secondary: {{ settings.button_text_case_secondary }};
+    --button-text-case-tertiary: {{ settings.button_text_case_tertiary }};
+
+    /* Button Padding Spacing */
+    --button-spacing-primary: {% if settings.button_spacing_primary == 'small' %}8px 16px {% else %} 16px 32px{% endif %};
+    --button-spacing-secondary: {% if settings.button_spacing_secondary == 'small' %}8px 16px {% else %} 16px 32px{% endif %};
+    --button-spacing-tertiary: {% if settings.button_spacing_tertiary == 'small' %}8px 16px {% else %} 16px 32px{% endif %};
 
     /* Borders */
     --border-color: rgb(var(--color-border-rgb) / var(--opacity-50));

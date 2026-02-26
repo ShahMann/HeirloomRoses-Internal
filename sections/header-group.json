@@ -35,7 +35,7 @@
       "settings": {
         "speed": 5,
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-143a8631-0804-4fc4-922a-9f46128d1704",
         "divider_width": 1,
         "padding-block-start": 15,
         "padding-block-end": 15
@@ -80,13 +80,14 @@
         }
       },
       "settings": {
-        "logo_position": "left",
+        "logo_position": "center",
         "menu_position": "left",
         "menu_row": "top",
+        "customer_account_menu": "customer-account-main-menu",
         "show_search": true,
         "search_position": "right",
         "search_row": "top",
-        "show_country": true,
+        "show_country": false,
         "country_selector_style": false,
         "show_language": true,
         "localization_font": "heading",
@@ -99,7 +100,11 @@
         "divider_width": 0,
         "divider_size": "page-width",
         "border_width": 0,
-        "color_scheme_top": "scheme-1",
+        "actions_display_style": "icon",
+        "actions_font_size": "0.875rem",
+        "actions_font": "body",
+        "actions_text_case": "none",
+        "color_scheme_top": "scheme-143a8631-0804-4fc4-922a-9f46128d1704",
         "color_scheme_bottom": "",
         "color_scheme_transparent": "scheme-6",
         "enable_transparent_header_home": false,

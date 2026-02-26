@@ -37,6 +37,10 @@
           "label": "t:options.secondary"
         },
         {
+          "value": "button-tertiary",
+          "label": "t:options.tertiary"
+        },
+        {
           "value": "link",
           "label": "t:options.link"
         }
@@ -100,7 +104,30 @@
       "unit": "%",
       "default": 100,
       "visible_if": "{{ block.settings.width_mobile == \"custom\" }}"
-    }
+    },
+    {
+      "type": "checkbox",
+      "id": "button_spacing_enable",
+      "label": "t:settings.button_spacing",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "button_spacing_class",
+      "label": "t:settings.button_spacing",
+      "options": [
+        {
+          "value": "button-spacing-small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "button-spacing-large",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "button-spacing-small",
+      "visible_if": "{{ block.settings.button_spacing_enable }}"
+    },
   ],
   "presets": [
     {

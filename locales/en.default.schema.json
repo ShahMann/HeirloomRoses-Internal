@@ -434,7 +434,9 @@
     "video_section": "Video",
     "view_all_button": "View all",
     "pills": "Pills",
-    "comparison_slider": "Comparison slider"
+    "comparison_slider": "Comparison slider",
+    "tertiary_button": "Tertiary button",
+    "quiz_block_banner": "Quiz Block Banner"
   },
   "options": {
     "above_carousel": "Above carousel",
@@ -746,7 +748,8 @@
     "wide": "Wide",
     "youtube": "YouTube",
     "with_hints": "With hints",
-    "below_media": "Below media"
+    "below_media": "Below media",
+    "button_tertiary": "Tertiary Button"
   },
   "settings": {
     "accordion": "Accordion",
@@ -1021,6 +1024,7 @@
     "product_type": "Product type",
     "products": "Products",
     "products_per_page": "Products per page",
+    "button_spacing": "Button Spacing",
     "product_custom_property": {
       "heading": "Heading",
       "description": "Description",
