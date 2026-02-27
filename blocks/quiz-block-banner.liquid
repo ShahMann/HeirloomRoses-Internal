@@ -1,193 +1,126 @@
 {% comment %} Custom Block {% endcomment %}
-<div class="quiz-block-banner-position position-{{ block.settings.position }}">
+<div class="quiz-block-banner quiz-block-banner--{{ block.settings.position }}" {{ block.shopify_attributes }}>
   <div
-    class="quiz-block-banner-card"
-    style="background: {{ block.settings.background_color }}; color: {{ block.settings.text_color }};"
-    {{ block.shopify_attributes }}
+    class="quiz-block-banner__card"
+    style="--bg: {{ block.settings.background_color }}; --text: {{ block.settings.text_color }};"
   >
-    <div class="quiz-block-banner-card__content">
-      <div class="quiz-block-banner-card__icon">✺</div>
+    <div class="quiz-block-banner__content">
+      <div class="quiz-block-banner__icon">✺</div>
 
-      <div class="quiz-block-banner-card__text">
+      <div class="quiz-block-banner__text">
         {% if block.settings.heading != blank %}
-          <h3 class="quiz-block-banner-heading quiz-block-banner-heading--{{ block.settings.heading_font }}">{{ block.settings.heading }} →</h3>
+          <h3 class="quiz-block-banner__heading quiz-block-banner__heading--{{ block.settings.heading_font }}">
+            {{ block.settings.heading }} →
+          </h3>
         {% endif %}
 
         {% if block.settings.description != blank %}
-          <p class="quiz-block-banner-description quiz-block-banner-description--{{ block.settings.description_font }}">{{ block.settings.description }}</p>
+          <p class="quiz-block-banner__description quiz-block-banner__description--{{ block.settings.description_font }}">
+            {{ block.settings.description }}
+          </p>
         {% endif %}
       </div>
     </div>
 
     {% if block.settings.link != blank %}
-      <a href="{{ block.settings.link }}" class="quiz-block-banner-card__link"></a>
+      <a href="{{ block.settings.link }}" class="quiz-block-banner__link"></a>
     {% endif %}
   </div>
 </div>
 
 {% stylesheet %}
-.quiz-block-banner-position {
-  position: absolute;
-  width: 100%;
-  max-width: 100%;
-  pointer-events: none;
-}
+  .quiz-block-banner {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    padding: 20px;
+    pointer-events: none;
+    align-items: flex-start;
+  }
 
-.quiz-block-banner-card {
-  position: relative;
-  max-width: 523px;
-  padding: 24px 28px;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-  pointer-events: auto;
-}
+  .quiz-block-banner--left {
+    justify-content: flex-start;
+  }
+  .quiz-block-banner--center {
+    justify-content: center;
+  }
+  .quiz-block-banner--right {
+    justify-content: flex-end;
+  }
+  .quiz-block-banner__card {
+    width: 100%;
+    max-width: 100%;
+    background: var(--bg);
+    color: var(--text);
+    padding: 22px;
+    border-radius: 28px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+    position: relative;
+    pointer-events: auto;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
 
-.quiz-block-banner-card__content {
-  display: flex;
-  gap: 32px;
-  align-items: center;
-}
+  .quiz-block-banner__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22);
+  }
+  .quiz-block-banner__content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
 
-.quiz-block-banner-card__icon {
-  font-size: 68px;
-}
+  .quiz-block-banner__icon {
+    font-size: 42px;
+    line-height: 1;
+  }
 
-.quiz-block-banner-heading {
-  margin: 0 0 8px;
-  font-size: 20px;
-}
+  .quiz-block-banner__heading {
+    margin: 0 0 6px;
+    font-size: 20px;
+    line-height: 1.3;
+  }
 
-.quiz-block-banner-description {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-}
+  .quiz-block-banner__description {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.95;
+  }
 
-.quiz-block-banner-heading--body {
-  font-family: var(--font-body--family);
-  font-style: var(--font-body--style);
-  font-weight: var(--font-body--weight);
-}
+  .quiz-block-banner__link {
+    position: absolute;
+    inset: 0;
+  }
 
-.quiz-block-banner-heading--subheading {
-  font-family: var(--font-subheading--family);
-  font-style: var(--font-subheading--style);
-  font-weight: var(--font-subheading--weight);
-}
+  @media (min-width: 768px) {
+    .quiz-block-banner {
+      position: relative;
+    }
 
-.quiz-block-banner-heading--heading {
-  font-family: var(--font-heading--family);
-  font-style: var(--font-heading--style);
-  font-weight: var(--font-heading--weight);
-}
+    .quiz-block-banner__card {
+      max-width: 523px;
+      padding: 26px 30px;
+      border-radius: 16px;
+    }
 
-.quiz-block-banner-heading--accent {
-  font-family: var(--font-accent--family);
-  font-style: var(--font-accent--style);
-  font-weight: var(--font-accent--weight);
-}
+    .quiz-block-banner__content {
+      flex-direction: row;
+      align-items: center;
+      gap: 32px;
+    }
 
-.quiz-block-banner-description--body {
-  font-family: var(--font-body--family);
-  font-style: var(--font-body--style);
-  font-weight: var(--font-body--weight);
-}
+    .quiz-block-banner__icon {
+      font-size: 68px;
+    }
 
-.quiz-block-banner-description--subheading {
-  font-family: var(--font-subheading--family);
-  font-style: var(--font-subheading--style);
-  font-weight: var(--font-subheading--weight);
-}
-
-.quiz-block-banner-description--heading {
-  font-family: var(--font-heading--family);
-  font-style: var(--font-heading--style);
-  font-weight: var(--font-heading--weight);
-}
-
-.quiz-block-banner-description--accent {
-  font-family: var(--font-accent--family);
-  font-style: var(--font-accent--style);
-  font-weight: var(--font-accent--weight);
-}
-
-.quiz-block-banner-card__link {
-  position: absolute;
-  inset: 0;
-}
-
-/* POSITION CLASSES */
-
-/* TOP */
-.position-top-left {
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.position-top-center {
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-}
-
-.position-top-right {
-  top: 0;
-  right: 0;
-  display: flex;
-  justify-content: flex-end;
-}
-
-/* MIDDLE */
-.position-middle-left {
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  display: flex;
-  justify-content: flex-start;
-}
-
-.position-center {
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  display: flex;
-  justify-content: center;
-}
-
-.position-middle-right {
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  display: flex;
-  justify-content: flex-end;
-}
-
-/* BOTTOM */
-.position-bottom-left {
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.position-bottom-center {
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-}
-
-.position-bottom-right {
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: flex-end;
-}
+    .quiz-block-banner__heading {
+      font-size: 22px;
+    }
+  }
 {% endstylesheet %}
-
 
 {% schema %}
 {
@@ -259,17 +192,11 @@
       "id": "position",
       "label": "Position",
       "options": [
-        { "value": "top-left", "label": "Top Left" },
-        { "value": "top-center", "label": "Top Center" },
-        { "value": "top-right", "label": "Top Right" },
-        { "value": "middle-left", "label": "Middle Left" },
+        { "value": "left", "label": "Left" },
         { "value": "center", "label": "Center" },
-        { "value": "middle-right", "label": "Middle Right" },
-        { "value": "bottom-left", "label": "Bottom Left" },
-        { "value": "bottom-center", "label": "Bottom Center" },
-        { "value": "bottom-right", "label": "Bottom Right" }
+        { "value": "right", "label": "Right" }
       ],
-      "default": "bottom-right"
+      "default": "center"
     },
     {
       "type": "url",
