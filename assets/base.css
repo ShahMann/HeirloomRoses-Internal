@@ -1385,7 +1385,11 @@ button.shopify-payment-button__button--unbranded {
 }
 
 .button-secondary {
-  font-family: var(--button-font-family-secondary);
+  font-family: "SeasonSans-Medium";
+  font-weight: 550;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 12%;
   text-transform: var(--button-text-case-secondary);
   border-radius: var(--style-border-radius-buttons-secondary);
   padding: var(--button-spacing-secondary);
@@ -4996,7 +5000,7 @@ product-recommendations:has([data-has-recommendations='false']) {
   src: url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/SeasonMix-Regular.woff2?v=1772456275") format("woff2"),
        url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/SeasonMix-Regular.woff?v=1772456274") format("woff");
   font-weight: 400;
-  font-style: light;
+  font-style: normal;
   font-display: swap;
 }
 @font-face {
@@ -5016,4 +5020,66 @@ product-recommendations:has([data-has-recommendations='false']) {
   font-display: swap;
 }
 
+@font-face {
+  font-family: "SeasonMix-Light";
+  src: url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/SeasonMix-Light.woff2?v=1772459666") format("woff2"),
+       url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/SeasonMix-Light.woff?v=1772459667") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans-Medium";
+  src: url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/SeasonSans-Medium.woff2?v=1772459775") format("woff2"),
+       url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/SeasonSans-Medium.woff?v=1772459777") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.take-quiz .hero__content-wrapper{
+  gap: 32px;
+}
+.take-quiz .hero__content-wrapper .h3 p {
+  font-family: "SeasonMix-Light";
+  font-weight: 300;
+  font-size: 64px;
+  line-height: 90%;
+}
+.take-quiz .hero__content-wrapper p {
+  font-family: "SeasonSans-Light";
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 120%;
+  letter-spacing: 2%;
+}
+.take-quiz .hero__content-wrapper .button {
+  font-family: "SeasonSans-Medium";
+  font-weight: 550;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: 12%;
+}
+.hero-banner {
+  padding-top: 0 !important;
+}
+.hero-banner .hero__container {
+  padding-left: 64px;
+  display: flex;
+}
+.hero-banner .hero__content-wrapper rte-formatter.paragraph p {
+  font-family: "MintMagnolia-Regular";
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 60%;
+  letter-spacing: 0%;
+}
+.hero-banner .hero__content-wrapper .h1 p {
+  font-family: "SeasonMix-Light";
+  font-weight: 300;
+  font-size: 96px;
+  line-height: 90%;
+  letter-spacing: 0%;
+  margin: 0;
+}
 /* CUSTOM CSS - END */
