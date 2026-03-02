@@ -4979,3 +4979,41 @@ product-recommendations:has([data-has-recommendations='false']) {
     translate: 0px var(--atc-destination, 0px);
   }
 }
+
+
+/* CUSTOM CSS - START */
+
+@font-face {
+  font-family: "MintMagnolia-Regular";
+  src: url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/mint-magnolia-regular_1.woff2?v=1772444558") format("woff2"),
+       url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/mint-magnolia-regular_1.woff?v=1772444558") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonMix-Regular";
+  src: url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/SeasonMix-Regular.woff2?v=1772456275") format("woff2"),
+       url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/SeasonMix-Regular.woff?v=1772456274") format("woff");
+  font-weight: 400;
+  font-style: light;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans-Regular";
+  src: url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/SeasonSans-Regular.woff2?v=1772456298") format("woff2"),
+       url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/SeasonSans-Regular.woff?v=1772456298") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SeasonSans-Light";
+  src: url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/SeasonSans-Light.woff2?v=1772456515") format("woff2"),
+       url("https://cdn.shopify.com/s/files/1/0630/0532/7545/files/SeasonSans-Light.woff?v=1772456516") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CUSTOM CSS - END */
