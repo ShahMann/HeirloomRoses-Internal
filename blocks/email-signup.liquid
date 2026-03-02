@@ -1,14 +1,22 @@
 
 
 {% assign block_settings = block.settings %}
+{% assign layout_desktop = block_settings.layout_desktop | default: 'vertical' %}
+{% assign layout_mobile = block_settings.layout_mobile | default: 'vertical' %}
 <div
-  class="email-signup-block size-style spacing-style"
-  style="{% render 'size-style', settings: block_settings %}{% render 'spacing-style', settings: block_settings %}"
+  class="email-signup-block size-style spacing-style email-signup-block--layout-desktop-{{ layout_desktop }} email-signup-block--layout-mobile-{{ layout_mobile }}{% if block_settings.background_image != blank %} email-signup-block--has-bg-image{% endif %}"
+  style="{% render 'size-style', settings: block_settings %}{% render 'spacing-style', settings: block_settings %}--email-signup-banner-radius: {{ block_settings.banner_border_radius | default: 24 }}px; --email-signup-banner-radius-mobile: {{ block_settings.banner_border_radius_mobile | default: 16 }}px;{% if block_settings.background_image != blank %}--email-signup-bg-image: url({{ block_settings.background_image | image_url: width: 1600 }});{% endif %}{% if block_settings.banner_text_color != blank %}--email-signup-banner-text-color: {{ block_settings.banner_text_color }};{% endif %}"
   {{ block.shopify_attributes }}
 >
+  <div class="email-signup-banner">
   {% if block_settings.heading != blank %}
-    <div class="email-signup__heading {{ block_settings.heading_preset }}">
+    <div class="email-signup__heading {{ block_settings.heading_preset }} email-signup__heading--align-{{ block_settings.banner_text_alignment | default: 'center' }}">
       {{ block_settings.heading | escape }}
+    </div>
+  {% endif %}
+  {% if block_settings.banner_subheading != blank %}
+    <div class="email-signup__subheading {{ block_settings.banner_subheading_preset | default: 'paragraph' }} email-signup__subheading--align-{{ block_settings.banner_text_alignment | default: 'center' }}">
+      {{ block_settings.banner_subheading | escape }}
     </div>
   {% endif %}
   {% assign form_id = block.id | prepend: 'EmailSignup-' %}
@@ -102,6 +110,7 @@
       </div>
     {%- endif -%}
   {% endform %}
+  </div>
 </div>
 
 {% stylesheet %}
@@ -111,6 +120,8 @@
     --arrow-button-size-small: 20px;
     --arrow-icon-size: 32px;
     --arrow-icon-size-small: 24px;
+    --email-signup-banner-radius: 0;
+    --email-signup-banner-radius-mobile: 0;
 
     min-width: fit-content;
 
@@ -120,8 +131,131 @@
     }
   }
 
+  .email-signup-banner {
+    border-radius: var(--email-signup-banner-radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 0;
+
+    @media screen and (max-width: 749px) {
+      border-radius: var(--email-signup-banner-radius-mobile);
+    }
+  }
+
+  .email-signup-block--has-bg-image .email-signup-banner {
+    background-image: var(--email-signup-bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 200px;
+    padding: 1.5rem;
+  }
+
+  .email-signup-block--has-bg-image .email-signup-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .email-signup-block.email-signup-block--layout-desktop-horizontal .email-signup-banner {
+    @media screen and (min-width: 750px) {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--gap-sm, 0.75rem);
+    }
+  }
+
+  .email-signup-block.email-signup-block--layout-desktop-horizontal .email-signup-banner .email-signup__heading,
+  .email-signup-block.email-signup-block--layout-desktop-horizontal .email-signup-banner .email-signup__subheading {
+    @media screen and (min-width: 750px) {
+      margin-inline-end: auto;
+      flex: 0 0 auto;
+    }
+  }
+
+  .email-signup-block.email-signup-block--layout-desktop-horizontal .email-signup-banner .email-signup__form {
+    @media screen and (min-width: 750px) {
+      flex: 1 1 auto;
+      min-width: 200px;
+    }
+  }
+
+  .email-signup-block.email-signup-block--layout-mobile-horizontal .email-signup-banner {
+    @media screen and (max-width: 749px) {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--gap-sm, 0.75rem);
+    }
+  }
+
+  .email-signup-block.email-signup-block--layout-mobile-horizontal .email-signup-banner .email-signup__heading,
+  .email-signup-block.email-signup-block--layout-mobile-horizontal .email-signup-banner .email-signup__subheading {
+    @media screen and (max-width: 749px) {
+      margin-inline-end: auto;
+      flex: 0 0 auto;
+    }
+  }
+
+  .email-signup-block.email-signup-block--layout-mobile-horizontal .email-signup-banner .email-signup__form {
+    @media screen and (max-width: 749px) {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+  }
+
+  .email-signup-block--has-bg-image .email-signup__heading,
+  .email-signup-block--has-bg-image .email-signup__subheading {
+    color: var(--email-signup-banner-text-color, rgb(255 255 255));
+    position: relative;
+    z-index: 1;
+  }
+
+  .email-signup-block--has-bg-image .email-signup__form {
+    position: relative;
+    z-index: 1;
+  }
+
+  .email-signup-block .email-signup-banner {
+    position: relative;
+  }
+
   .email-signup__heading {
     padding-block: var(--padding-sm);
+  }
+
+  .email-signup__heading--align-left {
+    text-align: left;
+  }
+
+  .email-signup__heading--align-center {
+    text-align: center;
+  }
+
+  .email-signup__heading--align-right {
+    text-align: right;
+  }
+
+  .email-signup__subheading {
+    padding-block: 0 var(--padding-sm);
+  }
+
+  .email-signup__subheading--align-left {
+    text-align: left;
+  }
+
+  .email-signup__subheading--align-center {
+    text-align: center;
+  }
+
+  .email-signup__subheading--align-right {
+    text-align: right;
   }
 
   .email-signup__form {
@@ -380,6 +514,67 @@
       "content": "t:content.email_signups_create_customer_profiles"
     },
     {
+      "type": "header",
+      "content": "Banner background & layout"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "banner_border_radius",
+      "label": "Banner border radius (desktop)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "banner_border_radius_mobile",
+      "label": "Banner border radius (mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "layout_desktop",
+      "label": "Layout (desktop)",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        }
+      ],
+      "default": "vertical"
+    },
+    {
+      "type": "select",
+      "id": "layout_mobile",
+      "label": "Layout (mobile)",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        }
+      ],
+      "default": "vertical"
+    },
+    {
       "type": "select",
       "id": "width",
       "label": "t:settings.width",
@@ -427,6 +622,78 @@
       "type": "text",
       "id": "heading",
       "label": "t:settings.text"
+    },
+    {
+      "type": "select",
+      "id": "banner_text_alignment",
+      "label": "Banner text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "banner_subheading",
+      "label": "Banner subheading"
+    },
+    {
+      "type": "select",
+      "id": "banner_subheading_preset",
+      "label": "Subheading type preset",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "paragraph",
+          "label": "t:options.paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "paragraph",
+      "info": "t:info.edit_presets_in_theme_settings"
+    },
+    {
+      "type": "color",
+      "id": "banner_text_color",
+      "label": "Banner text color (when background image is set)",
+      "info": "Used for heading and subheading over the background image. Defaults to white if not set."
     },
     {
       "type": "select",

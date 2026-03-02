@@ -11,114 +11,6 @@
   "type": "footer",
   "name": "Footer",
   "sections": {
-    "hero_ewXAP6": {
-      "type": "hero",
-      "blocks": {
-        "text_XbwpVV": {
-          "type": "text",
-          "settings": {
-            "text": "<h1>New arrivals</h1>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "h1",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "text_UKz7Nw": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Made with care and unconditionally loved by our customers.</p>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 32,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "button_4pAG4L": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Shop now",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100,
-            "button_spacing_enable": false,
-            "button_spacing_class": "button-spacing-small"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_XbwpVV",
-        "text_UKz7Nw",
-        "button_4pAG4L"
-      ],
-      "name": "t:names.hero",
-      "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 16,
-        "section_width": "page-width",
-        "section_height": "large",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-5",
-        "toggle_overlay": true,
-        "overlay_color": "#00000026",
-        "overlay_style": "gradient",
-        "gradient_direction": "to top",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 40,
-        "padding-block-end": 40
-      }
-    },
     "footer_m9NzUG": {
       "type": "footer",
       "blocks": {
@@ -162,6 +54,41 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "email_signup_iGC9qN": {
+              "type": "email-signup",
+              "name": "t:names.email_signup",
+              "settings": {
+                "background_image": "shopify://shop_images/SALV001_Salvia_Blue_by_You-3.jpg",
+                "banner_border_radius": 24,
+                "banner_border_radius_mobile": 16,
+                "layout_desktop": "vertical",
+                "layout_mobile": "vertical",
+                "width": "fill",
+                "custom_width": 53,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "heading": "Hello",
+                "banner_text_alignment": "center",
+                "banner_subheading": "",
+                "banner_subheading_preset": "paragraph",
+                "banner_text_color": "",
+                "heading_preset": "h3",
+                "border_style": "all",
+                "border_width": 1,
+                "border_radius": 100,
+                "input_type_preset": "paragraph",
+                "style_class": "button",
+                "display_type": "arrow",
+                "label": "Sign up",
+                "integrated_button": true,
+                "button_type_preset": "paragraph",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "menu_JbtNrW": {
               "type": "menu",
               "name": "t:names.menu",
@@ -269,6 +196,7 @@
             }
           },
           "block_order": [
+            "email_signup_iGC9qN",
             "menu_JbtNrW",
             "menu_FRNd7H",
             "menu_3X7jq9",
@@ -399,11 +327,19 @@
           "type": "email-signup",
           "disabled": true,
           "settings": {
+            "banner_border_radius": 24,
+            "banner_border_radius_mobile": 16,
+            "layout_desktop": "vertical",
+            "layout_mobile": "vertical",
             "width": "fill",
             "custom_width": 100,
             "inherit_color_scheme": true,
             "color_scheme": "",
             "heading": "",
+            "banner_text_alignment": "center",
+            "banner_subheading": "",
+            "banner_subheading_preset": "paragraph",
+            "banner_text_color": "",
             "heading_preset": "h3",
             "border_style": "all",
             "border_width": 1,
@@ -460,11 +396,11 @@
         "social_links_Ew63Kq": {
           "type": "social-links",
           "settings": {
-            "facebook_url": "https://www.facebook.com/",
-            "instagram_url": "https://www.instagram.com/",
-            "youtube_url": "https://www.youtube.com/",
+            "facebook_url": "https://www.facebook.com/#",
+            "instagram_url": "https://www.instagram.com/#",
+            "youtube_url": "https://www.youtube.com/#",
             "tiktok_url": "https://www.tiktok.com/",
-            "twitter_url": "https://x.com/",
+            "twitter_url": "https://x.com/#",
             "threads_url": "",
             "linkedin_url": "",
             "bluesky_url": "",
@@ -602,7 +538,6 @@
     }
   },
   "order": [
-    "hero_ewXAP6",
     "footer_m9NzUG",
     "footer_utilities_jLGE8U",
     "hero_3jed6g"
