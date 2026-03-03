@@ -753,6 +753,7 @@
           ]
         }
       },
+      "disabled": true,
       "name": "Featured collection",
       "settings": {
         "collection": "all",
@@ -772,6 +773,29 @@
         "color_scheme": "scheme-143a8631-0804-4fc4-922a-9f46128d1704",
         "padding-block-start": 48,
         "padding-block-end": 48
+      }
+    },
+    "dynamic_zone_collection_UQEkf8": {
+      "type": "dynamic-zone-collection",
+      "name": "Dynamic Zone Collection",
+      "settings": {
+        "show_promotional_section": true,
+        "promotional_image": "shopify://shop_images/COR004_Coreopsis_Li_l_Bang_Darling_Clementine-6.jpg",
+        "promotional_background_color": "#f5e6e0",
+        "promotional_label": "COLLECTION",
+        "promotional_heading": "Curated for You",
+        "promotional_text": "<p>Based on your location in Zone 7, these could be great for your garden.</p>",
+        "use_dynamic_zone_text": true,
+        "promotional_button_text": "VIEW ALL",
+        "promotional_button_link": "",
+        "show_promotional_icon": true,
+        "products_limit": 7,
+        "cards_desktop": 5,
+        "cards_mobile": "2",
+        "card_spacing": 20,
+        "background_color": "#ffffff",
+        "color_scheme": "scheme-143a8631-0804-4fc4-922a-9f46128d1704",
+        "use_theme_colors": true
       }
     },
     "featured_collection_cards_epGXat": {
@@ -1072,6 +1096,7 @@
     "hero_jVaWmY",
     "section_4XGcHU",
     "product_list_fa6P9H",
+    "dynamic_zone_collection_UQEkf8",
     "featured_collection_cards_epGXat",
     "shop_by_color_MCKaHA",
     "hero_BzbVcH"

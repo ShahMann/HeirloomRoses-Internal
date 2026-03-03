@@ -73,32 +73,8 @@ class DynamicZoneCollection extends HTMLElement {
 
 	render() {
 		this.innerHTML = `
-      <div class="zone-collection-header-${this.sectionId}">
-        <h2 class="zone-collection-title-${this.sectionId}">Loading Your Zone...</h2>
-        <div class="zone-collection-arrows-${this.sectionId}">
-          <button
-            class="zone-collection-arrow-${this.sectionId} zone-collection-prev-${this.sectionId}"
-            aria-label="Previous products"
-            type="button"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M15 18l-6-6 6-6"/>
-            </svg>
-          </button>
-          <button
-            class="zone-collection-arrow-${this.sectionId} zone-collection-next-${this.sectionId}"
-            aria-label="Next products"
-            type="button"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M9 18l6-6-6-6"/>
-            </svg>
-          </button>
-        </div>
-        <a href="#" class="zone-shop-all-link-${this.sectionId} hide">${this.shopAllText}</a>
-      </div>
-      <div class="zone-products-scroll-container-${this.sectionId}">
-        <div class="zone-products-grid-${this.sectionId}">
+      <div class="zone-products-scroll-container">
+        <div class="zone-products-grid">
           <div class="loading-products">
             <p>Loading products...</p>
           </div>
@@ -171,7 +147,7 @@ class DynamicZoneCollection extends HTMLElement {
 			const collectionHandle = `hardiness-zone-${zone}`;
 			const collectionUrl = `/collections/${collectionHandle}/products.json?limit=${this.productsLimit}`;
 
-			const productsGrid = this.querySelector(`.zone-products-grid-${this.sectionId}`);
+			const productsGrid = this.querySelector(`.zone-products-grid`);
 			if (productsGrid) {
 				productsGrid.innerHTML = '<div class="loading-products"><p>Loading products...</p></div>';
 			}
@@ -197,10 +173,10 @@ class DynamicZoneCollection extends HTMLElement {
 	}
 
   displayProducts(products, zone, collectionHandle) {
-		const titleEl = this.querySelector(`.zone-collection-title-${this.sectionId}`);
-		const shopAllLink = this.querySelector(`.zone-shop-all-link-${this.sectionId}`);
-		const productsGrid = this.querySelector(`.zone-products-grid-${this.sectionId}`);
-		const promotionalTextEl = this.closest('.zone-collection-wrapper')?.querySelector(`.zone-promotional-text-${this.sectionId}`);
+		const titleEl = this.querySelector(`.zone-collection-title`);
+		const shopAllLink = this.querySelector(`.zone-shop-all-link`);
+		const productsGrid = this.querySelector(`.zone-products-grid`);
+		const promotionalTextEl = this.closest('.zone-collection-wrapper')?.querySelector(`.zone-promotional-text`);
 
 		if (titleEl) {
 			const safeTitle = this.sectionTitle.replace("Zone {zone}", `<a href="#" class="zone-link" data-zone="${zone}">Zone ${zone}</a>`);
@@ -242,7 +218,7 @@ class DynamicZoneCollection extends HTMLElement {
 		}
 
 		// Update promotional button link if it points to collection
-		const promotionalButton = this.closest('.zone-collection-wrapper')?.querySelector(`.zone-promotional-button-${this.sectionId}`);
+		const promotionalButton = this.closest('.zone-collection-wrapper')?.querySelector(`.zone-promotional-button`);
 		if (promotionalButton && promotionalButton instanceof HTMLAnchorElement) {
 			if (promotionalButton.href && promotionalButton.href.includes('/collections/')) {
 				// If button link contains collection placeholder, update it
@@ -346,9 +322,7 @@ class DynamicZoneCollection extends HTMLElement {
               <div class="grid-item__meta">
                 <div class="grid-item__meta-main">
                   <div class="grid-product__title">${product.title.replace(/"/g, "")}</div>
-                </div>
-                <div class="grid-item__meta-secondary">
-                  <div class="grid-product__price">
+				  <div class="grid-product__price">
                     ${
 						onSale
 							? `
@@ -358,11 +332,15 @@ class DynamicZoneCollection extends HTMLElement {
 					}
                     <span class="grid-product__price--current">$${price}</span>
                   </div>
+                </div>
+                <div class="grid-item__meta-secondary">
+                  
                   <div class="wishlist-floating-btn wishlist-collection-button">
                     <button type="button" aria-label="Add to Wishlist" class="wkh-button wkh-align-center wkh-align-content-center" data-product-handle="${
 						product.handle
 					}">
-                      <div class="wkh-icon" icon="wishlist"></div>
+                      <svg class="icon-block__media icon-block-AVTRlK2k5cnBFcmtEe__icon_WRcptN icon-default" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20">
+<path d="M10 5.2393L8.5149 3.77392C6.79996 2.08174 4.01945 2.08174 2.30451 3.77392C0.589562 5.4661 0.589563 8.2097 2.30451 9.90188L10 17.4952L17.6955 9.90188C19.4104 8.2097 19.4104 5.4661 17.6955 3.77392C15.9805 2.08174 13.2 2.08174 11.4851 3.77392L10 5.2393ZM10.765 3.06343C12.8777 0.978857 16.3029 0.978856 18.4155 3.06343C20.5282 5.148 20.5282 8.52779 18.4155 10.6124L10.72 18.2057C10.3224 18.5981 9.67763 18.5981 9.27996 18.2057L1.58446 10.6124C-0.528154 8.52779 -0.528154 5.14801 1.58446 3.06343C3.69708 0.978859 7.12233 0.978858 9.23495 3.06343L10 3.81832L10.765 3.06343Z" fill-rule="evenodd"></path></svg>
                     </button>
                   </div>
                 </div>
@@ -380,9 +358,9 @@ class DynamicZoneCollection extends HTMLElement {
 	}
 
 	setupCarouselListeners() {
-		const prevButton = this.querySelector(`.zone-collection-prev-${this.sectionId}`);
-		const nextButton = this.querySelector(`.zone-collection-next-${this.sectionId}`);
-		const track = this.querySelector(`.zone-products-grid-${this.sectionId}`);
+		const prevButton = this.querySelector(`.zone-collection-prev`);
+		const nextButton = this.querySelector(`.zone-collection-next`);
+		const track = this.querySelector(`.zone-products-grid`);
 
 		if (prevButton) {
 			prevButton.addEventListener("click", () => this.prev());
@@ -408,7 +386,7 @@ class DynamicZoneCollection extends HTMLElement {
 	}
 
 	getMaxIndex() {
-		const productsGrid = this.querySelector(`.zone-products-grid-${this.sectionId}`);
+		const productsGrid = this.querySelector(`.zone-products-grid`);
 		if (!productsGrid) return 0;
 		const cards = productsGrid.querySelectorAll(".grid-item");
 		return Math.max(0, cards.length - this.getVisibleCards());
@@ -427,7 +405,7 @@ class DynamicZoneCollection extends HTMLElement {
 	}
 
 	updateCarousel() {
-		const productsGrid = this.querySelector(`.zone-products-grid-${this.sectionId}`);
+		const productsGrid = this.querySelector(`.zone-products-grid`);
 		if (!productsGrid) return;
 
 		const cards = productsGrid.querySelectorAll(".grid-item");
@@ -447,8 +425,8 @@ class DynamicZoneCollection extends HTMLElement {
 	}
 
 	updateButtons() {
-		const prevButton = this.querySelector(`.zone-collection-prev-${this.sectionId}`);
-		const nextButton = this.querySelector(`.zone-collection-next-${this.sectionId}`);
+		const prevButton = this.querySelector(`.zone-collection-prev`);
+		const nextButton = this.querySelector(`.zone-collection-next`);
 
 		if (!prevButton || !nextButton) return;
 
@@ -488,7 +466,7 @@ class DynamicZoneCollection extends HTMLElement {
 	handleMouseDown(e) {
 		this.startX = e.clientX;
 		this.isDragging = true;
-		const track = this.querySelector(`.zone-products-grid-${this.sectionId}`);
+		const track = this.querySelector(`.zone-products-grid`);
 		if (track) {
 			track.style.cursor = "grabbing";
 		}
@@ -503,7 +481,7 @@ class DynamicZoneCollection extends HTMLElement {
 	handleMouseUp() {
 		if (!this.isDragging) return;
 		this.isDragging = false;
-		const track = this.querySelector(`.zone-products-grid-${this.sectionId}`);
+		const track = this.querySelector(`.zone-products-grid`);
 		if (track) {
 			track.style.cursor = "grab";
 		}
@@ -521,7 +499,7 @@ class DynamicZoneCollection extends HTMLElement {
 	}
 
 	showError(message) {
-		const productsGrid = this.querySelector(`.zone-products-grid-${this.sectionId}`);
+		const productsGrid = this.querySelector(`.zone-products-grid`);
 		if (productsGrid) {
 			productsGrid.innerHTML = `
         <div class="error-message">

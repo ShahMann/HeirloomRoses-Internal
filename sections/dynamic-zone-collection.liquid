@@ -3,31 +3,42 @@
   Shows products from user's hardiness zone collection
 {% endcomment %}
 {% assign section_id = section.id | replace: '_', '' | downcase %}
+{% assign use_theme_colors = section.settings.use_theme_colors %}
 
-<div class="zone-collection-wrapper">
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+<div class="zone-collection-wrapper section color-{{ section.settings.color_scheme }} {% if use_theme_colors %}use-theme-colors{% endif %}">
   <div class="page-width">
-    <div class="zone-collection-layout-{{ section_id }}">
+    <div class="zone-collection-layout">
       {% if section.settings.show_promotional_section %}
-        <div class="zone-promotional-section-{{ section_id }}">
+        <div class="zone-promotional-section">
           {% if section.settings.promotional_image %}
-            <div class="zone-promotional-image-{{ section_id }}" style="background-image: url('{{ section.settings.promotional_image | image_url: width: 800 }}');">
-              <div class="zone-promotional-overlay-{{ section_id }}">
+            <div
+              class="zone-promotional-image"
+              style="background-image: url('{{ section.settings.promotional_image | image_url: width: 800 }}');"
+            >
+              <div class="zone-promotional-overlay">
                 {% if section.settings.promotional_label != blank %}
-                  <div class="zone-promotional-label-{{ section_id }}">{{ section.settings.promotional_label }}</div>
+                  <div class="zone-promotional-label">{{ section.settings.promotional_label }}</div>
                 {% endif %}
-                {% if section.settings.promotional_heading != blank %}
-                  <h2 class="zone-promotional-heading-{{ section_id }}">{{ section.settings.promotional_heading }}</h2>
-                {% endif %}
-                {% if section.settings.promotional_text != blank %}
-                  <div class="zone-promotional-text-{{ section_id }}">{{ section.settings.promotional_text }}</div>
-                {% endif %}
-                {% if section.settings.promotional_button_text != blank and section.settings.promotional_button_link != blank %}
-                  <a href="{{ section.settings.promotional_button_link }}" class="zone-promotional-button-{{ section_id }}">
+                <div class="zone-promotional-heading-container">
+                  {% if section.settings.promotional_heading != blank %}
+                    <h2 class="zone-promotional-heading">{{ section.settings.promotional_heading }}</h2>
+                  {% endif %}
+                  {% if section.settings.promotional_text != blank %}
+                    <div class="zone-promotional-text">{{ section.settings.promotional_text }}</div>
+                  {% endif %}
+                  {% comment %} {% if section.settings.promotional_button_text != blank and section.settings.promotional_button_link != blank %} {% endcomment %}
+                  <a
+                    href="{{ section.settings.promotional_button_link }}"
+                    class="zone-promotional-button button button-secondary"
+                  >
                     {{ section.settings.promotional_button_text }}
                   </a>
-                {% endif %}
+                  {% comment %} {% endif %} {% endcomment %}
+                </div>
                 {% if section.settings.show_promotional_icon %}
-                  <div class="zone-promotional-icon-{{ section_id }}">
+                  <div class="zone-promotional-icon">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
                     </svg>
@@ -36,24 +47,28 @@
               </div>
             </div>
           {% else %}
-            <div class="zone-promotional-image-{{ section_id }} zone-promotional-image-placeholder-{{ section_id }}">
-              <div class="zone-promotional-overlay-{{ section_id }}">
+            <div class="zone-promotional-image zone-promotional-image-placeholder">
+              <div class="zone-promotional-overlay">
                 {% if section.settings.promotional_label != blank %}
-                  <div class="zone-promotional-label-{{ section_id }}">{{ section.settings.promotional_label }}</div>
+                  <div class="zone-promotional-label">{{ section.settings.promotional_label }}</div>
                 {% endif %}
-                {% if section.settings.promotional_heading != blank %}
-                  <h2 class="zone-promotional-heading-{{ section_id }}">{{ section.settings.promotional_heading }}</h2>
-                {% endif %}
-                {% if section.settings.promotional_text != blank %}
-                  <div class="zone-promotional-text-{{ section_id }}">{{ section.settings.promotional_text }}</div>
-                {% endif %}
-                {% if section.settings.promotional_button_text != blank and section.settings.promotional_button_link != blank %}
-                  <a href="{{ section.settings.promotional_button_link }}" class="zone-promotional-button-{{ section_id }}">
-                    {{ section.settings.promotional_button_text }}
-                  </a>
-                {% endif %}
+                <div class="zone-promotional-heading-container">
+                  {% if section.settings.promotional_heading != blank %}
+                    <h2 class="zone-promotional-heading">{{ section.settings.promotional_heading }}</h2>
+                  {% endif %}
+                  {% if section.settings.promotional_text != blank %}
+                    <div class="zone-promotional-text">{{ section.settings.promotional_text }}</div>
+                  {% endif %}
+                  {% if section.settings.promotional_button_text != blank
+                    and section.settings.promotional_button_link != blank
+                  %}
+                    <a href="{{ section.settings.promotional_button_link }}" class="zone-promotional-button">
+                      {{ section.settings.promotional_button_text }}
+                    </a>
+                  {% endif %}
+                </div>
                 {% if section.settings.show_promotional_icon %}
-                  <div class="zone-promotional-icon-{{ section_id }}">
+                  <div class="zone-promotional-icon">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
                     </svg>
@@ -64,8 +79,8 @@
           {% endif %}
         </div>
       {% endif %}
-      <div class="zone-products-section-{{ section_id }}">
-        <dynamic-zone-collection 
+      <div class="zone-products-section">
+        <dynamic-zone-collection
           data-products-limit="{{ section.settings.products_limit }}"
           data-section-title="{{ section.settings.section_title }}"
           data-shop-all-text="{{ section.settings.shop_all_text }}"
@@ -73,7 +88,8 @@
           data-cards-mobile="{{ section.settings.cards_mobile }}"
           data-section-id="{{ section_id }}"
           data-promotional-text="{{ section.settings.promotional_text }}"
-          data-use-dynamic-text="{{ section.settings.use_dynamic_zone_text }}">
+          data-use-dynamic-text="{{ section.settings.use_dynamic_zone_text }}"
+        >
         </dynamic-zone-collection>
       </div>
     </div>
@@ -82,431 +98,190 @@
 
 {% style %}
   .zone-collection-wrapper {
-    padding: {{ section.settings.section_padding_top }}px 0 {{ section.settings.section_padding_bottom }}px;
-    background-color: {{ section.settings.background_color }};
+    padding: 8px 16px;
+    {% if use_theme_colors %}
+      background: rgb(var(--color-background));
+    {% else %}
+      background: {{ section.settings.background_color }};
+    {% endif %}
   }
-
-  .zone-collection-layout-{{ section_id }} {
+  .zone-collection-layout {
     display: flex;
-    gap: {{ section.settings.promotional_spacing }}px;
-    align-items: flex-start;
+    gap: 32px;
+    align-items: stretch;
   }
 
-  .zone-promotional-section-{{ section_id }} {
-    flex: 0 0 {{ section.settings.promotional_width }}%;
-    position: relative;
+  .zone-promotional-heading {
+    margin: 0;
   }
-
-  .zone-promotional-image-{{ section_id }} {
-    position: relative;
-    width: 100%;
-    min-height: 500px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: {{ section.settings.promotional_border_radius }}px;
-    overflow: hidden;
-  }
-
-  .zone-promotional-image-placeholder-{{ section_id }} {
-    background-color: {{ section.settings.promotional_background_color }};
-  }
-
-  .zone-promotional-overlay-{{ section_id }} {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  .zone-promotional-heading-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: {{ section.settings.promotional_padding }}px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,{{ section.settings.promotional_overlay_opacity | divided_by: 100.0 }}) 100%);
+    gap: 16px;
+    align-items: center;  
   }
 
-  .zone-promotional-label-{{ section_id }} {
-    font-size: {{ section.settings.promotional_label_size }}px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: {{ section.settings.promotional_label_color }};
-    margin-bottom: {{ section.settings.promotional_label_spacing }}px;
-    font-family: Helvetica, Arial, sans-serif;
+  .zone-promotional-label {
+    font-family: "SeasonSans-Medium", sans-serif;
+    font-weight: 550;
+    font-size: 14px;
+    line-height: 140%;
+    letter-spacing: 12%;
   }
 
-  .zone-promotional-heading-{{ section_id }} {
-    font-size: {{ section.settings.promotional_heading_size }}px;
-    font-weight: {{ section.settings.promotional_heading_weight }};
-    color: {{ section.settings.promotional_heading_color }};
-    margin: 0 0 {{ section.settings.promotional_heading_spacing }}px 0;
-    line-height: 1.2;
-    font-family: Georgia, serif;
+  .zone-promotional-heading {
+    font-family: "SeasonMix-Light", sans-serif;
+    font-weight: 300;
+    font-size: 48px;
+    line-height: 90%;
+    letter-spacing: 0%;
   }
 
-  .zone-promotional-text-{{ section_id }} {
-    font-size: {{ section.settings.promotional_text_size }}px;
-    color: {{ section.settings.promotional_text_color }};
-    margin-bottom: {{ section.settings.promotional_text_spacing }}px;
-    line-height: 1.5;
-    max-width: 90%;
-    font-family: Helvetica, Arial, sans-serif;
+  .zone-promotional-text {
+    font-family: "SeasonSans-Regular", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 120%;
+    letter-spacing: 3%;
   }
 
-  .zone-promotional-button-{{ section_id }} {
-    display: inline-block;
-    padding: {{ section.settings.promotional_button_padding_vertical }}px {{ section.settings.promotional_button_padding_horizontal }}px;
-    background-color: {{ section.settings.promotional_button_background }};
-    color: {{ section.settings.promotional_button_text_color }};
-    text-decoration: none;
-    font-size: {{ section.settings.promotional_button_text_size }}px;
-    font-weight: 600;
-    text-transform: uppercase;
-    border-radius: {{ section.settings.promotional_button_border_radius }}px;
-    transition: opacity 0.3s ease, transform 0.2s ease;
-    margin-top: {{ section.settings.promotional_button_spacing }}px;
-    font-family: Helvetica, Arial, sans-serif;
+  .zone-promotional-heading-container .button-secondary {
+    font-size: 10px;
   }
 
-  .zone-promotional-button-{{ section_id }}:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
+  .zone-promotional-section {
+    flex: 0 0 30%;
+    display: flex;
   }
 
-  .zone-promotional-icon-{{ section_id }} {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: {{ section.settings.promotional_icon_size }}px;
-    height: {{ section.settings.promotional_icon_size }}px;
-    color: {{ section.settings.promotional_icon_color }};
-  }
-
-  .zone-promotional-icon-{{ section_id }} svg {
+  .zone-promotional-image {
+    position: relative;
     width: 100%;
-    height: 100%;
+    min-height: 680px;
+    border-radius: 28px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
   }
 
-  .zone-products-section-{{ section_id }} {
+  .zone-promotional-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 32px;
+    text-align: center;
+    background: rgba(255,255,255,0.45);
+  }
+  .zone-products-section {
     flex: 1;
     min-width: 0;
   }
 
-  .dynamic-zone-collection {
-    width: 100%;
+  .zone-products-scroll-container {
+    overflow: visible;
   }
 
-  .zone-collection-header-{{ section_id }} {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: {{ section.settings.title_spacing }}px;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  .zone-collection-title-{{ section_id }} {
-    font-size: {{ section.settings.title_size_desktop }}px;
-    font-weight: 600;
-    margin: 0;
-    color: {{ section.settings.title_color }};
-    text-align: {{ section.settings.title_alignment_desktop }};
-    flex-grow: 1;
-  }
-
-  .zone-collection-title-{{ section_id }} .zone-link {
-    text-decoration: underline;
-  }
-
-  .zone-shop-all-link-{{ section_id }} {
-    font-size: 16px;
-    font-weight: 500;
-    text-decoration: none;
-    color: {{ section.settings.link_color }};
-    border-bottom: 2px solid {{ section.settings.link_color }};
-    padding-bottom: 4px;
-    transition: opacity 0.3s ease;
-  }
-
-  .zone-shop-all-link-{{ section_id }}:hover {
-    opacity: 0.7;
-  }
-
-  .zone-shop-all-link-{{ section_id }}.hide {
-    display: none;
-  }
-
-  .zone-collection-arrows-{{ section_id }} {
-    display: flex;
-    gap: 8px;
-  }
-
-  .zone-collection-arrow-{{ section_id }} {
-    width: {{ section.settings.arrow_size }}px;
-    height: {{ section.settings.arrow_size }}px;
-    background-color: {{ section.settings.arrow_color }};
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-    color: {{ section.settings.arrow_icon_color }};
-  }
-
-  .zone-collection-arrow-{{ section_id }}:hover {
-    background-color: {{ section.settings.arrow_hover_color }};
-  }
-
-  .zone-collection-arrow-{{ section_id }}:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .zone-collection-arrow-{{ section_id }}:focus-visible {
-    outline: 2px solid {{ section.settings.arrow_color }};
-    outline-offset: 2px;
-  }
-
-  .zone-collection-arrow-{{ section_id }} svg {
-    width: calc({{ section.settings.arrow_size }}px * 0.5);
-    height: calc({{ section.settings.arrow_size }}px * 0.5);
-  }
-
-  .zone-products-scroll-container-{{ section_id }} {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .zone-products-grid-{{ section_id }} {
-    display: flex;
+  .zone-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 cards desktop */
     gap: {{ section.settings.card_spacing }}px;
-    transition: transform 0.3s ease;
-    will-change: transform;
   }
 
-  .zone-products-grid-{{ section_id }} .grid-item {
-    flex: 0 0 calc((100% - ({{ section.settings.cards_desktop | minus: 1 }} * {{ section.settings.card_spacing }}px)) / {{ section.settings.cards_desktop }});
-  }
-
-  .loading-products,
-  .error-message {
-    flex: 1 1 100%;
-    text-align: center;
-    padding: 60px 20px;
-    font-size: 18px;
-    color: #666;
-  }
-
-  .zone-products-grid-{{ section_id }} .grid-product {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-
-  .zone-products-grid-{{ section_id }} .product-grid-item {
-    height: 100%;
-    transition: transform 0.2s ease;
-    border: none;
-  }
-
-  .zone-products-grid-{{ section_id }} .grid-product:hover .product-grid-item {
-    transform: translateY(-2px);
-  }
-
-  .zone-products-grid-{{ section_id }} .grid-product:focus-visible {
-    outline: 2px solid {{ section.settings.title_color }};
-    outline-offset: 2px;
-  }
-
-  .zone-products-grid-{{ section_id }} .grid-product__image-wrap {
-    position: relative;
+  .grid-product__image-wrap {
     width: 100%;
-    margin-bottom: 12px;
     aspect-ratio: 1;
     overflow: hidden;
     border-radius: 8px;
-    background-color: #f5f5f5;
   }
 
-  .zone-products-grid-{{ section_id }} .grid__image-ratio {
-    width: 100%;
-    height: 100%;
-  }
-
-  .zone-products-grid-{{ section_id }} .grid__image-contain {
+  .grid__image-contain {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.4s ease;
   }
 
-  .zone-products-grid-{{ section_id }} .grid-product__tags {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 1;
+  .grid-product:hover .grid__image-contain {
+    transform: scale(1.05);
+  }
+
+  .grid-item__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+  }
+
+  .grid-product__title {
+    font-family: "SeasonSans-Regular", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 120%;
+    letter-spacing: 3%;
+    color: var(--color-red);
+  }
+
+  .grid-product__price {
+    justify-content: center;
+    font-family: "SeasonSans-Medium", sans-serif;
+    font-weight: 550;
+    font-size: 10px;
+    line-height: 140%;
+    letter-spacing: 12%;
+    color: var(--color-brown);
+  }
+  
+  .grid-item__meta-main {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     gap: 8px;
   }
 
-  .zone-products-grid-{{ section_id }} .grid-product__tag {
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    background: {{ section.settings.badge_color }};
-    color: #fff;
-    width: fit-content;
+  .grid-item__meta-secondary .wishlist-floating-btn button {
+    border: none;
+    background: transparent;
   }
 
-  .zone-products-grid-{{ section_id }} .grid-product__tag--sold-out {
-    background: #999;
+  .grid-item__meta-secondary .wishlist-floating-btn svg.icon-block__media {
+    width: 13px;
+    color: var(--color-red);
   }
 
-  .zone-products-grid-{{ section_id }} .grid-product__tag--sale {
-    background: {{ section.settings.badge_color }};
-  }
 
-  .zone-products-grid-{{ section_id }} .grid-item__meta {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    margin: 0;
-  }
+  /* MOBILE */
+  @media (max-width: 749px) {
 
-  .zone-products-grid-{{ section_id }} .grid-item__meta-main {
-    flex: 1;
-  }
-
-  .zone-products-grid-{{ section_id }} .grid-product__title {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 16px !important;
-    color: #000000;
-    margin: 0;
-    line-height: 1.4;
-    text-align: center;
-    font-weight: 700;
-  }
-
-  .zone-products-grid-{{ section_id }} .grid-item__meta-secondary {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    margin-top: 4px;
-  }
-
-  .zone-products-grid-{{ section_id }} .grid-product__price {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
-  }
-
-  .zone-products-grid-{{ section_id }} .grid-product__price--current {
-    font-size: {{ section.settings.card_text_size_desktop | plus: 2 }}px;
-    font-weight: 600;
-    color: {{ section.settings.price_color }};
-  }
-
-  .zone-products-grid-{{ section_id }} .grid-product__price--original {
-    font-size: {{ section.settings.card_text_size_desktop }}px;
-    color: #999;
-    text-decoration: line-through;
-  }
-
-  .zone-products-grid-{{ section_id }} .wishlist-floating-btn {
-    position: relative;
-  }
-
-  .hide {
-    display: none !important;
-  }
-
-  @media screen and (max-width: 749px) {
-    .zone-collection-wrapper {
-      padding: {{ section.settings.section_padding_top | times: 0.7 | round }}px 0 {{ section.settings.section_padding_bottom | times: 0.7 | round }}px;
-    }
-
-    .zone-collection-layout-{{ section_id }} {
+    .zone-collection-layout {
       flex-direction: column;
-      gap: {{ section.settings.promotional_spacing_mobile }}px;
     }
 
-    .zone-promotional-section-{{ section_id }} {
+    .zone-promotional-section {
       flex: 1 1 100%;
-      width: 100%;
     }
 
-    .zone-promotional-image-{{ section_id }} {
-      min-height: {{ section.settings.promotional_height_mobile }}px;
+    .zone-promotional-image {
+      min-height: 480px;
+      border-radius: 24px;
     }
 
-    .zone-promotional-label-{{ section_id }} {
-      font-size: {{ section.settings.promotional_label_size_mobile }}px;
+    /* 2 columns mobile */
+    .zone-products-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
 
-    .zone-promotional-heading-{{ section_id }} {
-      font-size: {{ section.settings.promotional_heading_size_mobile }}px;
+    .grid-product__title {
+      font-size: 14px;
     }
-
-    .zone-promotional-text-{{ section_id }} {
-      font-size: {{ section.settings.promotional_text_size_mobile }}px;
+    .zone-promotional-heading {
+      font-size: 36px;
     }
-
-    .zone-promotional-button-{{ section_id }} {
-      font-size: {{ section.settings.promotional_button_text_size_mobile }}px;
-      padding: {{ section.settings.promotional_button_padding_vertical_mobile }}px {{ section.settings.promotional_button_padding_horizontal_mobile }}px;
-    }
-
-    .zone-promotional-icon-{{ section_id }} {
-      width: {{ section.settings.promotional_icon_size_mobile }}px;
-      height: {{ section.settings.promotional_icon_size_mobile }}px;
-    }
-
-    .zone-products-section-{{ section_id }} {
-      flex: 1 1 100%;
-      width: 100%;
-    }
-
-    .zone-collection-title-{{ section_id }} {
-      font-size: {{ section.settings.title_size_mobile }}px;
-      text-align: {{ section.settings.title_alignment_mobile }};
-    }
-
-    .zone-products-grid-{{ section_id }} .grid-item {
-      flex: 0 0 calc((100% - ({{ section.settings.cards_mobile | minus: 1 }} * {{ section.settings.card_spacing }}px)) / {{ section.settings.cards_mobile }});
-      padding: 0;
-      margin: 0;
-    }
-
-    .zone-products-grid-{{ section_id }} .grid-product__title {
-      font-size: {{ section.settings.card_text_size_mobile }}px;
-    }
-
-    .zone-products-grid-{{ section_id }} .grid-product__price--current {
-      font-size: {{ section.settings.card_text_size_mobile | plus: 2 }}px;
-    }
-
-    .zone-products-grid-{{ section_id }} .grid-product__price--original {
-      font-size: {{ section.settings.card_text_size_mobile }}px;
-    }
-
-    .zone-collection-arrows-{{ section_id }} {
-      {% unless section.settings.show_arrows_mobile %}
-        display: none;
-      {% endunless %}
-    }
-
-    .zone-products-scroll-container-{{ section_id }} {
-      touch-action: pan-x;
-      -webkit-overflow-scrolling: touch;
+    .zone-promotional-text {
+      font-size: 12px;
+      letter-spacing: 4%;
     }
   }
 {% endstyle %}
@@ -582,427 +357,6 @@
     },
     {
       "type": "header",
-      "content": "Promotional Layout"
-    },
-    {
-      "type": "range",
-      "id": "promotional_width",
-      "min": 20,
-      "max": 50,
-      "step": 5,
-      "unit": "%",
-      "label": "Promotional section width (desktop)",
-      "default": 30
-    },
-    {
-      "type": "range",
-      "id": "promotional_spacing",
-      "min": 0,
-      "max": 60,
-      "step": 5,
-      "unit": "px",
-      "label": "Spacing between sections (desktop)",
-      "default": 30
-    },
-    {
-      "type": "range",
-      "id": "promotional_spacing_mobile",
-      "min": 0,
-      "max": 40,
-      "step": 5,
-      "unit": "px",
-      "label": "Spacing between sections (mobile)",
-      "default": 20
-    },
-    {
-      "type": "range",
-      "id": "promotional_border_radius",
-      "min": 0,
-      "max": 30,
-      "step": 2,
-      "unit": "px",
-      "label": "Border radius",
-      "default": 12
-    },
-    {
-      "type": "range",
-      "id": "promotional_padding",
-      "min": 20,
-      "max": 80,
-      "step": 5,
-      "unit": "px",
-      "label": "Content padding",
-      "default": 40
-    },
-    {
-      "type": "range",
-      "id": "promotional_overlay_opacity",
-      "min": 0,
-      "max": 50,
-      "step": 5,
-      "unit": "%",
-      "label": "Overlay opacity",
-      "default": 10,
-      "info": "Dark overlay on image for better text readability"
-    },
-    {
-      "type": "header",
-      "content": "Promotional Text Styles"
-    },
-    {
-      "type": "range",
-      "id": "promotional_label_size",
-      "min": 10,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "label": "Label size (desktop)",
-      "default": 12
-    },
-    {
-      "type": "range",
-      "id": "promotional_label_size_mobile",
-      "min": 10,
-      "max": 18,
-      "step": 1,
-      "unit": "px",
-      "label": "Label size (mobile)",
-      "default": 11
-    },
-    {
-      "type": "color",
-      "id": "promotional_label_color",
-      "label": "Label color",
-      "default": "#5a3a2e"
-    },
-    {
-      "type": "range",
-      "id": "promotional_label_spacing",
-      "min": 5,
-      "max": 30,
-      "step": 1,
-      "unit": "px",
-      "label": "Label spacing",
-      "default": 10
-    },
-    {
-      "type": "range",
-      "id": "promotional_heading_size",
-      "min": 24,
-      "max": 60,
-      "step": 2,
-      "unit": "px",
-      "label": "Heading size (desktop)",
-      "default": 36
-    },
-    {
-      "type": "range",
-      "id": "promotional_heading_size_mobile",
-      "min": 20,
-      "max": 40,
-      "step": 2,
-      "unit": "px",
-      "label": "Heading size (mobile)",
-      "default": 28
-    },
-    {
-      "type": "range",
-      "id": "promotional_heading_weight",
-      "min": 400,
-      "max": 700,
-      "step": 100,
-      "label": "Heading weight",
-      "default": 600
-    },
-    {
-      "type": "color",
-      "id": "promotional_heading_color",
-      "label": "Heading color",
-      "default": "#5a3a2e"
-    },
-    {
-      "type": "range",
-      "id": "promotional_heading_spacing",
-      "min": 10,
-      "max": 40,
-      "step": 2,
-      "unit": "px",
-      "label": "Heading spacing",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "promotional_text_size",
-      "min": 12,
-      "max": 24,
-      "step": 1,
-      "unit": "px",
-      "label": "Text size (desktop)",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "promotional_text_size_mobile",
-      "min": 12,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "label": "Text size (mobile)",
-      "default": 14
-    },
-    {
-      "type": "color",
-      "id": "promotional_text_color",
-      "label": "Text color",
-      "default": "#5a3a2e"
-    },
-    {
-      "type": "range",
-      "id": "promotional_text_spacing",
-      "min": 10,
-      "max": 40,
-      "step": 2,
-      "unit": "px",
-      "label": "Text spacing",
-      "default": 20
-    },
-    {
-      "type": "header",
-      "content": "Promotional Button"
-    },
-    {
-      "type": "range",
-      "id": "promotional_button_text_size",
-      "min": 12,
-      "max": 18,
-      "step": 1,
-      "unit": "px",
-      "label": "Button text size (desktop)",
-      "default": 14
-    },
-    {
-      "type": "range",
-      "id": "promotional_button_text_size_mobile",
-      "min": 12,
-      "max": 16,
-      "step": 1,
-      "unit": "px",
-      "label": "Button text size (mobile)",
-      "default": 13
-    },
-    {
-      "type": "color",
-      "id": "promotional_button_background",
-      "label": "Button background",
-      "default": "#8b4a3c"
-    },
-    {
-      "type": "color",
-      "id": "promotional_button_text_color",
-      "label": "Button text color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "range",
-      "id": "promotional_button_padding_vertical",
-      "min": 8,
-      "max": 20,
-      "step": 2,
-      "unit": "px",
-      "label": "Button padding vertical (desktop)",
-      "default": 12
-    },
-    {
-      "type": "range",
-      "id": "promotional_button_padding_horizontal",
-      "min": 20,
-      "max": 50,
-      "step": 5,
-      "unit": "px",
-      "label": "Button padding horizontal (desktop)",
-      "default": 30
-    },
-    {
-      "type": "range",
-      "id": "promotional_button_padding_vertical_mobile",
-      "min": 8,
-      "max": 18,
-      "step": 2,
-      "unit": "px",
-      "label": "Button padding vertical (mobile)",
-      "default": 10
-    },
-    {
-      "type": "range",
-      "id": "promotional_button_padding_horizontal_mobile",
-      "min": 16,
-      "max": 40,
-      "step": 4,
-      "unit": "px",
-      "label": "Button padding horizontal (mobile)",
-      "default": 24
-    },
-    {
-      "type": "range",
-      "id": "promotional_button_border_radius",
-      "min": 0,
-      "max": 20,
-      "step": 2,
-      "unit": "px",
-      "label": "Button border radius",
-      "default": 4
-    },
-    {
-      "type": "range",
-      "id": "promotional_button_spacing",
-      "min": 10,
-      "max": 40,
-      "step": 2,
-      "unit": "px",
-      "label": "Button spacing",
-      "default": 24
-    },
-    {
-      "type": "header",
-      "content": "Promotional Icon"
-    },
-    {
-      "type": "range",
-      "id": "promotional_icon_size",
-      "min": 20,
-      "max": 60,
-      "step": 5,
-      "unit": "px",
-      "label": "Icon size (desktop)",
-      "default": 40
-    },
-    {
-      "type": "range",
-      "id": "promotional_icon_size_mobile",
-      "min": 20,
-      "max": 50,
-      "step": 5,
-      "unit": "px",
-      "label": "Icon size (mobile)",
-      "default": 35
-    },
-    {
-      "type": "color",
-      "id": "promotional_icon_color",
-      "label": "Icon color",
-      "default": "#d4504c"
-    },
-    {
-      "type": "range",
-      "id": "promotional_height_mobile",
-      "min": 300,
-      "max": 600,
-      "step": 50,
-      "unit": "px",
-      "label": "Promotional section height (mobile)",
-      "default": 400
-    },
-    {
-      "type": "header",
-      "content": "Title"
-    },
-    {
-      "type": "text",
-      "id": "section_title",
-      "label": "Section Title Template",
-      "default": "Recommended for Your Zone {zone}",
-      "info": "Use {zone} as placeholder for zone number"
-    },
-    {
-      "type": "range",
-      "id": "title_size_desktop",
-      "min": 16,
-      "max": 60,
-      "step": 2,
-      "unit": "px",
-      "label": "Title size desktop",
-      "default": 32
-    },
-    {
-      "type": "range",
-      "id": "title_size_mobile",
-      "min": 14,
-      "max": 40,
-      "step": 2,
-      "unit": "px",
-      "label": "Title size mobile",
-      "default": 24
-    },
-    {
-      "type": "color",
-      "id": "title_color",
-      "label": "Title Color",
-      "default": "#000000"
-    },
-    {
-      "type": "select",
-      "id": "title_alignment_desktop",
-      "label": "Title alignment desktop",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
-      ],
-      "default": "left"
-    },
-    {
-      "type": "select",
-      "id": "title_alignment_mobile",
-      "label": "Title alignment mobile",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
-      ],
-      "default": "left"
-    },
-    {
-      "type": "range",
-      "id": "title_spacing",
-      "min": 10,
-      "max": 60,
-      "step": 5,
-      "unit": "px",
-      "label": "Title spacing",
-      "default": 40
-    },
-    {
-      "type": "text",
-      "id": "shop_all_text",
-      "label": "Shop All Link Text",
-      "default": "Shop All"
-    },
-    {
-      "type": "color",
-      "id": "link_color",
-      "label": "Link Color",
-      "default": "#000000"
-    },
-    {
-      "type": "header",
       "content": "Layout"
     },
     {
@@ -1051,80 +405,6 @@
     },
     {
       "type": "header",
-      "content": "Card text"
-    },
-    {
-      "type": "range",
-      "id": "card_text_size_desktop",
-      "min": 12,
-      "max": 24,
-      "step": 1,
-      "unit": "px",
-      "label": "Card text size desktop",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "card_text_size_mobile",
-      "min": 12,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "label": "Card text size mobile",
-      "default": 14
-    },
-    {
-      "type": "color",
-      "id": "price_color",
-      "label": "Price Color",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "badge_color",
-      "label": "Badge Background Color",
-      "default": "#d4504c"
-    },
-    {
-      "type": "header",
-      "content": "Arrows"
-    },
-    {
-      "type": "range",
-      "id": "arrow_size",
-      "min": 30,
-      "max": 60,
-      "step": 5,
-      "unit": "px",
-      "label": "Arrow size",
-      "default": 40
-    },
-    {
-      "type": "color",
-      "id": "arrow_color",
-      "label": "Arrow background",
-      "default": "#f5f5f5"
-    },
-    {
-      "type": "color",
-      "id": "arrow_hover_color",
-      "label": "Arrow hover background",
-      "default": "#e5e5e5"
-    },
-    {
-      "type": "color",
-      "id": "arrow_icon_color",
-      "label": "Arrow icon color",
-      "default": "#000000"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_arrows_mobile",
-      "label": "Show arrows on mobile",
-      "default": false
-    },
-    {
-      "type": "header",
       "content": "Section style"
     },
     {
@@ -1134,24 +414,21 @@
       "default": "#ffffff"
     },
     {
-      "type": "range",
-      "id": "section_padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "label": "Section padding top",
-      "default": 60
+      "type": "header",
+      "content": "Theme colors"
     },
     {
-      "type": "range",
-      "id": "section_padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "label": "Section padding bottom",
-      "default": 60
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_theme_colors",
+      "label": "Use theme color scheme for button and text",
+      "info": "When off, use custom colors below",
+      "default": true
     }
   ],
   "presets": [
@@ -1161,12 +438,12 @@
   ]
 }
 {% endschema %}
-{% comment %} 
+{% comment %}
   position: relative;
   width: 100%;
   margin-bottom: 12px;
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: 8px;
-  background-color: #f5f5f5;     
+  background-color: #f5f5f5;
 {% endcomment %}
