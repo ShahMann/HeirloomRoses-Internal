@@ -1,0 +1,893 @@
+{% liquid
+  assign show_language = section.settings.show_language
+  if localization.available_languages.size <= 1
+    assign show_language = false
+  endif
+
+  assign show_country = section.settings.show_country
+  if localization.available_countries.size <= 1
+    assign show_country = false
+  endif
+
+  assign localization_font = '--menu-localization-font: var(--font-[localization_font]--family); ' | replace: '[localization_font]', section.settings.localization_font
+  assign localization_font_size = '--menu-localization-font-size: [localization_font_size]; ' | replace: '[localization_font_size]', section.settings.localization_font_size
+  assign color_shadow = '--color-shadow: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));'
+  assign form_style = localization_font | append: localization_font_size | append: color_shadow
+%}
+
+{% if section.settings.show_country_selector and show_country %}
+  <script
+    src="{{ 'localization.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+{% endif %}
+
+{% if section.blocks.size > 1 %}
+  <script
+    src="{{ 'announcement-bar.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+{% endif %}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<aside
+  class="custom-announcement-bar spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px;"
+>
+  <div class="custom-announcement-bar__container">
+    {% comment %} Left Column: Country/Region Selector {% endcomment %}
+    <div class="custom-announcement-bar__column custom-announcement-bar__column--left">
+      {% if section.settings.show_country_selector %}
+        {% if show_language and show_country == false %}
+          <div class="dropdown-localization">
+            {% render 'localization-form',
+              show_country: show_country,
+              show_language: show_language,
+              localization_style: 'dropdown',
+              form_style: form_style,
+              form_id: section.id
+            %}
+          </div>
+        {% elsif show_country %}
+          <dropdown-localization-component class="dropdown-localization">
+            <button
+              type="button"
+              class="button dropdown-localization__button localization-selector custom-announcement-bar__localization-button"
+              aria-expanded="false"
+              aria-controls="dropdown-localization-results-{{ section.id }}"
+              ref="button"
+              on:click="/toggleSelector"
+              style="{{ localization_font }} {{ localization_font_size }}"
+            >
+              {% if show_country %}
+                {% if section.settings.country_selector_style == true %}
+                  <span
+                    class="icon-flag"
+                    style="
+                      background-image: url({{- localization.country | image_url: width: 32 }});
+                      --size-shadow: 2px;
+                      --color-shadow: rgb(var(--color-foreground-rgb) / var(--opacity-30-60));
+                    "
+                  ></span>
+                {% endif %}
+                <span class="currency-code" data-testid="localization-currency-code">
+                  {{- localization.country.currency.iso_code -}}
+                </span>
+              {% endif %}
+              <span class="visually-hidden" data-testid="localization-visually-hidden">
+                {{- 'accessibility.localization_region_and_language' | t -}}
+              </span>
+
+              {%- if show_country and show_language -%}
+                <span>/</span>
+              {%- endif -%}
+
+              {%- if show_language -%}
+                <span>
+                  {{ localization.language.iso_code | upcase }}
+                </span>
+              {%- endif -%}
+              <span class="svg-wrapper icon-caret">
+                {{- 'icon-caret.svg' | inline_asset_content -}}
+              </span>
+            </button>
+
+            <div
+              class="localization-wrapper {{ section.settings.localization_position }}-bound color-{{ settings.popover_color_scheme }}"
+              hidden
+              ref="panel"
+            >
+              {% render 'localization-form',
+                show_country: show_country,
+                show_language: show_language,
+                localization_style: 'dropdown',
+                form_style: form_style,
+                form_id: section.id
+              %}
+            </div>
+          </dropdown-localization-component>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    {% comment %} Center Column: Announcement blocks (same as announcement bar) {% endcomment %}
+    <div class="custom-announcement-bar__column custom-announcement-bar__column--center">
+      {% liquid
+        assign autoplay = false
+        assign show_arrows = false
+        if section.blocks.size > 1
+          assign autoplay = true
+          assign show_arrows = true
+        endif
+      %}
+      <announcement-bar-component
+        class="announcement-bar__slider custom-announcement-bar__slider"
+        {% if autoplay %}
+          autoplay="{{ section.settings.announcement_speed }}" aria-live="polite"
+        {% endif %}
+      >
+        {% if show_arrows %}
+          {% render 'slideshow-arrows', icon_style: 'chevron' %}
+        {% endif %}
+        <div class="announcement-bar__slides">
+          {% content_for 'blocks' %}
+        </div>
+      </announcement-bar-component>
+    </div>
+
+    {% comment %} Right Column: Zone + Account + Wishlist + Cart {% endcomment %}
+    <div class="custom-announcement-bar__column custom-announcement-bar__column--right">
+      <div class="custom-announcement-bar__actions">
+        {% comment %} Hardiness Zone Indicator {% endcomment %}
+        {% if section.settings.show_zone_indicator %}
+          <div class="custom-announcement-bar__zone-indicator">
+            {% render 'component-location-detector' %}
+          </div>
+        {% endif %}
+
+        {% comment %} Account Link {% endcomment %}
+        {% if section.settings.show_account and shop.customer_accounts_enabled %}
+          <div class="custom-announcement-bar__account">
+            <div class="account-button custom-announcement-bar__action-button color-{{ settings.popover_color_scheme }}">
+              <shopify-account menu="{{ section.settings.customer_account_menu }}">
+                {% if customer %}
+                  <div class="account-button__fallback"></div>
+                {% else %}
+                  <span
+                    slot="signed-out-avatar"
+                    class="account-button__text custom-announcement-bar__action-text"
+                  >
+                    {{ 'content.account_title' | t }}
+                  </span>
+                  <span
+                    slot="signed-out-avatar"
+                    class="custom-announcement-bar__account-icon"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="15"
+                      height="17"
+                      viewBox="0 0 15 17"
+                      fill="none"
+                      class="account-button__icon"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linejoin="round"
+                        stroke-width="var(--icon-stroke-width)"
+                        d="M10.375 3.813a3.063 3.063 0 1 1-6.125 0 3.063 3.063 0 0 1 6.125 0ZM7.313 9.5c-3.667 0-6.24 2.691-6.563 6.125h13.125C13.552 12.191 10.979 9.5 7.312 9.5Z"
+                      />
+                    </svg>
+                  </span>
+                {% endif %}
+              </shopify-account>
+            </div>
+          </div>
+        {% endif %}
+
+        {% comment %} Wishlist {% endcomment %}
+        {% if section.settings.show_wishlist %}
+          <div class="custom-announcement-bar__wishlist">
+            <a
+              href="{{ section.settings.wishlist_url | default: '/pages/wishlist' }}"
+              class="custom-announcement-bar__action-button custom-announcement-bar__wishlist-link"
+              aria-label="{{ 'content.wishlist' | t | default: 'Wishlist' }}"
+            >
+              <span class="custom-announcement-bar__action-text mobile:hidden">
+                {{ 'content.wishlist' | t | default: 'Wishlist' }}
+              </span>
+              <span class="svg-wrapper" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+        {% endif %}
+
+        {% comment %} Cart Icon (Link to Cart Page) {% endcomment %}
+        {% if section.settings.show_cart %}
+          <script
+            type="module"
+            src="{{ 'cart-icon.js' | asset_url }}"
+            fetchpriority="low"
+          ></script>
+          <a
+            href="{{ routes.cart_url }}"
+            class="custom-announcement-bar__action-button custom-announcement-bar__cart-link"
+            aria-label="{{ 'accessibility.cart' | t }}"
+            aria-describedby="cart-bubble-text-{{ section.id }}"
+          >
+            <cart-icon
+              class="custom-announcement-bar__cart-icon{% unless cart == empty %} custom-announcement-bar__cart-icon--has-cart{% endunless %}"
+              data-testid="cart-icon"
+            >
+              <span class="custom-announcement-bar__action-text mobile:hidden">
+                {{ 'content.cart_title' | t }}
+              </span>
+              <span class="svg-wrapper" aria-hidden="true">
+                {{ 'icon-cart.svg' | inline_asset_content }}
+              </span>
+              {% render 'cart-bubble', limit: 100, live_region: true %}
+            </cart-icon>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</aside>
+
+{% stylesheet %}
+  .custom-announcement-bar {
+    border-block-end: var(--border-bottom-width) solid var(--color-border);
+  }
+
+  .custom-announcement-bar__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-md);
+    width: 100%;
+  }
+
+  .custom-announcement-bar__column {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  .custom-announcement-bar__column--left {
+    justify-content: flex-start;
+  }
+
+  .custom-announcement-bar__column--center {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .custom-announcement-bar__column--right {
+    justify-content: flex-end;
+  }
+
+  /* Center column: announcement blocks slider (same as announcement bar) */
+  .custom-announcement-bar__slider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .custom-announcement-bar__column--center .announcement-bar__slides {
+    display: grid;
+    grid: [stack] auto / [stack] auto;
+    width: calc(100% - var(--button-size) * 2);
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  .custom-announcement-bar__column--center .announcement-bar__slides:only-child {
+    width: 100%;
+  }
+
+  .custom-announcement-bar__column--center .announcement-bar__slides > * {
+    grid-area: stack;
+  }
+
+  .custom-announcement-bar__column--center .announcement-bar__slide {
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    content-visibility: visible;
+    place-content: center;
+  }
+
+  .custom-announcement-bar__column--center .announcement-bar__slide[aria-hidden='true'] {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .custom-announcement-bar__column--center .announcement-bar__text:first-child {
+    margin: 0;
+  }
+
+  .custom-announcement-bar__column--center .announcement-bar__link {
+    position: absolute;
+    inset: 0;
+  }
+
+  .custom-announcement-bar__slider slideshow-arrows {
+    padding: 0;
+    mix-blend-mode: normal;
+  }
+
+  .custom-announcement-bar__slider slideshow-arrows .slideshow-control {
+    color: var(--color-foreground);
+  }
+
+  .custom-announcement-bar__slider .slideshow-control {
+    display: flex;
+    padding: 0;
+    width: var(--button-size);
+    height: var(--button-size);
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    animation: none;
+  }
+
+  .custom-announcement-bar__slider .slideshow-control .svg-wrapper {
+    width: var(--icon-size-xs);
+    height: var(--icon-size-xs);
+  }
+
+  .custom-announcement-bar__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-md);
+  }
+
+  .custom-announcement-bar__action-button {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    color: var(--color-foreground);
+    text-decoration: none;
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  .custom-announcement-bar__action-button:hover {
+    opacity: var(--opacity-subdued-text);
+  }
+
+  .custom-announcement-bar__action-text {
+    font-size: var(--font-size-sm);
+  }
+
+  .custom-announcement-bar__localization-button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--menu-localization-font);
+    font-size: var(--menu-localization-font-size);
+    padding-inline: var(--padding-2xs);
+    margin-inline: calc(-1 * var(--padding-2xs));
+    color: var(--color-foreground);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .custom-announcement-bar__localization-button:hover {
+    opacity: var(--opacity-subdued-text);
+  }
+
+  .custom-announcement-bar__localization-button .icon-flag {
+    width: var(--menu-localization-font-size, var(--icon-size-sm));
+    height: var(--menu-localization-font-size, var(--icon-size-sm));
+    clip-path: circle(50%);
+    background-position: center;
+    background-size: cover;
+    margin-inline-end: 4px;
+    position: relative;
+  }
+
+  .custom-announcement-bar__localization-button .icon-flag::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 var(--size-shadow) var(--color-shadow);
+    border-radius: 50%;
+  }
+
+  .custom-announcement-bar__localization-button .icon-caret {
+    height: var(--icon-size-xs);
+    width: var(--icon-size-xs);
+    flex-shrink: 0;
+    transition: transform var(--animation-speed) var(--animation-easing);
+  }
+
+  .custom-announcement-bar__localization-button[aria-expanded='true'] .icon-caret svg {
+    transform: rotate(180deg);
+  }
+
+  .custom-announcement-bar__zone-indicator {
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-announcement-bar__zone-indicator .location_and_grow_zone {
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-announcement-bar__account {
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-announcement-bar__account .account-button {
+    background: transparent;
+  }
+
+  .custom-announcement-bar__account-icon,
+  .custom-announcement-bar__account .account-button__text {
+    color: var(--color-foreground);
+    transition: color var(--animation-speed) var(--animation-easing);
+  }
+
+  .custom-announcement-bar__account-icon {
+    width: 15px;
+    height: 17px;
+  }
+
+  .custom-announcement-bar__account .account-button__fallback {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--shopify-account-color-accent, #0a142f);
+  }
+
+  shopify-account {
+    --shopify-account-font-heading: var(--font-heading--family);
+    --shopify-account-font-heading-weight: var(--font-heading--weight);
+    --shopify-account-font-body: var(--font-body--family);
+    --shopify-account-font-body-weight: var(--font-body--weight);
+    --shopify-account-radius-base: var(--style-border-radius-popover);
+    --shopify-account-radius-button: var(--style-border-radius-buttons-primary);
+    --shopify-account-radius-button-small: var(--style-border-radius-buttons-primary);
+    --shopify-account-radius-input: var(--style-border-radius-buttons-primary);
+    --shopify-account-color-background: var(--color-background);
+    --shopify-account-color-text: var(--color-foreground);
+    --shopify-account-color-accent: var(--color-primary-button-background);
+    --shopify-account-color-accent-text: var(--color-primary-button-text);
+  }
+
+  .custom-announcement-bar__wishlist-link {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+  }
+
+  .custom-announcement-bar__wishlist-link .svg-wrapper {
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
+  }
+
+  .custom-announcement-bar__wishlist-link svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .custom-announcement-bar__cart-link {
+    position: relative;
+  }
+
+  .custom-announcement-bar__cart-icon {
+    --cart-bubble-size: 20px;
+    --cart-bubble-top: 4.5px;
+    --cart-bubble-right: 2.5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+  }
+
+  .custom-announcement-bar__cart-icon .svg-wrapper {
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
+  }
+
+  .custom-announcement-bar__cart-icon .cart-bubble {
+    position: absolute;
+    width: var(--cart-bubble-size, 20px);
+    top: var(--cart-bubble-top);
+    right: var(--cart-bubble-right);
+  }
+
+  .custom-announcement-bar__cart-icon.header-actions__cart-icon--has-cart svg {
+    mask: radial-gradient(
+      calc(var(--cart-bubble-size) + 2px) at calc(100% - var(--cart-bubble-right)) var(--cart-bubble-top),
+      transparent 45.45%,
+      #fff 45.45%,
+      #fff 100%
+    );
+  }
+
+  cart-icon:has(.cart-bubble__text-count:empty) {
+    --cart-bubble-size: 10px;
+    --cart-bubble-top: 9px;
+    --cart-bubble-right: 9px;
+  }
+
+  .localization-wrapper {
+    position: fixed;
+    z-index: var(--layer-raised);
+    border-radius: var(--style-border-radius-popover);
+    transition-property: display, opacity, translate;
+    transition-duration: 0.3s;
+    transition-timing-function: var(--ease-out-quad);
+    transition-behavior: allow-discrete;
+    translate: 0 20px;
+    opacity: 0;
+    box-shadow: var(--shadow-popover);
+    border: var(--style-border-popover);
+    background-color: var(--color-background);
+    max-height: 27.5rem;
+    top: calc(100% + 10px);
+  }
+
+  .localization-wrapper:not([hidden]) {
+    translate: 0 0;
+    opacity: 1;
+  }
+
+  @starting-style {
+    .localization-wrapper:not([hidden]) {
+      translate: 0 20px;
+      opacity: 0;
+    }
+  }
+
+  dropdown-localization-component .localization-wrapper.right-bound {
+    right: 0;
+    left: unset;
+  }
+
+  dropdown-localization-component .localization-wrapper.left-bound {
+    left: -8px;
+    right: unset;
+  }
+
+  dropdown-localization-component {
+    position: relative;
+    background-color: transparent;
+  }
+
+  /* Responsive Styles */
+  @media screen and (max-width: 749px) {
+    .custom-announcement-bar__container {
+      flex-direction: column;
+      gap: var(--gap-sm);
+      align-items: stretch;
+    }
+
+    .custom-announcement-bar__column {
+      flex: none;
+      justify-content: center;
+    }
+
+    .custom-announcement-bar__column--left {
+      order: 1;
+    }
+
+    .custom-announcement-bar__column--center {
+      order: 2;
+    }
+
+    .custom-announcement-bar__column--right {
+      order: 3;
+      justify-content: center;
+    }
+
+    .custom-announcement-bar__actions {
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--gap-sm);
+    }
+
+  }
+
+  @media screen and (min-width: 750px) {
+    .custom-announcement-bar__column--left {
+      flex: 0 0 auto;
+      min-width: 0;
+    }
+
+    .custom-announcement-bar__column--center {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .custom-announcement-bar__column--right {
+      flex: 0 0 auto;
+      min-width: 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Custom Announcement Bar",
+  "tag": "aside",
+  "class": "custom-announcement-bar-section",
+  "blocks": [
+    {
+      "type": "_announcement"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Left Column: Country/Region Selector"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_selector",
+      "label": "Show country/region selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country",
+      "label": "Show country/region",
+      "info": "Manage countries/regions in your store settings",
+      "default": true,
+      "visible_if": "{{ section.settings.show_country_selector }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "country_selector_style",
+      "label": "Show flag",
+      "default": true,
+      "visible_if": "{{ section.settings.show_country_selector and section.settings.show_country }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_language",
+      "label": "Show language selector",
+      "info": "Manage languages in your store settings",
+      "default": true,
+      "visible_if": "{{ section.settings.show_country_selector }}"
+    },
+    {
+      "type": "select",
+      "id": "localization_font",
+      "label": "Font",
+      "options": [
+        {
+          "value": "heading",
+          "label": "Heading"
+        },
+        {
+          "value": "subheading",
+          "label": "Subheading"
+        },
+        {
+          "value": "body",
+          "label": "Body"
+        },
+        {
+          "value": "accent",
+          "label": "Accent"
+        }
+      ],
+      "default": "heading",
+      "visible_if": "{{ section.settings.show_country_selector }}"
+    },
+    {
+      "type": "select",
+      "id": "localization_font_size",
+      "label": "Font size",
+      "options": [
+        {
+          "value": "0.625rem",
+          "label": "10px"
+        },
+        {
+          "value": "0.75rem",
+          "label": "12px"
+        },
+        {
+          "value": "0.875rem",
+          "label": "14px"
+        },
+        {
+          "value": "1rem",
+          "label": "16px"
+        },
+        {
+          "value": "1.125rem",
+          "label": "18px"
+        }
+      ],
+      "default": "1rem",
+      "visible_if": "{{ section.settings.show_country_selector }}"
+    },
+    {
+      "type": "select",
+      "id": "localization_position",
+      "label": "Dropdown position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "right",
+      "visible_if": "{{ section.settings.show_country_selector }}"
+    },
+    {
+      "type": "header",
+      "content": "Center Column: Announcements"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add announcement blocks above. With multiple blocks, they will rotate with arrows and autoplay."
+    },
+    {
+      "type": "range",
+      "id": "announcement_speed",
+      "label": "Scroll speed (multiple announcements)",
+      "min": 2,
+      "max": 10,
+      "default": 5,
+      "unit": "sec"
+    },
+    {
+      "type": "header",
+      "content": "Right Column: Actions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_zone_indicator",
+      "label": "Show hardiness zone indicator",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show account link",
+      "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "customer_account_menu",
+      "label": "Customer account menu",
+      "default": "customer-account-main-menu",
+      "visible_if": "{{ section.settings.show_account }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "Show wishlist link",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "wishlist_url",
+      "label": "Wishlist URL",
+      "visible_if": "{{ section.settings.show_wishlist }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Show cart icon",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Page width"
+        },
+        {
+          "value": "full-width",
+          "label": "Full width"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-4"
+    },
+    {
+      "type": "range",
+      "id": "divider_width",
+      "label": "Divider thickness",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "Left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "Right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Announcement Bar",
+      "blocks": {
+        "announcement_1": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Free Shipping on Orders Over $125"
+          }
+        }
+      },
+      "block_order": ["announcement_1"]
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}
