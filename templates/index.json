@@ -64,7 +64,7 @@
           },
           "blocks": {}
         },
-        "product_description_AyHbWF": {
+        "product_description_EKVJd3": {
           "type": "product-description",
           "name": "t:names.product_description",
           "settings": {
@@ -126,7 +126,7 @@
       "block_order": [
         "text_JgcpCH",
         "text_YLPk4p",
-        "product_description_AyHbWF",
+        "product_description_EKVJd3",
         "button_H9gpTf",
         "quiz_block_banner_cgqFYd"
       ],

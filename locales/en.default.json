@@ -108,9 +108,7 @@
     "sign_up": "Sign up",
     "submit": "Submit",
     "view_store_information": "View store information",
-    "sort": "Sort",
-    "zone": "My Hardiness Zone",
-    "zip_content": "Planting In"
+    "sort": "Sort"
   },
   "blocks": {
     "contact_form": {
