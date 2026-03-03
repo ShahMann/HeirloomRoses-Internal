@@ -39,7 +39,7 @@
   </div>
 
   <div
-    class="border-style custom-section-content"
+    class="border-style custom-section-content three-content-section"
     style="{% render 'border-override', settings: section.settings %}"
   >
     {% if section.settings.toggle_overlay %}
@@ -93,5 +93,35 @@
 
   .custom-section-content {
     z-index: var(--layer-flat);
+  }
+  .section-wrapper .custom-section-background .background-image-container.background-image-fit {
+    top: -18px;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    opacity: var(--image-opacity);
+    width: 100%;
+  }
+  @media screen and (max-width: 749px) {
+    .section-wrapper .custom-section-background .background-image-container.background-image-fit {
+      top: -5px;
+    }
+  }
+  .three-content-section .section-content-wrapper {
+    padding: 8px 16px;
+  }
+  .three-content-section .group-block-content.layout-panel-flex.layout-panel-flex--column .h2 p {
+    font-family: "SeasonMix-Light", sans-serif;
+    font-weight: 300;
+    font-size: 48px;
+    line-height: 90%;
+    letter-spacing: 0%
+  }
+  .three-content-section .group-block-content.layout-panel-flex.layout-panel-flex--column rte-formatter p {
+    font-family: "SeasonSans-Light", sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 120%;
+    letter-spacing: 2%
   }
 {% endstylesheet %}

@@ -90,7 +90,7 @@
                   <h3 class="featured-collection-cards__heading">{{ card_heading }}</h3>
                 {% endif %}
                 {% if card_button_text != blank %}
-                  <span class="featured-collection-cards__button">{{ card_button_text }}</span>
+                  <span class="featured-collection-cards__button size-style button button-spacing-large">{{ card_button_text }}</span>
                 {% endif %}
               </div>
             </a>
@@ -108,15 +108,18 @@
 {% stylesheet %}
   .featured-collection-cards__inner {
     width: 100%;
-    max-width: var(--page-width, 1200px);
     margin-inline: auto;
-    padding-inline: var(--page-width-margin, 1.5rem);
+    padding-inline: 0;
+  }
+
+  .featured-collection-cards-section .section {
+    padding: 8px 16px;
   }
 
   .featured-collection-cards__grid {
     display: grid;
     grid-template-columns: repeat(var(--featured-cards-columns, 4), 1fr);
-    gap: var(--cards-gap, 24px);
+    gap: var(--cards-gap, 16px);
   }
 
   @media screen and (max-width: 749px) {
@@ -198,59 +201,66 @@
 
   .featured-collection-cards__card-content {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     right: 0;
-    padding: 1.5rem;
-    text-align: var(--featured-cards-text-align, left);
+    bottom: 0;
+    padding: 32px;
+    margin: auto;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 77px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .featured-collection-cards__card-content {
+      gap: 50px;
+    }
   }
 
   .featured-collection-cards__subheading {
-    font-size: 0.875rem;
-    opacity: 0.95;
-    color: var(--featured-cards-subheading-color, rgb(var(--color-foreground)));
-  }
-
-  .featured-collection-cards.use-theme-colors .featured-collection-cards__subheading {
-    color: rgb(var(--color-foreground));
+    color: var(--color-cream-one);
+    font-family: "MintMagnolia-Regular", sans-serif;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 60%;
+    letter-spacing: 0%;
   }
 
   .featured-collection-cards__heading {
     margin: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-    line-height: 1.2;
-    color: var(--featured-cards-heading-color, rgb(var(--color-foreground)));
+    color: var(--color-cream-one);
+    font-family: "SeasonMix-Regular", sans-serif;
+    font-weight: 420;
+    font-size: 36px;
+    line-height: 90%;
+    letter-spacing: 0%;
   }
 
-  .featured-collection-cards.use-theme-colors .featured-collection-cards__heading {
-    color: rgb(var(--color-foreground));
+  @media screen and (max-width: 749px) {
+    .featured-collection-cards__heading {
+      font-family: "SeasonMix-Light", sans-serif;
+      font-weight: 300;
+    }
   }
 
   .featured-collection-cards__button {
     display: inline-block;
-    margin-top: 0.25rem;
-    padding: 0.6rem 1.25rem;
-    font-size: 0.875rem;
-    font-weight: 600;
     text-align: center;
-    border-radius: 100px;
-    background: var(--featured-cards-button-bg, rgb(var(--color-primary-button-background)));
-    color: var(--featured-cards-button-text, rgb(var(--color-primary-button-text)));
     width: fit-content;
-    transition: opacity 0.2s ease;
+    font-family: "SeasonSans-Medium", sans-serif;
+    font-weight: 550;
+    font-size: 10px;
+    line-height: 140%;
+    letter-spacing: 12%;
   }
 
-  .featured-collection-cards.use-theme-colors .featured-collection-cards__button {
-    background: rgb(var(--color-primary-button-background));
-    color: rgb(var(--color-primary-button-text));
-  }
-
-  .featured-collection-cards__card-link:hover .featured-collection-cards__button {
-    opacity: 0.9;
+  @media screen and (max-width: 749px) {
+    .featured-collection-cards__button.button-spacing-large {
+      padding: 8px 16px;
+    }
   }
 
   .featured-collection-cards__empty {
