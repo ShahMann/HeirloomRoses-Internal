@@ -35,7 +35,8 @@
     left: 0;
     width: 100%;
     display: flex;
-    padding-right: 64px;
+    padding-right: 0;
+    padding-bottom: 64px;
     pointer-events: none;
     align-items: flex-start;
   }
@@ -54,7 +55,7 @@
     max-width: 100%;
     background: var(--bg);
     color: var(--text);
-    padding: 22px;
+    padding: 32px;
     border-radius: 28px;
     box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
     position: relative;
@@ -96,7 +97,7 @@
     margin: 0;
     font-family: "SeasonSans-Regular";
     font-weight: 400;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 120%;
     letter-spacing: 3%;
   }
@@ -108,12 +109,15 @@
 
   @media (min-width: 768px) {
     .quiz-block-banner {
-      position: relative;
+      padding-right: 64px;
+      padding-bottom: 64px;
+    }
+    .quiz-block-banner__description {
+      font-size: 16px;
     }
 
     .quiz-block-banner__card {
       max-width: 523px;
-      padding: 32px;
       border-radius: 16px;
     }
 

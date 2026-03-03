@@ -117,10 +117,35 @@
 </div>
 
 {% stylesheet %}
+  .shop-by-color-section {
+    padding: 8px 16px;
+  }
+  .shop-by-color-section .section {
+    padding: 64px 64px 120px 64px;
+  }
+  @media screen and (max-width: 749px) {
+    .shop-by-color-section .section {
+      padding: 16px;
+    } 
+  }
   .shop-by-color__inner {
     display: flex;
     flex-direction: column;
-    gap: var(--gap, 24px);
+    gap: var(--gap, 64px);
+  }
+
+  .shop-by-color__inner h2 {
+    font-family: "SeasonMix-Light", sans-serif;
+    font-weight: 300;
+    font-size: 64px;
+    line-height: 90%;
+    letter-spacing: 0%;
+  }
+
+  @media screen and (max-width: 749px) {
+    .shop-by-color__inner h2 {
+      font-size: 36px;
+    } 
   }
 
   .shop-by-color__heading {
@@ -140,6 +165,12 @@
   @media screen and (min-width: 750px) {
     .shop-by-color__grid {
       grid-template-columns: repeat(var(--shop-by-color-columns-desktop), 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .shop-by-color__grid {
+      column-gap: 32px;
     }
   }
 
@@ -164,12 +195,22 @@
 
   .shop-by-color__image-wrap {
     position: relative;
-    width: 100%;
+    width: 118px;
+    height: 118px;
     aspect-ratio: 1;
     border-radius: 50%;
     overflow: hidden;
-    margin-bottom: 0.5em;
+    margin-bottom: 0;
     flex-shrink: 0;
+    border: 2px solid var(--color-brown);
+  }
+  @media screen and (max-width: 749px) {
+    .shop-by-color__image-wrap {
+      width: 22.637vw;
+      aspect-ratio: 1/1;
+      height: auto;
+      border: 1px solid var(--color-brown);
+    }
   }
 
   .shop-by-color__image {
@@ -194,9 +235,19 @@
   }
 
   .shop-by-color__label {
-    font-size: 0.9375rem;
     color: rgb(var(--color-foreground));
-    font-weight: 500;
+    font-family: "SeasonSans-Light", sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 120%;
+    letter-spacing: 2%;
+    padding: 8px;
+  }
+  @media screen and (max-width: 749px) {
+    .shop-by-color__label {
+      font-size: 16px;
+      letter-spacing: 3%;
+    }
   }
 
   /* Carousel layout */
@@ -286,7 +337,7 @@
       "id": "column_gap",
       "label": "Gap between columns",
       "min": 0,
-      "max": 60,
+      "max": 100,
       "step": 2,
       "unit": "px",
       "default": 24

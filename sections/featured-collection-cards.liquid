@@ -1,0 +1,559 @@
+{%- liquid
+  assign card_blocks = section.blocks | where: 'type', 'collection_card'
+  assign use_theme_colors = section.settings.use_theme_colors
+  assign mobile_layout = section.settings.mobile_layout
+-%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+<div
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    color-{{ section.settings.color_scheme }}
+    featured-collection-cards
+    featured-collection-cards--mobile-{{ mobile_layout }}
+    {% if use_theme_colors %}use-theme-colors{% endif %}
+    spacing-style
+    gap-style
+  "
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    {% render 'gap-style', value: section.settings.gap, name: 'cards-gap' %}
+    {% if section.settings.margin_top > 0 %}margin-block-start: {{ section.settings.margin_top }}px;{% endif %}
+    {% if section.settings.margin_bottom > 0 %}margin-block-end: {{ section.settings.margin_bottom }}px;{% endif %}
+    --featured-cards-columns: {{ section.settings.columns }};
+    --featured-cards-columns-mobile: {{ section.settings.mobile_columns }};
+    --featured-cards-border-radius: {{ section.settings.card_border_radius }}px;
+    {% unless use_theme_colors %}
+      --featured-cards-button-bg: {{ section.settings.button_background }};
+      --featured-cards-button-text: {{ section.settings.button_text_color }};
+      --featured-cards-heading-color: {{ section.settings.heading_color }};
+      --featured-cards-subheading-color: {{ section.settings.subheading_color }};
+    {% endunless %}
+    --featured-cards-overlay: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --featured-cards-text-align: {{ section.settings.text_alignment }};
+  "
+  data-testid="featured-collection-cards"
+>
+  <div class="featured-collection-cards__inner page-width">
+    {% if card_blocks.size > 0 %}
+      <div class="featured-collection-cards__grid">
+        {% for block in card_blocks %}
+          {% liquid
+            assign card_collection = block.settings.collection
+            assign card_image = block.settings.image
+            if card_image == blank and card_collection != blank
+              assign card_image = card_collection.image
+            endif
+            assign card_heading = block.settings.heading | default: card_collection.title
+            assign card_subheading = block.settings.sub_heading
+            assign card_button_text = block.settings.button_text | default: 'View all'
+            assign card_link = block.settings.button_link | default: card_collection.url
+          %}
+          <div
+            class="featured-collection-cards__card"
+            {{ block.shopify_attributes }}
+          >
+            <a
+              href="{{ card_link }}"
+              class="featured-collection-cards__card-link"
+            >
+              <div class="featured-collection-cards__card-media">
+                {% if card_image != blank %}
+                  <img
+                    src="{{ card_image | image_url: width: 600 }}"
+                    srcset="
+                      {{ card_image | image_url: width: 400 }} 400w,
+                      {{ card_image | image_url: width: 600 }} 600w,
+                      {{ card_image | image_url: width: 800 }} 800w
+                    "
+                    sizes="(min-width: 990px) calc((100vw - 10rem) / {{ section.settings.columns }}), (min-width: 750px) calc((100vw - 8rem) / 2), 60vw"
+                    alt="{{ card_image.alt | default: card_heading | escape }}"
+                    width="{{ card_image.width }}"
+                    height="{{ card_image.height }}"
+                    loading="lazy"
+                    class="featured-collection-cards__card-image"
+                  />
+                {% else %}
+                  <div class="featured-collection-cards__card-placeholder">
+                    {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {% endif %}
+                <span class="featured-collection-cards__card-overlay" aria-hidden="true"></span>
+              </div>
+              <div class="featured-collection-cards__card-content">
+                {% if card_subheading != blank %}
+                  <span class="featured-collection-cards__subheading">{{ card_subheading }}</span>
+                {% endif %}
+                {% if card_heading != blank %}
+                  <h3 class="featured-collection-cards__heading">{{ card_heading }}</h3>
+                {% endif %}
+                {% if card_button_text != blank %}
+                  <span class="featured-collection-cards__button">{{ card_button_text }}</span>
+                {% endif %}
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="featured-collection-cards__empty">
+        <p>Add collection cards in the theme editor.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .featured-collection-cards__inner {
+    width: 100%;
+    max-width: var(--page-width, 1200px);
+    margin-inline: auto;
+    padding-inline: var(--page-width-margin, 1.5rem);
+  }
+
+  .featured-collection-cards__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--featured-cards-columns, 4), 1fr);
+    gap: var(--cards-gap, 24px);
+  }
+
+  @media screen and (max-width: 749px) {
+    .featured-collection-cards--mobile-horizontal .featured-collection-cards__grid {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: var(--cards-gap, 24px);
+      padding-bottom: 4px;
+      margin-inline: calc(-1 * var(--page-width-margin, 1.5rem));
+      padding-inline: var(--page-width-margin, 1.5rem);
+    }
+
+    .featured-collection-cards--mobile-horizontal .featured-collection-cards__card {
+      flex: 0 0 75%;
+      min-width: 75%;
+      scroll-snap-align: start;
+    }
+
+    .featured-collection-cards--mobile-vertical .featured-collection-cards__grid {
+      grid-template-columns: repeat(var(--featured-cards-columns-mobile, 2), 1fr);
+    }
+  }
+
+  .featured-collection-cards__card {
+    border-radius: var(--featured-cards-border-radius, 16px);
+    overflow: hidden;
+    background: rgb(var(--color-foreground) / 0.04);
+  }
+
+  .featured-collection-cards__card-link {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+  }
+
+  .featured-collection-cards__card-media {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+  }
+
+  .featured-collection-cards__card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .featured-collection-cards__card-link:hover .featured-collection-cards__card-image {
+    transform: scale(1.05);
+  }
+
+  .featured-collection-cards__card-placeholder {
+    width: 100%;
+    height: 100%;
+    background: rgb(var(--color-foreground) / 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .featured-collection-cards__card-placeholder .placeholder-svg {
+    width: 50%;
+    height: 50%;
+    opacity: 0.3;
+  }
+
+  .featured-collection-cards__card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(0 0 0 / var(--featured-cards-overlay, 0.4)), transparent 50%);
+    pointer-events: none;
+  }
+
+  .featured-collection-cards__card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    text-align: var(--featured-cards-text-align, left);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .featured-collection-cards__subheading {
+    font-size: 0.875rem;
+    opacity: 0.95;
+    color: var(--featured-cards-subheading-color, rgb(var(--color-foreground)));
+  }
+
+  .featured-collection-cards.use-theme-colors .featured-collection-cards__subheading {
+    color: rgb(var(--color-foreground));
+  }
+
+  .featured-collection-cards__heading {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--featured-cards-heading-color, rgb(var(--color-foreground)));
+  }
+
+  .featured-collection-cards.use-theme-colors .featured-collection-cards__heading {
+    color: rgb(var(--color-foreground));
+  }
+
+  .featured-collection-cards__button {
+    display: inline-block;
+    margin-top: 0.25rem;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 100px;
+    background: var(--featured-cards-button-bg, rgb(var(--color-primary-button-background)));
+    color: var(--featured-cards-button-text, rgb(var(--color-primary-button-text)));
+    width: fit-content;
+    transition: opacity 0.2s ease;
+  }
+
+  .featured-collection-cards.use-theme-colors .featured-collection-cards__button {
+    background: rgb(var(--color-primary-button-background));
+    color: rgb(var(--color-primary-button-text));
+  }
+
+  .featured-collection-cards__card-link:hover .featured-collection-cards__button {
+    opacity: 0.9;
+  }
+
+  .featured-collection-cards__empty {
+    text-align: center;
+    padding: 3rem;
+    color: rgb(var(--color-foreground) / 0.6);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured collection cards",
+  "tag": "section",
+  "class": "featured-collection-cards-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Cards layout"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns (desktop)",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Columns (mobile, vertical layout)",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile view",
+      "info": "Horizontal = scroll; Vertical = stacked grid",
+      "options": [
+        { "value": "horizontal", "label": "Horizontal scroll" },
+        { "value": "vertical", "label": "Vertical stack" }
+      ],
+      "default": "horizontal"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap between cards",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Image overlay darkness",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Theme colors"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_theme_colors",
+      "label": "Use theme color scheme for button and text",
+      "info": "When off, use custom colors below",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#000F9F",
+      "visible_if": "{{ section.settings.use_theme_colors == false }}"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.use_theme_colors == false }}"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.use_theme_colors == false }}"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.use_theme_colors == false }}"
+    },
+    {
+      "type": "header",
+      "content": "Section layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        { "value": "page-width", "label": "Page width" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "Margin"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Top margin",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Bottom margin",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "Left padding",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "Right padding",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Collection card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom image",
+          "info": "Overrides collection image when set"
+        },
+        {
+          "type": "text",
+          "id": "sub_heading",
+          "label": "Subheading",
+          "default": "Featured Collection"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "info": "Leave blank to use collection title"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "View all"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link",
+          "info": "Leave blank to link to collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection cards",
+      "category": "Collection",
+      "blocks": [
+        {
+          "type": "collection_card",
+          "settings": {
+            "sub_heading": "Featured Collection",
+            "heading": "New Arrivals",
+            "button_text": "View all"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "sub_heading": "Featured Collection",
+            "heading": "Best Sellers",
+            "button_text": "View all"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "sub_heading": "Featured Collection",
+            "heading": "Rose Bundles",
+            "button_text": "View all"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "sub_heading": "Featured Collection",
+            "heading": "Soil Nutrition",
+            "button_text": "View all"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
