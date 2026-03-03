@@ -770,6 +770,81 @@
         "padding-block-end": 48
       }
     },
+    "featured_collection_cards_epGXat": {
+      "type": "featured-collection-cards",
+      "blocks": {
+        "collection_card_zTD4Ep": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "new-introductions",
+            "image": "shopify://shop_images/24BC6-Gabriel_Oak.jpg",
+            "sub_heading": "Featured Collection",
+            "heading": "New Arrivals",
+            "button_text": "View all",
+            "button_link": ""
+          }
+        },
+        "collection_card_BWDC8a": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "",
+            "sub_heading": "Featured Collection",
+            "heading": "Best Sellers",
+            "button_text": "View all",
+            "button_link": ""
+          }
+        },
+        "collection_card_3KcVri": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "",
+            "sub_heading": "Featured Collection",
+            "heading": "Rose Bundles",
+            "button_text": "View all",
+            "button_link": ""
+          }
+        },
+        "collection_card_VLqPiK": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "",
+            "sub_heading": "Featured Collection",
+            "heading": "Soil Nutrition",
+            "button_text": "View all",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_card_zTD4Ep",
+        "collection_card_BWDC8a",
+        "collection_card_3KcVri",
+        "collection_card_VLqPiK"
+      ],
+      "name": "Featured collection cards",
+      "settings": {
+        "columns": 4,
+        "mobile_columns": "1",
+        "mobile_layout": "vertical",
+        "gap": 24,
+        "card_border_radius": 16,
+        "overlay_opacity": 0,
+        "text_alignment": "center",
+        "color_scheme": "scheme-143a8631-0804-4fc4-922a-9f46128d1704",
+        "use_theme_colors": true,
+        "button_background": "#000F9F",
+        "button_text_color": "#FFFFFF",
+        "heading_color": "#FFFFFF",
+        "subheading_color": "#FFFFFF",
+        "section_width": "page-width",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding-block-start": 36,
+        "padding-block-end": 36,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0
+      }
+    },
     "shop_by_color_MCKaHA": {
       "type": "shop-by-color",
       "blocks": {
@@ -990,6 +1065,7 @@
     "hero_jVaWmY",
     "section_4XGcHU",
     "product_list_fa6P9H",
+    "featured_collection_cards_epGXat",
     "shop_by_color_MCKaHA",
     "hero_BzbVcH"
   ]
