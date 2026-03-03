@@ -20,7 +20,7 @@
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
-            "type_preset": "custom",
+            "type_preset": "paragraph",
             "font": "var(--font-accent--family)",
             "font_size": "0.75rem",
             "line_height": "normal",
@@ -89,7 +89,7 @@
             "heading_font": "heading",
             "description": "Not sure which rose to choose? In just a few questions, we’ll guide you to the right fit—so you can plant with confidence.",
             "description_font": "body",
-            "position": "bottom-right",
+            "position": "right",
             "link": "",
             "background_color": "#ef426f",
             "text_color": "#ffffff"
@@ -132,7 +132,8 @@
         "blurred_reflection": false,
         "reflection_opacity": 75,
         "padding-block-start": 64,
-        "padding-block-end": 100
+        "padding-block-end": 100,
+        "custom_class": "hero-banner"
       }
     },
     "section_4XGcHU": {
@@ -748,11 +749,11 @@
         "text_Hd98by": {
           "type": "text",
           "settings": {
-            "text": "<h1>New arrivals</h1>",
+            "text": "<p>Take the Quiz</p>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",
-            "type_preset": "h1",
+            "type_preset": "h3",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
             "line_height": "normal",
@@ -773,11 +774,11 @@
         "text_3e4cWm": {
           "type": "text",
           "settings": {
-            "text": "<p>Made with care and unconditionally loved by our customers.</p>",
+            "text": "<p>Tell us your location, growing conditions, and flower preferences and we’ll do the rest. </p>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",
-            "type_preset": "rte",
+            "type_preset": "paragraph",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
             "line_height": "normal",
@@ -789,7 +790,7 @@
             "background_color": "#00000026",
             "corner_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 32,
+            "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -807,8 +808,8 @@
             "custom_width": 100,
             "width_mobile": "fit-content",
             "custom_width_mobile": 100,
-            "button_spacing_enable": false,
-            "button_spacing_class": "button-spacing-small"
+            "button_spacing_enable": true,
+            "button_spacing_class": "button-spacing-large"
           },
           "blocks": {}
         }
@@ -839,15 +840,16 @@
         "section_width": "page-width",
         "section_height": "large",
         "section_height_custom": 50,
-        "color_scheme": "scheme-5",
+        "color_scheme": "scheme-143a8631-0804-4fc4-922a-9f46128d1704",
         "toggle_overlay": true,
         "overlay_color": "#00000026",
         "overlay_style": "gradient",
         "gradient_direction": "to top",
         "blurred_reflection": false,
         "reflection_opacity": 75,
-        "padding-block-start": 40,
-        "padding-block-end": 40
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "custom_class": "take-quiz"
       }
     }
   },
