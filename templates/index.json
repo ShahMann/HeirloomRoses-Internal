@@ -743,6 +743,112 @@
         "padding-block-end": 48
       }
     },
+    "shop_by_color_MCKaHA": {
+      "type": "shop-by-color",
+      "blocks": {
+        "color_item_KPd7tr": {
+          "type": "color_item",
+          "settings": {
+            "image": "shopify://shop_images/24BC6-Gabriel_Oak.jpg",
+            "link": "#",
+            "title": "Purple"
+          }
+        },
+        "color_item_t4Ej4H": {
+          "type": "color_item",
+          "settings": {
+            "image": "shopify://shop_images/DIA007_Dianthus_Purple_Wedding-3_524f6edf-5047-44cf-9deb-ac6c100cdd36.jpg",
+            "link": "",
+            "title": "Pink"
+          }
+        },
+        "color_item_Ye9XkJ": {
+          "type": "color_item",
+          "settings": {
+            "image": "shopify://shop_images/DIA010_Dianthus_Carmen_Burgundy-3.jpg",
+            "link": "",
+            "title": "Red"
+          }
+        },
+        "color_item_fyeUEL": {
+          "type": "color_item",
+          "settings": {
+            "image": "shopify://shop_images/TN-ECH019EchinaceaColorburstOrange-1.jpg",
+            "link": "",
+            "title": "Orange"
+          }
+        },
+        "color_item_bJCnC6": {
+          "type": "color_item",
+          "settings": {
+            "image": "shopify://shop_images/STACH005_Pink_Pearl-6_14f66c03-14cf-43cf-8138-e694f969f381.jpg",
+            "link": "",
+            "title": "Apricot"
+          }
+        },
+        "color_item_RaeHNA": {
+          "type": "color_item",
+          "settings": {
+            "image": "shopify://shop_images/COR003_Coreopsis_Ruby_Frost-5.jpg",
+            "link": "",
+            "title": "Multi"
+          }
+        },
+        "color_item_q8e7FV": {
+          "type": "color_item",
+          "settings": {
+            "image": "shopify://shop_images/TN-ECH015_Echinacea-Cara-Mia-Yellow-4_8e197e09-3b51-45cf-b89e-af72bb5f3079.jpg",
+            "link": "",
+            "title": "Yellow"
+          }
+        },
+        "color_item_VrPgYA": {
+          "type": "color_item",
+          "settings": {
+            "image": "shopify://shop_images/CAT001_Blue_Wonder_Dwarf_Catmint-8.jpg",
+            "link": "",
+            "title": "Neutral"
+          }
+        },
+        "color_item_qW7Jzi": {
+          "type": "color_item",
+          "settings": {
+            "image": "shopify://shop_images/DIA004_Dianthus_Everlast_White-1.jpg",
+            "link": "",
+            "title": "White"
+          }
+        }
+      },
+      "block_order": [
+        "color_item_KPd7tr",
+        "color_item_t4Ej4H",
+        "color_item_Ye9XkJ",
+        "color_item_fyeUEL",
+        "color_item_bJCnC6",
+        "color_item_RaeHNA",
+        "color_item_q8e7FV",
+        "color_item_VrPgYA",
+        "color_item_qW7Jzi"
+      ],
+      "name": "Shop by Color",
+      "settings": {
+        "heading": "Shop by Color",
+        "layout_mode": "grid",
+        "columns_desktop": 9,
+        "columns_mobile": "3",
+        "column_gap": 24,
+        "row_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 24,
+        "color_scheme": "scheme-143a8631-0804-4fc4-922a-9f46128d1704",
+        "padding-block-start": 48,
+        "padding-block-end": 48,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0
+      }
+    },
     "hero_BzbVcH": {
       "type": "hero",
       "blocks": {
@@ -857,6 +963,7 @@
     "hero_jVaWmY",
     "section_4XGcHU",
     "product_list_fa6P9H",
+    "shop_by_color_MCKaHA",
     "hero_BzbVcH"
   ]
 }
