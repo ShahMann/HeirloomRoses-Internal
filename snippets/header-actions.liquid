@@ -234,6 +234,10 @@
       {{ cart_icon }}
     </a>
   {% endif %}
+  {% comment %} Location Detector Component {% endcomment %}
+  <div class="header-actions__action desktop-locator-popup">
+    {% render 'component-location-detector' %}
+  </div>
 </header-actions>
 
 {% stylesheet %}
