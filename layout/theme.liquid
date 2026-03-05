@@ -31,6 +31,7 @@
     {%- render 'import-map' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}
+    <script src="{{ 'zone-quick-add.js' | asset_url }}" defer></script>
     <script src="{{ 'dynamic-zone-collection.js' | asset_url }}" defer></script>
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
