@@ -135,6 +135,7 @@
       "block_order": [
         "announcement_bnK7Tp"
       ],
+      "disabled": true,
       "name": "Custom Announcement Bar",
       "settings": {
         "show_country_selector": true,
@@ -159,11 +160,68 @@
         "padding-inline-start": 20,
         "padding-inline-end": 20
       }
+    },
+    "custom_header_pe6ktQ": {
+      "type": "custom-header",
+      "blocks": {
+        "mega_menu_column_tkkRRC": {
+          "type": "mega_menu_column",
+          "settings": {
+            "heading": "COLLECTIONS",
+            "menu": "main-menu"
+          }
+        },
+        "mega_menu_column_QwNiwg": {
+          "type": "mega_menu_column",
+          "settings": {
+            "heading": "ALL FLOWERS",
+            "menu": "main-menu"
+          }
+        },
+        "mega_menu_column_NCQh8y": {
+          "type": "mega_menu_column",
+          "settings": {
+            "heading": "PLANT CARE",
+            "menu": "main-menu"
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_column_tkkRRC",
+        "mega_menu_column_QwNiwg",
+        "mega_menu_column_NCQh8y"
+      ],
+      "disabled": true,
+      "name": "Custom Header",
+      "settings": {
+        "mega_menu_trigger_label": "SHOP",
+        "mega_menu_columns_count": 4,
+        "mega_menu_panel_align": "page-width",
+        "mega_menu_image": "shopify://shop_images/Heairloom_logo_horizontal.png",
+        "mega_menu_image_position": "first",
+        "mega_menu_image_title": "",
+        "mega_menu_image_subtitle": "",
+        "mega_menu_image_link": "",
+        "mega_menu_bg_color": "#fdfcfc",
+        "show_flower_match_maker": true,
+        "flower_match_maker_url": "",
+        "flower_match_maker_text": "FLOWER MATCH MAKER",
+        "logo_text": "HEIRLOOM",
+        "show_logo_flower_icon": true,
+        "logo_height": 40,
+        "menu_learn": "main-menu",
+        "menu_about": "main-menu",
+        "show_search": true,
+        "section_width": "page-width",
+        "background_color": "#F9F0F0",
+        "text_color": "#6B1A2A"
+      }
     }
   },
   "order": [
     "header_announcements_9jGBFp",
     "header_section",
-    "custom_announcement_bar_Nk3hee"
+    "custom_announcement_bar_Nk3hee",
+    "custom_header_pe6ktQ"
   ]
 }

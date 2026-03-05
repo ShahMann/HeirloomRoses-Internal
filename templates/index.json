@@ -133,6 +133,7 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
+        "image_1": "shopify://shop_images/0fb4212cc944de554ca0c32f3b6dc2fbd18e4f9c_1.jpg",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
@@ -790,7 +791,7 @@
         "promotional_button_link": "",
         "show_promotional_icon": true,
         "products_limit": 7,
-        "cards_desktop": 5,
+        "cards_desktop": 6,
         "cards_mobile": "2",
         "card_spacing": 20,
         "background_color": "#ffffff",
@@ -805,7 +806,7 @@
           "type": "collection_card",
           "settings": {
             "collection": "new-introductions",
-            "image": "shopify://shop_images/24BC6-Gabriel_Oak.jpg",
+            "image": "shopify://shop_images/cc6baf0d673555f1712214b86a0577c6798aa909.jpg",
             "sub_heading": "Featured Collection",
             "heading": "New Arrivals",
             "button_text": "View all",
@@ -816,7 +817,7 @@
           "type": "collection_card",
           "settings": {
             "collection": "",
-            "image": "shopify://shop_images/Irene_May_copy_2.jpg",
+            "image": "shopify://shop_images/4a987057f801733b0640d0e3f3bb3d4bb327ff07.jpg",
             "sub_heading": "Featured Collection",
             "heading": "Best Sellers",
             "button_text": "View all",
@@ -827,7 +828,7 @@
           "type": "collection_card",
           "settings": {
             "collection": "",
-            "image": "shopify://shop_images/Rosalina.png",
+            "image": "shopify://shop_images/717b928b5384d0e9442894ad4de5ccd268874d64.jpg",
             "sub_heading": "Featured Collection",
             "heading": "Rose Bundles",
             "button_text": "View all",
@@ -838,7 +839,7 @@
           "type": "collection_card",
           "settings": {
             "collection": "",
-            "image": "shopify://shop_images/gabriel-oak-6_66155333-50fd-4422-8701-2cfdad79bbb9.jpg",
+            "image": "shopify://shop_images/44522ce2a32ae395f29d3e0150d2b7bb2bdbbf95.jpg",
             "sub_heading": "Featured Collection",
             "heading": "Soil Nutrition",
             "button_text": "View all",
@@ -882,7 +883,7 @@
         "color_item_KPd7tr": {
           "type": "color_item",
           "settings": {
-            "image": "shopify://shop_images/24BC6-Gabriel_Oak.jpg",
+            "image": "shopify://shop_images/7cc8a18788be553f7e5ef8a84b9077bfd73efb84.png",
             "link": "#",
             "title": "Purple"
           }
@@ -890,7 +891,7 @@
         "color_item_t4Ej4H": {
           "type": "color_item",
           "settings": {
-            "image": "shopify://shop_images/DIA007_Dianthus_Purple_Wedding-3_524f6edf-5047-44cf-9deb-ac6c100cdd36.jpg",
+            "image": "shopify://shop_images/b5624eeeabe2e2f59e2710db5eae6e49416d87b3.png",
             "link": "",
             "title": "Pink"
           }
@@ -988,7 +989,7 @@
         "text_Hd98by": {
           "type": "text",
           "settings": {
-            "text": "<p>Take the Quiz</p>",
+            "text": "<p>Find Your Perfect <br/>Match</p>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",
@@ -1013,7 +1014,7 @@
         "text_3e4cWm": {
           "type": "text",
           "settings": {
-            "text": "<p>Tell us your location, growing conditions, and flower preferences and we’ll do the rest. </p>",
+            "text": "<p>Answer 5 quick questions, and in 2 minutes you’ll get personalized flower recommendations for you.</p>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",
@@ -1039,7 +1040,7 @@
           "type": "button",
           "name": "t:names.button",
           "settings": {
-            "label": "Shop now",
+            "label": "Get Started",
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
             "style_class": "button",
@@ -1061,6 +1062,7 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
+        "image_1": "shopify://shop_images/44944c4c4ab577f140052f86a9d101a2fb106d06.jpg",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
