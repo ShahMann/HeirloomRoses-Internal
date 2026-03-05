@@ -26,11 +26,11 @@
                     <h2 class="zone-promotional-heading">{{ section.settings.promotional_heading }}</h2>
                   {% endif %}
                   {% if section.settings.promotional_text != blank %}
-                    <div class="zone-promotional-text">{{ section.settings.promotional_text }}</div>
+                    {% assign promo_text_with_placeholder = section.settings.promotional_text | replace: '{zone}', '<span class="zone-dynamic-number" data-zone-placeholder></span>' %}
+                    <div class="zone-promotional-text">{{ promo_text_with_placeholder }}</div>
                   {% endif %}
-                  {% comment %} {% if section.settings.promotional_button_text != blank and section.settings.promotional_button_link != blank %} {% endcomment %}
                   <a
-                    href="{{ section.settings.promotional_button_link }}"
+                    href="#"
                     class="zone-promotional-button button button-secondary"
                   >
                     {{ section.settings.promotional_button_text }}
@@ -57,12 +57,11 @@
                     <h2 class="zone-promotional-heading">{{ section.settings.promotional_heading }}</h2>
                   {% endif %}
                   {% if section.settings.promotional_text != blank %}
-                    <div class="zone-promotional-text">{{ section.settings.promotional_text }}</div>
+                    {% assign promo_text_with_placeholder = section.settings.promotional_text | replace: '{zone}', '<span class="zone-dynamic-number" data-zone-placeholder></span>' %}
+                    <div class="zone-promotional-text">{{ promo_text_with_placeholder }}</div>
                   {% endif %}
-                  {% if section.settings.promotional_button_text != blank
-                    and section.settings.promotional_button_link != blank
-                  %}
-                    <a href="{{ section.settings.promotional_button_link }}" class="zone-promotional-button">
+                  {% if section.settings.promotional_button_text != blank %}
+                    <a href="#" class="zone-promotional-button">
                       {{ section.settings.promotional_button_text }}
                     </a>
                   {% endif %}
@@ -87,8 +86,6 @@
           data-cards-desktop="{{ section.settings.cards_desktop }}"
           data-cards-mobile="{{ section.settings.cards_mobile }}"
           data-section-id="{{ section_id }}"
-          data-promotional-text="{{ section.settings.promotional_text }}"
-          data-use-dynamic-text="{{ section.settings.use_dynamic_zone_text }}"
         >
         </dynamic-zone-collection>
       </div>
@@ -184,77 +181,207 @@
     overflow: visible;
   }
 
-  .zone-products-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 cards desktop */
-    gap: {{ section.settings.card_spacing }}px;
+  /* Use theme product-grid; set gap from section settings */
+  .zone-products-section .product-grid {
+    --product-grid-gap: {{ section.settings.card_spacing }}px;
   }
 
-  .grid-product__image-wrap {
+  @media screen and (min-width: 750px) {
+    .zone-products-section .product-grid--zone-collection.product-grid--grid {
+      display: grid;
+      grid-template-columns: repeat(var(--zone-cards-desktop, 4), 1fr);
+    }
+  }
+
+  .zone-products-section .product-grid .product-media {
+    aspect-ratio: 1;
+  }
+
+  .zone-products-section .product-grid .product-media__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Zone product card: old-style layout (title red, price black, wishlist icon) */
+  .zone-products-section .grid-product__image-wrap {
     width: 100%;
     aspect-ratio: 1;
     overflow: hidden;
     border-radius: 8px;
+    position: relative;
   }
 
-  .grid__image-contain {
+  .zone-products-section .grid__image-contain {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
   }
 
-  .grid-product:hover .grid__image-contain {
+  .zone-products-section .grid-product:hover .grid__image-contain {
     transform: scale(1.05);
   }
 
-  .grid-item__meta {
+  .zone-products-section .grid-item__meta {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 8px;
-  }
-
-  .grid-product__title {
-    font-family: "SeasonSans-Regular", sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 120%;
-    letter-spacing: 3%;
-    color: var(--color-red);
-  }
-
-  .grid-product__price {
-    justify-content: center;
-    font-family: "SeasonSans-Medium", sans-serif;
-    font-weight: 550;
-    font-size: 10px;
-    line-height: 140%;
-    letter-spacing: 12%;
-    color: var(--color-brown);
-  }
-  
-  .grid-item__meta-main {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 8px 0 0;
     gap: 8px;
   }
 
-  .grid-item__meta-secondary .wishlist-floating-btn button {
-    border: none;
-    background: transparent;
-  }
-
-  .grid-item__meta-secondary .wishlist-floating-btn svg.icon-block__media {
-    width: 13px;
+  .zone-products-section .grid-product__title {
+    font-family: var(--font-heading-family), sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.2;
+    letter-spacing: 0.03em;
     color: var(--color-red);
   }
 
+  .zone-products-section .grid-product__price {
+    font-family: var(--font-body-family), sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 1.4;
+    color: #000;
+  }
+
+  .zone-products-section .grid-product__price--original {
+    text-decoration: line-through;
+    margin-right: 4px;
+    color: #666;
+  }
+
+  .zone-products-section .grid-item__meta-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 4px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .zone-products-section .grid-item__meta-secondary {
+    flex-shrink: 0;
+  }
+
+  .zone-products-section .grid-item__meta-secondary .wishlist-floating-btn button {
+    border: none;
+    background: transparent;
+    padding: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .zone-products-section .grid-item__meta-secondary .wishlist-floating-btn svg.icon-block__media {
+    width: 18px;
+    height: 18px;
+    color: #6B1A2A;
+    fill: currentColor;
+  }
+
+  .zone-products-section .zone-grid-product .grid-item__link {
+    text-decoration: none;
+    display: block;
+  }
+
+  .zone-products-section .zone-grid-product .grid-item__content {
+    border-radius: 0 0 8px 8px;
+    padding: 8px 8px 12px;
+  }
+
+  .zone-products-section .grid-product__tags,
+  .zone-products-section .grid-product__tag {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 1;
+  }
+
+  .zone-products-section .grid-product__tag--sold-out,
+  .zone-products-section .grid-product__tag--sale {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+
+  .zone-products-section .grid-product__tag--sold-out {
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+  }
+
+  .zone-products-section .grid-product__tag--sale {
+    background: #6B1A2A;
+    color: #fff;
+  }
+
+  /* Quick add overlay: show on hover, centered pill button */
+  .zone-products-section .zone-card-gallery {
+    position: relative;
+  }
+
+  .zone-products-section .zone-quick-add-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .zone-products-section .product-grid__item:hover .zone-quick-add-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .zone-products-section .zone-quick-add-btn {
+    pointer-events: auto;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 9999px;
+    background: #fff;
+    color: #6B1A2A;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .zone-products-section .zone-quick-add-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .zone-products-section .zone-quick-add-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.9;
+  }
+
+  @media (max-width: 749px) {
+    .zone-products-section .zone-quick-add-overlay {
+      opacity: 1;
+      pointer-events: auto;
+      background: rgba(255, 255, 255, 0.85);
+    }
+    .zone-products-section .zone-quick-add-btn {
+      padding: 10px 20px;
+      font-size: 13px;
+    }
+  }
 
   /* MOBILE */
   @media (max-width: 749px) {
-
     .zone-collection-layout {
       flex-direction: column;
     }
@@ -268,20 +395,16 @@
       border-radius: 24px;
     }
 
-    /* 2 columns mobile */
-    .zone-products-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .grid-product__title {
-      font-size: 14px;
-    }
     .zone-promotional-heading {
       font-size: 36px;
     }
     .zone-promotional-text {
       font-size: 12px;
       letter-spacing: 4%;
+    }
+
+    .zone-products-section .grid-product__title {
+      font-size: 14px;
     }
   }
 {% endstyle %}
@@ -329,25 +452,14 @@
       "type": "richtext",
       "id": "promotional_text",
       "label": "Description Text",
-      "default": "<p>Based on your location in Zone 7, these could be great for your garden.</p>"
-    },
-    {
-      "type": "checkbox",
-      "id": "use_dynamic_zone_text",
-      "label": "Use dynamic zone in text",
-      "default": true,
-      "info": "Replace {zone} in text with actual zone number"
+      "default": "<p>Based on your location in Zone {zone}, these could be great for your garden.</p>",
+      "info": "Use {zone} where the zone number should appear (e.g. Zone 6). It updates automatically from the visitor's saved zone."
     },
     {
       "type": "text",
       "id": "promotional_button_text",
       "label": "Button Text",
       "default": "VIEW ALL"
-    },
-    {
-      "type": "url",
-      "id": "promotional_button_link",
-      "label": "Button Link"
     },
     {
       "type": "checkbox",

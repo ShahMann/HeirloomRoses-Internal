@@ -208,37 +208,92 @@
           </div>
         {% endif %}
 
-        {% comment %} Cart Icon (Link to Cart Page) {% endcomment %}
+        {% comment %} Cart Icon – respects settings.cart_type (drawer / page) like main header {% endcomment %}
         {% if section.settings.show_cart %}
           <script
             type="module"
             src="{{ 'cart-icon.js' | asset_url }}"
             fetchpriority="low"
           ></script>
-          <a
-            href="{{ routes.cart_url }}"
-            class="custom-announcement-bar__action-button custom-announcement-bar__cart-link"
-            aria-label="{{ 'accessibility.cart' | t }}"
-            aria-describedby="cart-bubble-text-{{ section.id }}"
-          >
-            <cart-icon
-              class="custom-announcement-bar__cart-icon{% unless cart == empty %} custom-announcement-bar__cart-icon--has-cart{% endunless %}"
-              data-testid="cart-icon"
+          {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
+            <script
+              src="{{ 'cart-drawer.js' | asset_url }}"
+              type="module"
+              fetchpriority="low"
+            ></script>
+            <button
+              type="button"
+              class="custom-announcement-bar__action-button custom-announcement-bar__cart-link custom-announcement-bar__cart-trigger button-unstyled"
+              aria-label="{{ 'accessibility.cart' | t }}"
+              aria-describedby="cart-bubble-text-{{ section.id }}"
+              aria-haspopup="dialog"
+              data-announcement-bar-cart-trigger
+              data-cart-url="{{ routes.cart_url }}"
             >
-              <span class="custom-announcement-bar__action-text mobile:hidden">
-                {{ 'content.cart_title' | t }}
-              </span>
-              <span class="svg-wrapper" aria-hidden="true">
-                {{ 'icon-cart.svg' | inline_asset_content }}
-              </span>
-              {% render 'cart-bubble', limit: 100, live_region: true %}
-            </cart-icon>
-          </a>
+              <cart-icon
+                class="custom-announcement-bar__cart-icon{% unless cart == empty %} custom-announcement-bar__cart-icon--has-cart{% endunless %}"
+                data-testid="cart-icon"
+              >
+                <span class="svg-wrapper" aria-hidden="true">
+                  {{ 'icon-cart.svg' | inline_asset_content }}
+                </span>
+                <span class="custom-announcement-bar__action-text mobile:hidden">
+                  {{ 'content.cart_title_custom' | t }}
+                </span>
+                {% render 'cart-bubble', limit: 100, live_region: true %}
+              </cart-icon>
+            </button>
+          {% else %}
+            <a
+              href="{{ routes.cart_url }}"
+              class="custom-announcement-bar__action-button custom-announcement-bar__cart-link"
+              aria-label="{{ 'accessibility.cart' | t }}"
+              aria-describedby="cart-bubble-text-{{ section.id }}"
+            >
+              <cart-icon
+                class="custom-announcement-bar__cart-icon{% unless cart == empty %} custom-announcement-bar__cart-icon--has-cart{% endunless %}"
+                data-testid="cart-icon"
+              >
+                <span class="custom-announcement-bar__action-text mobile:hidden">
+                  {{ 'content.cart_title' | t }}
+                </span>
+                <span class="svg-wrapper" aria-hidden="true">
+                  {{ 'icon-cart.svg' | inline_asset_content }}
+                </span>
+                {% render 'cart-bubble', limit: 100, live_region: true %}
+              </cart-icon>
+            </a>
+          {% endif %}
         {% endif %}
       </div>
     </div>
   </div>
 </aside>
+
+{% if section.settings.show_cart and settings.cart_type == 'drawer' and template.name != 'cart' %}
+  <script>
+    (function () {
+      function handleAnnouncementBarCartClick(e) {
+        var trigger = e.target.closest('[data-announcement-bar-cart-trigger]');
+        if (!trigger) return;
+        var drawer = document.querySelector('cart-drawer-component');
+        if (drawer && typeof drawer.open === 'function') {
+          drawer.open();
+        } else {
+          var url = trigger.getAttribute('data-cart-url') || '/cart';
+          window.location.href = url;
+        }
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+          document.addEventListener('click', handleAnnouncementBarCartClick);
+        });
+      } else {
+        document.addEventListener('click', handleAnnouncementBarCartClick);
+      }
+    })();
+  </script>
+{% endif %}
 
 {% stylesheet %}
   .custom-announcement-bar {

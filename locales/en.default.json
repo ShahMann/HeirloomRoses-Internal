@@ -153,6 +153,7 @@
     }
   },
   "content": {
+    "wishlist": "Wishlist",
     "cancel": "Cancel",
     "discount": "Discount",
     "account_title": "Account",
@@ -163,6 +164,7 @@
     "blog_details_separator": "|",
     "cart_estimated_total": "Estimated total",
     "cart_title": "Cart",
+    "cart_title_custom": "Bag",
     "cart_subtotal": "Subtotal",
     "cart_total": "Cart total",
     "checkout": "Check out",

@@ -9,8 +9,6 @@ class DynamicZoneCollection extends HTMLElement {
 		this.sectionTitle = this.dataset.sectionTitle || "Recommended for Your Zone {zone}";
 		this.shopAllText = this.dataset.shopAllText || "Shop All";
 		this.sectionId = this.dataset.sectionId || "";
-		this.promotionalText = this.dataset.promotionalText || "";
-		this.useDynamicText = this.dataset.useDynamicText === "true";
 		this.currentZone = null;
 		this.currentIndex = 0;
 		this.isTransitioning = false;
@@ -25,6 +23,7 @@ class DynamicZoneCollection extends HTMLElement {
 
 		this.setupStorageListener();
 		this.setupCarouselListeners();
+		this.setupQuickAddListeners();
 
 		document.addEventListener("zoneUpdated", (e) => {
 			const customEvent = e;
@@ -72,13 +71,14 @@ class DynamicZoneCollection extends HTMLElement {
 	}
 
 	render() {
+		const gridClass = "product-grid product-grid--grid product-grid--zone-collection product-grid--" + this.sectionId;
 		this.innerHTML = `
       <div class="zone-products-scroll-container">
-        <div class="zone-products-grid">
-          <div class="loading-products">
+        <ul class="${gridClass}" data-testid="product-grid" product-grid-view="default" ref="grid" role="list" data-product-card-size="medium" style="--mobile-columns: ${this.cardsMobile}; --zone-cards-desktop: ${this.cardsDesktop};">
+          <li class="loading-products" style="list-style: none; grid-column: 1 / -1;">
             <p>Loading products...</p>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     `;
 	}
@@ -147,9 +147,9 @@ class DynamicZoneCollection extends HTMLElement {
 			const collectionHandle = `hardiness-zone-${zone}`;
 			const collectionUrl = `/collections/${collectionHandle}/products.json?limit=${this.productsLimit}`;
 
-			const productsGrid = this.querySelector(`.zone-products-grid`);
+		const productsGrid = this.querySelector(`.product-grid`);
 			if (productsGrid) {
-				productsGrid.innerHTML = '<div class="loading-products"><p>Loading products...</p></div>';
+			productsGrid.innerHTML = '<li class="loading-products" style="list-style: none; grid-column: 1 / -1;"><p>Loading products...</p></li>';
 			}
 
 			const response = await fetch(collectionUrl);
@@ -175,8 +175,7 @@ class DynamicZoneCollection extends HTMLElement {
   displayProducts(products, zone, collectionHandle) {
 		const titleEl = this.querySelector(`.zone-collection-title`);
 		const shopAllLink = this.querySelector(`.zone-shop-all-link`);
-		const productsGrid = this.querySelector(`.zone-products-grid`);
-		const promotionalTextEl = this.closest('.zone-collection-wrapper')?.querySelector(`.zone-promotional-text`);
+		const productsGrid = this.querySelector(`.product-grid`);
 
 		if (titleEl) {
 			const safeTitle = this.sectionTitle.replace("Zone {zone}", `<a href="#" class="zone-link" data-zone="${zone}">Zone ${zone}</a>`);
@@ -197,35 +196,26 @@ class DynamicZoneCollection extends HTMLElement {
 			}
 		}
 
-		// Update promotional text with zone number if dynamic text is enabled
-		if (promotionalTextEl && this.useDynamicText && this.promotionalText) {
-			// Check if current content has the placeholder
-			if (promotionalTextEl.innerHTML.includes('{zone}')) {
-				promotionalTextEl.innerHTML = promotionalTextEl.innerHTML.replace(/{zone}/g, zone);
-			} else if (promotionalTextEl.textContent && promotionalTextEl.textContent.includes('{zone}')) {
-				// Update plain text content
-				promotionalTextEl.textContent = promotionalTextEl.textContent.replace(/{zone}/g, zone);
-			} else if (this.promotionalText.includes('{zone}')) {
-				// Update from original template
-				const updatedText = this.promotionalText.replace(/{zone}/g, zone);
-				// Check if it's HTML or plain text
-				if (updatedText.includes('<')) {
-					promotionalTextEl.innerHTML = updatedText;
-				} else {
-					promotionalTextEl.textContent = updatedText;
+		// Update zone number in promotional text
+		const wrapper = this.closest(".zone-collection-wrapper");
+		const promotionalTextEl = wrapper?.querySelector(".zone-promotional-text");
+		if (promotionalTextEl) {
+			const zonePlaceholders = promotionalTextEl.querySelectorAll(".zone-dynamic-number");
+			if (zonePlaceholders.length) {
+				zonePlaceholders.forEach((el) => { el.textContent = zone; });
+			} else {
+				// Fallback: replace any "Zone N" in content (e.g. old "Zone 7" when no {zone} placeholder)
+				const zoneNumberRegex = /Zone\s*\d+/i;
+				if (zoneNumberRegex.test(promotionalTextEl.innerHTML)) {
+					promotionalTextEl.innerHTML = promotionalTextEl.innerHTML.replace(zoneNumberRegex, "Zone " + zone);
 				}
 			}
 		}
 
-		// Update promotional button link if it points to collection
-		const promotionalButton = this.closest('.zone-collection-wrapper')?.querySelector(`.zone-promotional-button`);
+		// Update VIEW ALL button link to zone collection (dynamic)
+		const promotionalButton = wrapper?.querySelector(".zone-promotional-button");
 		if (promotionalButton && promotionalButton instanceof HTMLAnchorElement) {
-			if (promotionalButton.href && promotionalButton.href.includes('/collections/')) {
-				// If button link contains collection placeholder, update it
-				if (promotionalButton.href.includes('{collection}')) {
-					promotionalButton.href = promotionalButton.href.replace('{collection}', collectionHandle);
-				}
-			}
+			promotionalButton.href = `/collections/${collectionHandle}`;
 		}
 
 		if (shopAllLink) {
@@ -233,13 +223,11 @@ class DynamicZoneCollection extends HTMLElement {
 			shopAllLink.classList.remove("hide");
 		}
 		if (productsGrid) {
-			const availableProducts = products.filter((product) => 
-				product.variants.some((variant) => variant.available)
+			const availableProducts = products.filter((product) =>
+				product.variants.some((v) => v.available)
 			);
-			
 			const productsToDisplay = availableProducts.slice(0, this.productsLimit);
-
-			const productsHTML = productsToDisplay.map((product) => this.createProductCard(product)).join("");
+			const productsHTML = productsToDisplay.map((product, index) => this.createProductCard(product, index)).join("");
 			productsGrid.innerHTML = productsHTML;
 		}
 
@@ -252,104 +240,55 @@ class DynamicZoneCollection extends HTMLElement {
 		}, 0);
 	}
 
-	createProductCard(product) {
-		const image = product.images[0] || "";
+	createProductCard(product, index) {
+		const image = product.images[0] || null;
 		const variant = product.variants[0];
-		const price = variant.price ? parseFloat(variant.price).toFixed(2) : "0.00";
-		const comparePrice = variant.compare_at_price ? parseFloat(variant.compare_at_price).toFixed(2) : null;
+		const firstAvailableVariant = product.variants.find((v) => v.available) || product.variants[0];
+		const priceNum = variant && variant.price != null ? parseFloat(variant.price) : 0;
+		const compareNum = variant && variant.compare_at_price != null ? parseFloat(variant.compare_at_price) : null;
+		const price = priceNum.toFixed(2);
+		const comparePrice = compareNum != null ? compareNum.toFixed(2) : null;
+		const onSale = comparePrice && compareNum > priceNum;
+		const isAvailable = product.variants.some((v) => v.available);
+		const productUrl = variant && variant.id ? `/products/${product.handle}?variant=${variant.id}` : `/products/${product.handle}`;
+		const title = product.title.replace(/"/g, "&quot;");
+		const imageSrc = image ? (typeof image === "string" ? image : image.src || "") : "";
+		const imageAlt = (image && typeof image === "object" && image.alt) ? image.alt : product.title;
+		const variantId = firstAvailableVariant && firstAvailableVariant.id ? firstAvailableVariant.id : "";
 
-		const onSale = comparePrice && variant.compare_at_price > variant.price;
-		const productTags = product.tags ? product.tags.join(",") : "";
-		const hasCustomLabel = product.metafields && product.metafields.theme && product.metafields.theme.label;
-		const customLabels = hasCustomLabel ? product.metafields.theme.label.value : "";
-
-		const isAvailable = product.variants.some((variant) => variant.available);
-
-		const secondImage = product.images[1] || null;
-
-		const hasMultipleVariants = product.variants.length > 1;
-
+		const wishlistHeartSvg = '<svg class="icon-block__media icon-default" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><path d="M10 5.2393L8.5149 3.77392C6.79996 2.08174 4.01945 2.08174 2.30451 3.77392C0.589562 5.4661 0.589563 8.2097 2.30451 9.90188L10 17.4952L17.6955 9.90188C19.4104 8.2097 19.4104 5.4661 17.6955 3.77392C15.9805 2.08174 13.2 2.08174 11.4851 3.77392L10 5.2393ZM10.765 3.06343C12.8777 0.978857 16.3029 0.978856 18.4155 3.06343C20.5282 5.148 20.5282 8.52779 18.4155 10.6124L10.72 18.2057C10.3224 18.5981 9.67763 18.5981 9.27996 18.2057L1.58446 10.6124C-0.528154 8.52779 -0.528154 5.14801 1.58446 3.06343C3.69708 0.978859 7.12233 0.978858 9.23495 3.06343L10 3.81832L10.765 3.06343Z" fill-rule="evenodd"></path></svg>';
 		return `
-      <div class="grid-item grid-product">
-        <div class="product-grid-item" data-product-handle="${product.handle}" data-product-id="${product.id}">
-          <div class="grid-item__content">
-            <a href="/products/${product.handle}" class="grid-item__link">
-              <div class="grid-product__image-wrap">
-                <div class="grid-product__tags">
-                  ${
-						hasCustomLabel
-							? `
-                    <div class="grid-product__tag grid-product__tag--custom">
-                      ${customLabels}
-                    </div>
-                  `
-							: ""
-					}
-                  ${
-						!isAvailable
-							? `
-                    <div class="grid-product__tag grid-product__tag--sold-out">
-                      Sold Out
-                    </div>
-                  `
-							: ""
-					}
-                  ${
-						onSale && isAvailable
-							? `
-                    <div class="grid-product__tag grid-product__tag--sale">
-                      Sale
-                    </div>
-                  `
-							: ""
-					}
-                </div>
-                ${
-					image
-						? `
-                  <div class="grid__image-ratio grid__image-ratio--square">
-                    <img 
-                      src="${image.src}"
-                      alt="${image.alt || product.title}"
-                      class="grid__image-contain"
-                      loading="lazy"
-                    />
-                  </div>
-                `
-						: ""
-				}
-              </div>
-              <div class="grid-item__meta">
-                <div class="grid-item__meta-main">
-                  <div class="grid-product__title">${product.title.replace(/"/g, "")}</div>
-				  <div class="grid-product__price">
-                    ${
-						onSale
-							? `
-                      <span class="grid-product__price--original">$${comparePrice}</span>
-                    `
-							: ""
-					}
-                    <span class="grid-product__price--current">$${price}</span>
-                  </div>
-                </div>
-                <div class="grid-item__meta-secondary">
-                  
-                  <div class="wishlist-floating-btn wishlist-collection-button">
-                    <button type="button" aria-label="Add to Wishlist" class="wkh-button wkh-align-center wkh-align-content-center" data-product-handle="${
-						product.handle
-					}">
-                      <svg class="icon-block__media icon-block-AVTRlK2k5cnBFcmtEe__icon_WRcptN icon-default" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20">
-<path d="M10 5.2393L8.5149 3.77392C6.79996 2.08174 4.01945 2.08174 2.30451 3.77392C0.589562 5.4661 0.589563 8.2097 2.30451 9.90188L10 17.4952L17.6955 9.90188C19.4104 8.2097 19.4104 5.4661 17.6955 3.77392C15.9805 2.08174 13.2 2.08174 11.4851 3.77392L10 5.2393ZM10.765 3.06343C12.8777 0.978857 16.3029 0.978856 18.4155 3.06343C20.5282 5.148 20.5282 8.52779 18.4155 10.6124L10.72 18.2057C10.3224 18.5981 9.67763 18.5981 9.27996 18.2057L1.58446 10.6124C-0.528154 8.52779 -0.528154 5.14801 1.58446 3.06343C3.69708 0.978859 7.12233 0.978858 9.23495 3.06343L10 3.81832L10.765 3.06343Z" fill-rule="evenodd"></path></svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </a>
+<li class="product-grid__item product-grid__item--${index}" data-product-id="${product.id}" ref="cards[]">
+  <div class="grid-item grid-product zone-grid-product">
+    <div class="product-grid-item" data-product-handle="${product.handle}" data-product-id="${product.id}">
+      <div class="grid-item__content">
+        <a href="${productUrl}" class="grid-item__link">
+          <div class="grid-product__image-wrap zone-card-gallery">
+            ${imageSrc ? `<div class="grid__image-ratio grid__image-ratio--square"><img src="${imageSrc}" alt="${imageAlt.replace(/"/g, "&quot;")}" class="grid__image-contain" loading="lazy" /></div>` : ""}
+            ${!isAvailable ? '<div class="grid-product__tag grid-product__tag--sold-out">Sold Out</div>' : ""}
+            ${onSale && isAvailable ? '<div class="grid-product__tag grid-product__tag--sale">Sale</div>' : ""}
+            ${isAvailable && variantId ? `<div class="zone-quick-add-overlay" aria-hidden="true"><button type="button" class="zone-quick-add-btn" data-variant-id="${variantId}" data-product-title="${title}">Add to bag</button></div>` : ""}
           </div>
-        </div>
+          <div class="grid-item__meta">
+            <div class="grid-item__meta-main">
+              <div class="grid-product__title">${product.title.replace(/"/g, "&quot;")}</div>
+              <div class="grid-product__price">
+                ${onSale && isAvailable ? `<span class="grid-product__price--original">$${comparePrice}</span> ` : ""}
+                <span class="grid-product__price--current">$${price}</span>
+              </div>
+            </div>
+            <div class="grid-item__meta-secondary">
+              <div class="wishlist-floating-btn wishlist-collection-button">
+                <button type="button" aria-label="Add to Wishlist" class="wkh-button wkh-align-center wkh-align-content-center" data-product-handle="${product.handle}">${wishlistHeartSvg}</button>
+              </div>
+            </div>
+          </div>
+        </a>
       </div>
-    `;
+    </div>
+  </div>
+</li>
+    `.trim();
 	}
 
 	formatMoney(cents) {
@@ -360,7 +299,7 @@ class DynamicZoneCollection extends HTMLElement {
 	setupCarouselListeners() {
 		const prevButton = this.querySelector(`.zone-collection-prev`);
 		const nextButton = this.querySelector(`.zone-collection-next`);
-		const track = this.querySelector(`.zone-products-grid`);
+		const track = this.querySelector(`.product-grid`);
 
 		if (prevButton) {
 			prevButton.addEventListener("click", () => this.prev());
@@ -381,14 +320,63 @@ class DynamicZoneCollection extends HTMLElement {
 		}
 	}
 
+	setupQuickAddListeners() {
+		this.addEventListener("click", (e) => {
+			const btn = e.target.closest(".zone-quick-add-btn");
+			if (!btn || btn.disabled) return;
+			e.preventDefault();
+			e.stopPropagation();
+			const variantId = btn.getAttribute("data-variant-id");
+			if (!variantId) return;
+			this.handleQuickAdd(btn, variantId);
+		});
+	}
+
+	async handleQuickAdd(btn, variantId) {
+		const label = btn.textContent;
+		btn.disabled = true;
+		btn.textContent = "Adding…";
+		const ZoneQuickAdd = typeof window !== "undefined" && window.ZoneQuickAdd;
+		if (!ZoneQuickAdd || typeof ZoneQuickAdd.addToCart !== "function") {
+			btn.textContent = "Error";
+			setTimeout(() => {
+				btn.textContent = label;
+				btn.disabled = false;
+			}, 2000);
+			return;
+		}
+		try {
+			const result = await ZoneQuickAdd.addToCart(variantId, 1);
+			if (result.success) {
+				btn.textContent = "Added";
+				setTimeout(() => {
+					btn.textContent = label;
+					btn.disabled = false;
+				}, 1500);
+			} else {
+				btn.textContent = result.error || "Error";
+				setTimeout(() => {
+					btn.textContent = label;
+					btn.disabled = false;
+				}, 2000);
+			}
+		} catch (err) {
+			btn.textContent = "Error";
+			setTimeout(() => {
+				btn.textContent = label;
+				btn.disabled = false;
+			}, 2000);
+		}
+	}
+
 	getVisibleCards() {
 		return window.innerWidth <= 749 ? this.cardsMobile : this.cardsDesktop;
 	}
 
 	getMaxIndex() {
-		const productsGrid = this.querySelector(`.zone-products-grid`);
+		const productsGrid = this.querySelector(`.product-grid`);
 		if (!productsGrid) return 0;
-		const cards = productsGrid.querySelectorAll(".grid-item");
+		const cards = productsGrid.querySelectorAll(".product-grid__item");
 		return Math.max(0, cards.length - this.getVisibleCards());
 	}
 
@@ -405,10 +393,10 @@ class DynamicZoneCollection extends HTMLElement {
 	}
 
 	updateCarousel() {
-		const productsGrid = this.querySelector(`.zone-products-grid`);
+		const productsGrid = this.querySelector(`.product-grid`);
 		if (!productsGrid) return;
 
-		const cards = productsGrid.querySelectorAll(".grid-item");
+		const cards = productsGrid.querySelectorAll(".product-grid__item");
 		if (cards.length === 0) return;
 
 		this.isTransitioning = true;
@@ -466,7 +454,7 @@ class DynamicZoneCollection extends HTMLElement {
 	handleMouseDown(e) {
 		this.startX = e.clientX;
 		this.isDragging = true;
-		const track = this.querySelector(`.zone-products-grid`);
+		const track = this.querySelector(`.product-grid`);
 		if (track) {
 			track.style.cursor = "grabbing";
 		}
@@ -481,7 +469,7 @@ class DynamicZoneCollection extends HTMLElement {
 	handleMouseUp() {
 		if (!this.isDragging) return;
 		this.isDragging = false;
-		const track = this.querySelector(`.zone-products-grid`);
+		const track = this.querySelector(`.product-grid`);
 		if (track) {
 			track.style.cursor = "grab";
 		}
@@ -499,13 +487,9 @@ class DynamicZoneCollection extends HTMLElement {
 	}
 
 	showError(message) {
-		const productsGrid = this.querySelector(`.zone-products-grid`);
+		const productsGrid = this.querySelector(`.product-grid`);
 		if (productsGrid) {
-			productsGrid.innerHTML = `
-        <div class="error-message">
-          <p>${message}</p>
-        </div>
-      `;
+			productsGrid.innerHTML = `<li class="error-message" style="list-style: none; grid-column: 1 / -1;"><p>${message}</p></li>`;
 		}
 	}
 
