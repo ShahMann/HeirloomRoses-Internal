@@ -87,8 +87,8 @@
         "show_search": true,
         "search_position": "right",
         "search_row": "top",
-        "show_country": false,
-        "country_selector_style": false,
+        "show_country": true,
+        "country_selector_style": true,
         "show_language": true,
         "localization_font": "heading",
         "localization_font_size": "0.875rem",
@@ -114,10 +114,56 @@
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "default"
       }
+    },
+    "custom_announcement_bar_Nk3hee": {
+      "type": "custom-announcement-bar",
+      "blocks": {
+        "announcement_bnK7Tp": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Free Shipping on Orders Over $125",
+            "link": "",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "announcement_bnK7Tp"
+      ],
+      "name": "Custom Announcement Bar",
+      "settings": {
+        "show_country_selector": true,
+        "show_country": true,
+        "country_selector_style": true,
+        "show_language": true,
+        "localization_font": "heading",
+        "localization_font_size": "1rem",
+        "localization_position": "right",
+        "announcement_speed": 5,
+        "show_zone_indicator": true,
+        "show_account": true,
+        "customer_account_menu": "customer-account-main-menu",
+        "show_wishlist": true,
+        "wishlist_url": "",
+        "show_cart": true,
+        "section_width": "page-width",
+        "color_scheme": "",
+        "divider_width": 0,
+        "padding-block-start": 12,
+        "padding-block-end": 12,
+        "padding-inline-start": 20,
+        "padding-inline-end": 20
+      }
     }
   },
   "order": [
     "header_announcements_9jGBFp",
-    "header_section"
+    "header_section",
+    "custom_announcement_bar_Nk3hee"
   ]
 }

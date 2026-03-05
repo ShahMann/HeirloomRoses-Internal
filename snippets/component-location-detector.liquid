@@ -1,0 +1,85 @@
+{%- capture locator_button -%}
+    <div class="pdp-text hide">
+        <p><span class="check_zone">Check your hardiness zone</span><span onclick="event.stopImmediatePropagation(); return false;"> to see if I’m right for your garden.</span>
+    </p>
+    </div>
+    <div class="location_detector-wrapper">
+        <div class="location-icon-wrapper hide" role="region" aria-label="location">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+            </svg>
+
+        </div>
+        <div class="setup_zone hide">
+            <p>Set My Zone</p>
+        </div>
+        <div class="location-content hide">
+            <div class="location-zone" >
+                <p class="label">{{ 'actions.zone' | t }}: </p>
+                <span class="location"></span>
+                {% render 'icon', name: 'chevron-right' %}
+            </div>
+            {% comment %} <div class="location-zip-code">
+              <p class="label">{{ 'actions.zip_content' | t }}: </p>
+                <span class="location-zip"></span>
+            </div> {% endcomment %}
+        </div>
+    </div>
+{%- endcapture -%}
+
+{%- capture content -%}
+    <div class="location_grow_zone_content">
+        <div class="zone-img-box">
+            <img class="zone-img" loading="lazy" alt="Grow Zone Map of the United States" src="{{ 'us_locations.svg' | asset_url  }}" height="200" width="200" />
+        </div>
+    
+        <div class="zone-content-box">
+            <div class="location-info">
+                <h2 class="section-header__title h2">Find Your Hardiness Zone</h2>
+                <p>Your hardiness zone is key to selecting plants that can survive the winters in your area. Enter your zip code so we can guide you to roses and plants that will flourish in your garden.</p>
+            </div>
+            <locator-form defer-hydration>
+                <div class="zipcode-info">
+                    <form action="" method="post" class="zipcode-form">
+                        <div class="zipcode-input-wrapper">
+                          <div class="zipcode-input">
+                            <label for="zip" class="text-xl font-bold">What's your ZIP code?</label>
+                            <input type="text" class="hardiness-zip-code" data-1p-ignore="true" placeholder="Type your ZIP code here..."  name="zip" title="ZIP Code" minlength="4" maxlength="6" inputmode="numeric"  required="">
+                            <div class="checkmark-icon hide"></div>  
+                          </div>
+
+                            <div class="d-flex zone-msg">
+                                <p class="success-message-hardiness-zone hide"></p>
+                                <p class="success-message-zip-code hide"></p>
+                            </div>
+                            <a href="#" class="zone-collection-link hide">Shop Roses For Your Zone</a>
+                            <p class='error-message em hide'>We didn't found your location with our existing records. please try the US based location</p>
+                        </div>
+                        <div class="zipcode-btns-wrapper">
+                        <button class="btn btn-cl" type="button" aria-label="Use current location">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="20px" viewBox="0 0 100 100" aria-hidden="true" role="img" class="iconify iconify--gis" preserveAspectRatio="xMidYMid meet"><path d="M86.49.088a2.386 2.386 0 0 0-.882.463L11.34 62.374a2.386 2.386 0 0 0 1.62 4.218l37.957-1.478l17.7 33.612a2.386 2.386 0 0 0 4.462-.707l16.406-95.23a2.386 2.386 0 0 0-2.994-2.7zm-2.808 8.277L69.567 90.29L54.439 61.558a2.386 2.386 0 0 0-2.203-1.272L19.79 61.551z" fill="#3e5b58" fill-rule="evenodd"/></svg>
+                            Use current location</button>
+                        <button class="btn submit-btn" type="submit" aria-label="Save my location">Save my location</button>
+                        </div>
+                    </form>
+                </div>
+            </locator-form>
+
+            <script type="module">
+                import 'components/locator-form'
+            </script>
+        </div> 
+    </div>
+{%- endcapture -%}
+
+<location-and-growing-zone>
+  <div class="location_and_grow_zone">
+    {% render 'tool-tip-trigger',
+      button: locator_button,
+      context: 'LocationDetector',
+      wrapper_class: 'location-add-grow-zone',
+      content: content
+    %}
+  </div>
+</location-and-growing-zone>
