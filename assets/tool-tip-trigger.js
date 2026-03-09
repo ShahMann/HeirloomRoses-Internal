@@ -64,13 +64,19 @@ class ToolTipTrigger extends HTMLElement {
           this.el.classList.contains("location-zone-popup")
         ) {
           console.log("Opening tooltip from URL hash...");
+          this.el.classList.add("is-open");
           this.dispatchEvent(toolTipOpen);
         }
       }, 100); // Delay can be adjusted as needed
     });
     this.el.addEventListener("click", (e) => {
       e.stopPropagation();
+      this.el.classList.add("is-open");
       this.dispatchEvent(toolTipOpen);
+    });
+
+    document.addEventListener("tooltip:close", () => {
+      this.el.classList.remove("is-open");
     });
   }
 }

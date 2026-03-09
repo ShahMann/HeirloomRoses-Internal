@@ -79,7 +79,7 @@ class LocatorForm extends HTMLElement {
                 });
             }
             this.zipCodeMsg.forEach(msg => {
-                msg.innerText = "Zip Code: " + this.session.zip;
+                msg.innerText = this.session.zip;
                 msg.classList.remove("hide")
             });
             this.errorMessage.forEach(msg => msg.classList.add('hide'));
@@ -431,7 +431,7 @@ async function getUserZipCodeAndZone() {
 
                 const zipCodeMsg = document.querySelectorAll(".success-message-zip-code");
                 zipCodeMsg.forEach(msg => {
-                    msg.innerText = "Zip Code: " + zipCode;
+                    msg.innerText = zipCode;
                     msg.classList.remove("hide");
                 });
 
