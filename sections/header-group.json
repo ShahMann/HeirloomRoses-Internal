@@ -31,6 +31,7 @@
       "block_order": [
         "announcement_BxgCk9"
       ],
+      "disabled": true,
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
@@ -79,6 +80,7 @@
           "blocks": {}
         }
       },
+      "disabled": true,
       "settings": {
         "logo_position": "center",
         "menu_position": "left",
@@ -135,7 +137,6 @@
       "block_order": [
         "announcement_bnK7Tp"
       ],
-      "disabled": true,
       "name": "Custom Announcement Bar",
       "settings": {
         "show_country_selector": true,
@@ -152,7 +153,7 @@
         "show_wishlist": true,
         "wishlist_url": "",
         "show_cart": true,
-        "section_width": "page-width",
+        "section_width": "full-width",
         "color_scheme": "",
         "divider_width": 0,
         "padding-block-start": 12,
@@ -191,13 +192,12 @@
         "mega_menu_column_QwNiwg",
         "mega_menu_column_NCQh8y"
       ],
-      "disabled": true,
       "name": "Custom Header",
       "settings": {
         "mega_menu_trigger_label": "SHOP",
         "mega_menu_columns_count": 4,
         "mega_menu_panel_align": "page-width",
-        "mega_menu_image": "shopify://shop_images/Heairloom_logo_horizontal.png",
+        "mega_menu_image": "shopify://shop_images/44944c4c4ab577f140052f86a9d101a2fb106d06_ba88edfc-7db4-44f3-b4e6-362d51c8ca63.jpg",
         "mega_menu_image_position": "first",
         "mega_menu_image_title": "",
         "mega_menu_image_subtitle": "",
@@ -206,15 +206,16 @@
         "show_flower_match_maker": true,
         "flower_match_maker_url": "",
         "flower_match_maker_text": "FLOWER MATCH MAKER",
+        "logo_image": "shopify://shop_images/Heairloom_logo_horizontal.png",
         "logo_text": "HEIRLOOM",
-        "show_logo_flower_icon": true,
+        "show_logo_flower_icon": false,
         "logo_height": 40,
         "menu_learn": "main-menu",
         "menu_about": "main-menu",
         "show_search": true,
-        "section_width": "page-width",
-        "background_color": "#F9F0F0",
-        "text_color": "#6B1A2A"
+        "section_width": "full-width",
+        "background_color": "#faefe9",
+        "text_color": "#6b1a2a"
       }
     }
   },

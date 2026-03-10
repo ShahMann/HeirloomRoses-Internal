@@ -233,34 +233,6 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {}
-                },
-                "social_links_fapg3n": {
-                  "type": "social-links",
-                  "settings": {
-                    "facebook_url": "https://www.facebook.com/#",
-                    "instagram_url": "https://www.instagram.com/#",
-                    "youtube_url": "https://www.youtube.com/#",
-                    "tiktok_url": "https://www.tiktok.com/",
-                    "twitter_url": "https://x.com/#",
-                    "threads_url": "",
-                    "linkedin_url": "",
-                    "bluesky_url": "",
-                    "snapchat_url": "",
-                    "pinterest_url": "",
-                    "tumblr_url": "",
-                    "vimeo_url": "",
-                    "custom_url": ""
-                  },
-                  "blocks": {}
-                },
-                "footer_copyright_DUaFCq": {
-                  "type": "footer-copyright",
-                  "settings": {
-                    "show_powered_by": false,
-                    "font_size": "0.75rem",
-                    "case": "none"
-                  },
-                  "blocks": {}
                 }
               },
               "block_order": [
@@ -268,15 +240,43 @@
                 "menu_AAidRC",
                 "menu_3mfrNL",
                 "menu_TKBmBb",
-                "menu_kCGni9",
-                "social_links_fapg3n",
-                "footer_copyright_DUaFCq"
+                "menu_kCGni9"
               ]
+            },
+            "social_links_8JnUKw": {
+              "type": "social-links",
+              "settings": {
+                "facebook_url": "https://www.facebook.com/#",
+                "instagram_url": "https://www.instagram.com/#",
+                "youtube_url": "https://www.youtube.com/#",
+                "tiktok_url": "https://www.tiktok.com/",
+                "twitter_url": "https://x.com/#",
+                "threads_url": "",
+                "linkedin_url": "",
+                "bluesky_url": "",
+                "snapchat_url": "",
+                "pinterest_url": "",
+                "tumblr_url": "",
+                "vimeo_url": "",
+                "custom_url": ""
+              },
+              "blocks": {}
+            },
+            "footer_copyright_dw79a4": {
+              "type": "footer-copyright",
+              "settings": {
+                "show_powered_by": false,
+                "font_size": "0.75rem",
+                "case": "none"
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "email_signup_dPgnUw",
-            "group_NftyGq"
+            "group_NftyGq",
+            "social_links_8JnUKw",
+            "footer_copyright_dw79a4"
           ]
         },
         "group_wzh437": {
@@ -557,8 +557,9 @@
         "image_1": "shopify://shop_images/2026-03-02_16-45.png",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
+        "custom_mobile_media": true,
         "media_type_1_mobile": "image",
+        "image_1_mobile": "shopify://shop_images/Letter_302be822-ffc4-45af-98c1-d520067401a9.png",
         "media_type_2_mobile": "image",
         "link": "",
         "open_in_new_tab": false,
@@ -574,9 +575,9 @@
         "section_height": "large",
         "section_height_custom": 50,
         "color_scheme": "scheme-143a8631-0804-4fc4-922a-9f46128d1704",
-        "toggle_overlay": true,
+        "toggle_overlay": false,
         "overlay_color": "#00000026",
-        "overlay_style": "gradient",
+        "overlay_style": "solid",
         "gradient_direction": "to top",
         "blurred_reflection": false,
         "reflection_opacity": 75,
