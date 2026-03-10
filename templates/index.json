@@ -485,7 +485,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<p>Deep Roots</p>",
+                    "text": "<p>Deep<br/>Roots</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -800,7 +800,7 @@
     "featured_collection_cards_epGXat": {
       "type": "featured-collection-cards",
       "blocks": {
-        "collection_card_zTD4Ep": {
+        "collection_card_mUNdRP": {
           "type": "collection_card",
           "settings": {
             "collection": "new-introductions",
@@ -846,7 +846,7 @@
         }
       },
       "block_order": [
-        "collection_card_zTD4Ep",
+        "collection_card_mUNdRP",
         "collection_card_BWDC8a",
         "collection_card_3KcVri",
         "collection_card_VLqPiK"
@@ -968,8 +968,8 @@
         "layout_mode": "grid",
         "columns_desktop": 9,
         "columns_mobile": "3",
-        "column_gap": 64,
-        "row_gap": 32,
+        "column_gap": 18,
+        "row_gap": 20,
         "icons_style": "arrow",
         "icons_shape": "none",
         "section_width": "full-width",
