@@ -5126,4 +5126,15 @@ product-recommendations:has([data-has-recommendations='false']) {
     letter-spacing: 3%;
   }
 }
+.btn-cl svg {
+  width: 20px;
+  height: 20px;
+}
+.custom-announcement-bar__cart-icon .cart-bubble {
+  top: -10px !important;
+  right: 20px !important;
+}
+.custom-announcement-bar {
+  padding: 6px 32px;
+}
 /* CUSTOM CSS - END */

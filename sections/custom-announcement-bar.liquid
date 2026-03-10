@@ -34,7 +34,7 @@
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <aside
   class="custom-announcement-bar spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
-  style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px;"
+  style="--border-bottom-width: {{ section.settings.divider_width }}px;"
 >
   <div class="custom-announcement-bar__container">
     {% comment %} Left Column: Country/Region Selector {% endcomment %}
@@ -114,6 +114,7 @@
 
     {% comment %} Center Column: Announcement blocks (same as announcement bar) {% endcomment %}
     <div class="custom-announcement-bar__column custom-announcement-bar__column--center">
+
       {% liquid
         assign autoplay = false
         assign show_arrows = false
@@ -157,12 +158,6 @@
                 {% else %}
                   <span
                     slot="signed-out-avatar"
-                    class="account-button__text custom-announcement-bar__action-text"
-                  >
-                    {{ 'content.account_title' | t }}
-                  </span>
-                  <span
-                    slot="signed-out-avatar"
                     class="custom-announcement-bar__account-icon"
                     aria-hidden="true"
                   >
@@ -181,6 +176,12 @@
                         d="M10.375 3.813a3.063 3.063 0 1 1-6.125 0 3.063 3.063 0 0 1 6.125 0ZM7.313 9.5c-3.667 0-6.24 2.691-6.563 6.125h13.125C13.552 12.191 10.979 9.5 7.312 9.5Z"
                       />
                     </svg>
+                  </span>
+                  <span
+                    slot="signed-out-avatar"
+                    class="account-button__text custom-announcement-bar__action-text"
+                  >
+                    {{ 'content.account_title' | t }}
                   </span>
                 {% endif %}
               </shopify-account>
@@ -298,6 +299,25 @@
 {% stylesheet %}
   .custom-announcement-bar {
     border-block-end: var(--border-bottom-width) solid var(--color-border);
+    background-color: var(--color-brown) !important;
+    color: var(--color-white) !important;
+    /* height: 34px; */
+    padding: 6px 32px;
+  }
+
+  .currency-code, .dropdown-localization__button .svg-wrapper.icon-caret, .localization-form__list-item, .announcement-bar__text, .location-zone, .custom-announcement-bar__account,
+  .custom-announcement-bar__action-button, .custom-announcement-bar__account .account-button__text {
+    color: var(--color-white);
+    font-family: "SeasonSans-Medium", sans-serif;
+    font-weight: 550;
+    font-size: 10px;
+    line-height: 140%;
+    letter-spacing: 12%;
+  }
+
+  .custom-announcement-bar__account {
+    background: transparent;
+    color: var(--color-white) !important;
   }
 
   .custom-announcement-bar__container {
@@ -407,10 +427,13 @@
   .custom-announcement-bar__action-button {
     display: flex;
     align-items: center;
-    gap: var(--gap-xs);
-    color: var(--color-foreground);
+    gap: 4px;
+    flex-direction: row-reverse;
+    color: var(--color-white);
     text-decoration: none;
+    overflow: visible !important;
     transition: opacity var(--animation-speed) var(--animation-easing);
+    height: 34px;
   }
 
   .custom-announcement-bar__action-button:hover {
@@ -442,7 +465,7 @@
   .custom-announcement-bar__localization-button .icon-flag {
     width: var(--menu-localization-font-size, var(--icon-size-sm));
     height: var(--menu-localization-font-size, var(--icon-size-sm));
-    clip-path: circle(50%);
+    clip-path: 0 !important;
     background-position: center;
     background-size: cover;
     margin-inline-end: 4px;
@@ -454,7 +477,7 @@
     position: absolute;
     inset: 0;
     box-shadow: inset 0 0 var(--size-shadow) var(--color-shadow);
-    border-radius: 50%;
+    border-radius: 0%;
   }
 
   .custom-announcement-bar__localization-button .icon-caret {
@@ -489,19 +512,21 @@
 
   .custom-announcement-bar__account-icon,
   .custom-announcement-bar__account .account-button__text {
-    color: var(--color-foreground);
+    color: var(--color-white);
     transition: color var(--animation-speed) var(--animation-easing);
   }
 
+
   .custom-announcement-bar__account-icon {
-    width: 15px;
-    height: 17px;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
   }
 
   .custom-announcement-bar__account .account-button__fallback {
     width: 28px;
     height: 28px;
-    border-radius: 50%;
+    border-radius: 0%;
     background-color: var(--shopify-account-color-accent, #0a142f);
   }
 
@@ -558,8 +583,8 @@
   .custom-announcement-bar__cart-icon .cart-bubble {
     position: absolute;
     width: var(--cart-bubble-size, 20px);
-    top: var(--cart-bubble-top);
-    right: var(--cart-bubble-right);
+    top: -10px !important;
+    right: 20px !important;
   }
 
   .custom-announcement-bar__cart-icon.header-actions__cart-icon--has-cart svg {
@@ -607,13 +632,18 @@
   }
 
   dropdown-localization-component .localization-wrapper.right-bound {
-    right: 0;
-    left: unset;
+    right: unset !important;
+    left: 0 !important;
   }
 
   dropdown-localization-component .localization-wrapper.left-bound {
-    left: -8px;
-    right: unset;
+    left: -8px !important;
+    right: unset !important;
+  }
+
+  .custom-announcement-bar__actions .svg-wrapper {
+    height: 16px;
+    width: 16px;
   }
 
   dropdown-localization-component {

@@ -12,9 +12,10 @@
 
 .location_detector-wrapper {
   width: 100%;
-  height: 44px;
+  /* height: 44px; */
   display: flex;
   align-items: center;
+  gap: 4px;
 }
 
 .location_detector-wrapper {
@@ -32,9 +33,18 @@
 
 /* Location icon */
 .location-icon-wrapper svg {
-  width: 22px;
-  height: 22px;
+  width: 16px;
+  height: 16px;
   /* stroke: #fff; */
+}
+
+.location_detector-wrapper .setup_zone p {
+  color: var(--color-white);
+    font-family: "SeasonSans-Medium", sans-serif;
+    font-weight: 550;
+    font-size: 10px;
+    line-height: 140%;
+    letter-spacing: 12%;
 }
 
 /* Text */
@@ -269,6 +279,11 @@
   font-size: 14px;
   line-height: 140%;
   letter-spacing: 12%;
+}
+
+.btn-cl svg {
+  width: 20px;
+  height: 20px;
 }
 
 /* Save location button */

@@ -404,7 +404,7 @@ class DynamicZoneCollection extends HTMLElement {
 		const gap = parseInt(getComputedStyle(productsGrid).gap) || 0;
 		const translateX = -(this.currentIndex * (cardWidth + gap));
 
-		productsGrid.style.transform = `translateX(${translateX}px)`;
+		// productsGrid.style.transform = `translateX(${translateX}px)`;
 		this.updateButtons();
 
 		setTimeout(() => {
