@@ -82,7 +82,7 @@
                 {% endif %}
                 <span class="featured-collection-cards__card-overlay" aria-hidden="true"></span>
               </div>
-              <div class="featured-collection-cards__card-content" style="{% if card_blocks.size <= 5 %}gap: 6px;{% endif %}">
+              <div class="featured-collection-cards__card-content" style="{% if card_blocks.size >= 5 %}gap: 6px;{% endif %}">
                 {% if card_subheading != blank %}
                   <span class="featured-collection-cards__subheading">{{ card_subheading }}</span>
                 {% endif %}
@@ -199,6 +199,11 @@
     pointer-events: none;
   }
 
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .featured-collection-cards__card-content {
+      gap: 6px !important;
+    }
+  }
   .featured-collection-cards__card-content {
     position: absolute;
     top: 0;
@@ -213,6 +218,7 @@
     align-items: center;
     gap: 77px;
   }
+
 
   @media screen and (max-width: 749px) {
     .featured-collection-cards__card-content {

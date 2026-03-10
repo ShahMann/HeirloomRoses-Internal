@@ -5039,6 +5039,7 @@ product-recommendations:has([data-has-recommendations='false']) {
 
 .take-quiz .hero__content-wrapper{
   gap: 32px;
+  padding: 20px;
 }
 .take-quiz .hero__content-wrapper .h3 p {
   font-family: "SeasonMix-Light", sans-serif;
@@ -5112,7 +5113,7 @@ product-recommendations:has([data-has-recommendations='false']) {
   .take-quiz .hero__content-wrapper .h3 p {
     font-weight: 400;
     font-size: 48px;
-    line-height: 60%;
+    line-height: 100%;
   }
   .hero-banner .hero__content-wrapper .h1 p {
     font-size: 48px;
