@@ -221,7 +221,15 @@ class LocatorForm extends HTMLElement {
 
         this.errorMessage.forEach(msg => msg.classList.add('hide'));
         const checkmarkIcon = this.querySelector(".checkmark-icon");
-        checkmarkIcon.classList.remove("hide");
+        if (checkmarkIcon) checkmarkIcon.classList.remove("hide");
+
+        // Close the zone popup (tool-tip-trigger) on successful submit
+        const openTrigger = document.querySelector('.tool-tip-trigger.location-zone-popup.is-open');
+        if (openTrigger) {
+            openTrigger.classList.remove('is-open');
+            document.dispatchEvent(new CustomEvent('tooltip:close', { bubbles: true }));
+        }
+
         if (window.productHardinessZones?.includes(zoneDetail.zone)) {
             const zoneAvailability = document.querySelector(".custom-product-availability");
 
@@ -269,20 +277,6 @@ class LocatorForm extends HTMLElement {
 
             document.querySelector(".loading-skeleton")?.classList.add("hide");
             document.querySelector(".custom-product-availability")?.classList.add("hide");
-
-            // Trigger click on any open tooltip close button to close the tooltip on successful submit
-            const tooltipCloseButtons = document.querySelectorAll('.tool-tip__close');
-            tooltipCloseButtons.forEach(btn => {
-                // only click visible buttons (avoid hidden/template ones)
-                if (btn.offsetParent !== null) {
-                    try {
-                        btn.click();
-                    } catch (e) {
-                        // fallback: dispatch a MouseEvent
-                        btn.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-                    }
-                }
-            });
         }
     }
 

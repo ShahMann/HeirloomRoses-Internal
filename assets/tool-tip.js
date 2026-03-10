@@ -37,9 +37,19 @@ class ToolTip extends HTMLElement {
   }
 
   connectedCallback() {
-    if (this.closeButton) {
-      this.closeButton.addEventListener('click', this._close.bind(this), { signal: this.abortController.signal })
-    }
+    // Close when any [data-tool-tip-close] is clicked (template or injected content e.g. zone-close-btn). Use capture so we run before stopPropagation.
+    document.documentElement.addEventListener(
+      'click',
+      (e) => {
+        if (this.el.dataset.toolTipOpen !== 'true') return
+        const closeBtn = e.target.closest('[data-tool-tip-close]') || (e.target.parentElement && e.target.parentElement.closest('[data-tool-tip-close]'))
+        if (closeBtn) {
+          e.preventDefault()
+          this._close()
+        }
+      },
+      { capture: true, signal: this.abortController.signal }
+    )
 
     document.documentElement.addEventListener(
       'click',
