@@ -52,12 +52,12 @@
 /* Text */
 .location-zone .label {
   margin: 0;
-  font-weight: 500;
+  /* font-weight: 500; */
 }
 
-.location-zone .location {
+/* .location-zone .location {
   font-weight: 600;
-}
+} */
 
 /* Optional arrow icon */
 .location-zone svg {
@@ -330,10 +330,15 @@
     font-size:22px;
   }
 
-  .location-content {
+  .custom-header__drawer .location-content {
+    display: block !important;
+  }
+  .location-content .location-zone .label, .location-content .location-zone .location {
+    color: var(--color-brown);
+  }
+  .custom-announcement-bar__zone-indicator .location-content {
     display: none;
   }
-
 }
 
 /* no-message hardiness zone css */

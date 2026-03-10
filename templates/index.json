@@ -878,7 +878,7 @@
     "shop_by_color_MCKaHA": {
       "type": "shop-by-color",
       "blocks": {
-        "color_item_KPd7tr": {
+        "color_item_dFk3MD": {
           "type": "color_item",
           "settings": {
             "image": "shopify://shop_images/7cc8a18788be553f7e5ef8a84b9077bfd73efb84.png",
@@ -952,7 +952,7 @@
         }
       },
       "block_order": [
-        "color_item_KPd7tr",
+        "color_item_dFk3MD",
         "color_item_t4Ej4H",
         "color_item_Ye9XkJ",
         "color_item_fyeUEL",
