@@ -472,13 +472,14 @@
       "content": "Layout"
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "products_limit",
-      "min": 4,
-      "max": 12,
-      "step": 1,
       "label": "Number of Products",
-      "default": 8
+      "options": [
+        { "value": "4", "label": "4" },
+        { "value": "6", "label": "6" }
+      ],
+      "default": "6"
     },
     {
       "type": "range",

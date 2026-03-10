@@ -12,7 +12,7 @@ class ToolTipTrigger extends HTMLElement {
       ? this.el.closest("[data-product-grid-item]")
       : this.el;
 
-      // console.log('running my code');
+    // console.log('running my code');
     this.init();
 
   }
@@ -70,13 +70,53 @@ class ToolTipTrigger extends HTMLElement {
       }, 100); // Delay can be adjusted as needed
     });
     this.el.addEventListener("click", (e) => {
+      // Stop propagation so clicks inside the popup don't bubble up to the document click handler
       e.stopPropagation();
-      this.el.classList.add("is-open");
-      this.dispatchEvent(toolTipOpen);
+
+      if (!this.el.classList.contains("is-open")) {
+        this.el.classList.add("is-open");
+        this.dispatchEvent(toolTipOpen);
+      }
     });
 
     document.addEventListener("tooltip:close", () => {
       this.el.classList.remove("is-open");
+    });
+
+    // Close when close button inside the tooltip is clicked
+    this.el.addEventListener("click", (e) => {
+      const closeBtn = e.target.closest('[data-tool-tip-close]') || (e.target.parentElement && e.target.parentElement.closest('[data-tool-tip-close]'));
+      if (closeBtn) {
+        e.preventDefault();
+        this.el.classList.remove("is-open");
+        document.dispatchEvent(new CustomEvent("tooltip:close", { bubbles: true }));
+      }
+    });
+
+    // Close when user presses/clicks outside the visible popup box.
+    // The overlay (.location_grow_zone_content) is full-screen and inside the trigger, so we must
+    // check against the popup box (.zone-popup), not the trigger - otherwise clicks on the dark
+    // overlay would not close. Use composedPath() so form re-renders don't break contains().
+    const closeIfOutside = (e) => {
+      if (!this.el.classList.contains("is-open")) return;
+      const path = typeof e.composedPath === "function" ? e.composedPath() : [];
+      const popupBox = this.el.querySelector(".zone-popup");
+      const elToCheck = popupBox || this.el;
+      const clickInside = path.length > 0 ? path.includes(elToCheck) : elToCheck.contains(e.target);
+      if (!clickInside) {
+        this.el.classList.remove("is-open");
+        document.dispatchEvent(new CustomEvent("tooltip:close", { bubbles: true }));
+      }
+    };
+    document.addEventListener("mousedown", closeIfOutside, true);
+    document.addEventListener("click", closeIfOutside, true);
+
+    // Close on Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Escape" && this.el.classList.contains("is-open")) {
+        this.el.classList.remove("is-open");
+        document.dispatchEvent(new CustomEvent("tooltip:close", { bubbles: true }));
+      }
     });
   }
 }

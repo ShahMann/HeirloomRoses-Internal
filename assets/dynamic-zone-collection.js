@@ -145,7 +145,9 @@ class DynamicZoneCollection extends HTMLElement {
 	async fetchAndDisplayProducts(zone) {
 		try {
 			const collectionHandle = `hardiness-zone-${zone}`;
-			const collectionUrl = `/collections/${collectionHandle}/products.json?limit=${this.productsLimit}`;
+			// Request extra products so after filtering to in-stock only we still have enough for the grid
+			const fetchLimit = Math.max(this.productsLimit * 3, 24);
+			const collectionUrl = `/collections/${collectionHandle}/products.json?limit=${fetchLimit}`;
 
 		const productsGrid = this.querySelector(`.product-grid`);
 			if (productsGrid) {

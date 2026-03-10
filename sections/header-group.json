@@ -208,13 +208,13 @@
         "flower_match_maker_text": "FLOWER MATCH MAKER",
         "logo_image": "shopify://shop_images/Heairloom_logo_horizontal.png",
         "logo_text": "HEIRLOOM",
-        "show_logo_flower_icon": true,
+        "show_logo_flower_icon": false,
         "logo_height": 40,
         "menu_learn": "main-menu",
         "menu_about": "main-menu",
         "show_search": true,
         "section_width": "full-width",
-        "background_color": "#f9f0f0",
+        "background_color": "#faefe9",
         "text_color": "#6b1a2a"
       }
     }
