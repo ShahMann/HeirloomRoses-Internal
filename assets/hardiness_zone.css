@@ -20,6 +20,7 @@
 
 .location_detector-wrapper {
   width: 100%;
+  cursor: pointer;
 }
 .location-content .location-zone .label, .location-content .location-zone .location {
   color: var(--color-white);

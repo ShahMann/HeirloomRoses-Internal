@@ -158,13 +158,23 @@
 
   .shop-by-color__grid {
     display: grid;
+    grid-auto-flow: row;
     grid-template-columns: repeat(var(--shop-by-color-columns-mobile), 1fr);
     gap: var(--shop-by-color-row-gap) var(--shop-by-color-column-gap);
   }
 
   @media screen and (min-width: 750px) {
     .shop-by-color__grid {
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      gap: var(--shop-by-color-row-gap) var(--shop-by-color-column-gap);
+    }
+
+    .shop-by-color__grid .shop-by-color__item {
+      flex: 0 0 calc(100% / var(--shop-by-color-columns-desktop));
+      max-width: calc(100% / var(--shop-by-color-columns-desktop));
     }
   }
 
@@ -490,7 +500,7 @@
       "settings": {
         "heading": "Shop by Color",
         "layout_mode": "grid",
-        "columns_desktop": 3,
+        "columns_desktop": 9,
         "columns_mobile": "3",
         "column_gap": 24,
         "row_gap": 24,

@@ -118,8 +118,29 @@
 
   .featured-collection-cards__grid {
     display: grid;
-    grid-template-columns: repeat(var(--featured-cards-columns, 4), 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--cards-gap, 16px);
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: 990px) {
+    .featured-collection-cards__inner {
+      overflow: hidden;
+    }
+
+    .featured-collection-cards__grid {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .featured-collection-cards__card {
+      scroll-snap-align: start;
+    }
   }
 
   @media screen and (max-width: 749px) {

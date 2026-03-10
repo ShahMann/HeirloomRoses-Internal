@@ -788,7 +788,7 @@
         "promotional_text": "<p>Based on your location in Zone 7, these could be great for your garden.</p>",
         "promotional_button_text": "VIEW ALL",
         "show_promotional_icon": true,
-        "products_limit": 6,
+        "products_limit": "6",
         "cards_desktop": 3,
         "cards_mobile": "2",
         "card_spacing": 20,
