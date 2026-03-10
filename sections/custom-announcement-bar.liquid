@@ -654,9 +654,10 @@
   /* Responsive Styles */
   @media screen and (max-width: 749px) {
     .custom-announcement-bar__container {
-      flex-direction: column;
+      flex-direction: row;
       gap: var(--gap-sm);
-      align-items: stretch;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .custom-announcement-bar__column {
@@ -666,6 +667,7 @@
 
     .custom-announcement-bar__column--left {
       order: 1;
+      display: none;
     }
 
     .custom-announcement-bar__column--center {
@@ -683,6 +685,15 @@
       gap: var(--gap-sm);
     }
 
+    .custom-announcement-bar__action-text {
+      display: none;
+    }
+    shopify-account::part(signed-out-avatar) {
+      min-width: auto !important;
+    }
+    .custom-announcement-bar__cart-icon .cart-bubble {
+      width: 16px;
+    }
   }
 
   @media screen and (min-width: 750px) {
