@@ -90,7 +90,7 @@
                   <h3 class="featured-collection-cards__heading">{{ card_heading }}</h3>
                 {% endif %}
                 {% if card_button_text != blank %}
-                  <span class="featured-collection-cards__button size-style button button-spacing-large">{{ card_button_text }}</span>
+                  <span class="featured-collection-cards__button size-style button button-spacing-small">{{ card_button_text }}</span>
                 {% endif %}
               </div>
             </a>
@@ -118,8 +118,15 @@
 
   .featured-collection-cards__grid {
     display: grid;
-    grid-template-columns: repeat(var(--featured-cards-columns, 4), 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--cards-gap, 16px);
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: 990px) {
+    .featured-collection-cards__inner {
+      overflow: hidden;
+    }
   }
 
   @media screen and (max-width: 749px) {

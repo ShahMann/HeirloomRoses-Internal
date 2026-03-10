@@ -31,7 +31,7 @@
                   {% endif %}
                   <a
                     href="#"
-                    class="zone-promotional-button button button-secondary"
+                    class="zone-promotional-button button button-secondary button-spacing-small"
                   >
                     {{ section.settings.promotional_button_text }}
                   </a>
@@ -124,6 +124,7 @@
     font-size: 14px;
     line-height: 140%;
     letter-spacing: 12%;
+    text-transform: uppercase;
   }
 
   .zone-promotional-heading {
@@ -211,12 +212,15 @@
     border-radius: 8px;
     position: relative;
   }
+  .zone-products-section .grid-product:hover .grid-product__image-wrap {
+    border: 2px solid var(--color-pink);
+  }
 
   .zone-products-section .grid__image-contain {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
+    transition-duration: 0.5s;
   }
 
   .zone-products-section .grid-product:hover .grid__image-contain {
@@ -232,7 +236,7 @@
   }
 
   .zone-products-section .grid-product__title {
-    font-family: var(--font-heading-family), sans-serif;
+    font-family: "SeasonSans-Regular", sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 1.2;
@@ -241,13 +245,13 @@
   }
 
   .zone-products-section .grid-product__price {
-    font-family: var(--font-body-family), sans-serif;
+    font-family: "SeasonSans-Regular", sans-serif;
     font-weight: 500;
     font-size: 10px;
     line-height: 1.4;
-    color: #000;
+    letter-spacing: 0.12em;
+    color: var(--color-brown);
   }
-
   .zone-products-section .grid-product__price--original {
     text-decoration: line-through;
     margin-right: 4px;
@@ -345,17 +349,19 @@
 
   .zone-products-section .zone-quick-add-btn {
     pointer-events: auto;
-    padding: 12px 24px;
+    padding: 8px 16px;
     border: none;
     border-radius: 9999px;
     background: #fff;
-    color: #6B1A2A;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
+    color: var(--color-brown);
+    font-size: 10px;
+    font-weight: 550;
+    letter-spacing: 12%;
     cursor: pointer;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
+    line-height: 140%;
+    text-transform: uppercase;
   }
 
   .zone-products-section .zone-quick-add-btn:hover {

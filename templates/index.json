@@ -485,7 +485,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<p>Deep Roots</p>",
+                    "text": "<p>Deep<br/>Roots</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -788,10 +788,10 @@
         "promotional_text": "<p>Based on your location in Zone 7, these could be great for your garden.</p>",
         "promotional_button_text": "VIEW ALL",
         "show_promotional_icon": true,
-        "products_limit": 6,
+        "products_limit": "6",
         "cards_desktop": 3,
         "cards_mobile": "2",
-        "card_spacing": 20,
+        "card_spacing": 30,
         "background_color": "#ffffff",
         "color_scheme": "scheme-143a8631-0804-4fc4-922a-9f46128d1704",
         "use_theme_colors": true
@@ -800,7 +800,7 @@
     "featured_collection_cards_epGXat": {
       "type": "featured-collection-cards",
       "blocks": {
-        "collection_card_zTD4Ep": {
+        "collection_card_mUNdRP": {
           "type": "collection_card",
           "settings": {
             "collection": "new-introductions",
@@ -846,7 +846,7 @@
         }
       },
       "block_order": [
-        "collection_card_zTD4Ep",
+        "collection_card_mUNdRP",
         "collection_card_BWDC8a",
         "collection_card_3KcVri",
         "collection_card_VLqPiK"
@@ -968,8 +968,8 @@
         "layout_mode": "grid",
         "columns_desktop": 9,
         "columns_mobile": "3",
-        "column_gap": 64,
-        "row_gap": 32,
+        "column_gap": 18,
+        "row_gap": 20,
         "icons_style": "arrow",
         "icons_shape": "none",
         "section_width": "full-width",

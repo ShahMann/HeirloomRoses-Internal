@@ -51,15 +51,16 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--footer-gap);
+    padding: 64px;
   }
   .footer-content .group-block {
     width: 100%;
-    padding: 8px 16px;
+    /* padding: 8px 16px; */
   }
 
-  .footer-content .group-block .group-block {
+  /* .footer-content .group-block .group-block {
     padding: 0;
-  }
+  } */
 
   .footer-content .group-block .group-block .group-block-content {
     grid-template-columns: repeat(2, 1fr);
@@ -72,13 +73,11 @@
   .footer-content .group-block-content {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 42px;
+    gap: 38px;
   }
 
   .email-signup-banner {
-    min-height: 554px !important;
-    padding: 32px !important;
-    justify-content: center;
+    gap: 32px;
   }
   accordion-custom.menu {
       flex: 0 0 100%;
@@ -97,9 +96,9 @@
 
   /* Desktop only */
   @media screen and (min-width: 990px) {
-    .footer-content .group-block {
+    /* .footer-content .group-block {
       padding: 64px;
-    }
+    } */
     .footer-content {
       grid-template-columns: repeat(var(--grid-columns), 1fr);
     }
@@ -107,17 +106,17 @@
     .footer-content[style*='--grid-columns: 1'] {
       justify-items: center;
     }
-    .footer-content .group-block .group-block {
+    /* .footer-content .group-block .group-block {
       padding: 64px;
-    }
+    } */
 
     .footer-content--isolated-grid-item-desktop > :last-child {
       grid-column: 1 / -1;
     }
 
     accordion-custom.menu {
-      flex: 0 0 16%;
-      max-width: 16%;
+      flex: 1 0 16.667%;
+      max-width: 16.667%;
     }
   }
 
@@ -173,6 +172,7 @@
   .email-signup__input-group {
     flex-direction: column;
     gap: 32px !important;
+    align-items: flex-start !important;
   }
   .email-signup__button {
     width: auto;
@@ -189,12 +189,14 @@
   }
   .email-signup__heading {
     font-weight: 300 !important;
-    font-size: 36px !important;
+    font-size: 64px !important;
+    line-height: 90% !important;
     font-family: "SeasonMix-Light" !important;
+
   }
   .email-signup__input.paragraph {
     width: 100%;
-    box-shadow: inset 0 1px 3px #00000040;
+    /* box-shadow: inset 0 1px 3px #00000040; */
   }
   .footer-utilities__text {
     font-family: "SeasonSans-Medium", sans-serif;
@@ -203,13 +205,6 @@
     line-height: 140%;
     letter-spacing: 12%;
     color: var(--color-brown);
-  }
- 
-  .hero {
-    padding: 0 !important;
-  }
-  .hero__container {
-    border-radius: 0 !important;
   }
   footer .hero__media-grid {
     position: relative !important;
