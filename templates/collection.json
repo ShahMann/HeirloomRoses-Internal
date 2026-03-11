@@ -6,14 +6,31 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "section": {
       "type": "section",
       "blocks": {
+        "collection_banner_8YhyKn": {
+          "type": "collection-banner",
+          "name": "Collection Banner",
+          "settings": {
+            "collection": "",
+            "fallback_background_color": "#e8e4f0",
+            "text_color": "#5c3d2e",
+            "heading_size": "medium",
+            "banner_height": "medium",
+            "show_description": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0
+          },
+          "blocks": {}
+        },
         "text_tqQTNE": {
           "type": "text",
           "name": "Title",
+          "disabled": true,
           "settings": {
             "text": "<h1>{{ closest.collection.title }}</h1>",
             "width": "fit-content",
@@ -65,6 +82,7 @@
         }
       },
       "block_order": [
+        "collection_banner_8YhyKn",
         "text_tqQTNE",
         "text_twGGkJ"
       ],
@@ -105,7 +123,7 @@
           "static": true,
           "settings": {
             "enable_filtering": true,
-            "filter_style": "horizontal",
+            "filter_style": "vertical",
             "filter_width": "centered",
             "text_label_case": "default",
             "show_swatch_label": false,
@@ -214,6 +232,8 @@
         "layout_type": "grid",
         "product_card_size": "medium",
         "mobile_product_card_size": "small",
+        "enable_infinite_scroll": true,
+        "products_per_page": 24,
         "product_grid_width": "centered",
         "full_width_on_mobile": true,
         "columns_gap_horizontal": 16,

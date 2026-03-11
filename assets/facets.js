@@ -84,11 +84,17 @@ class FacetsFormComponent extends Component {
    */
   #updateSection() {
     const viewTransition = !this.closest('dialog');
+    const sectionId = this.sectionId;
+
+    const renderPromise = sectionRenderer.renderSection(sectionId);
+    if (renderPromise && typeof renderPromise.then === 'function') {
+      renderPromise.then(() => {
+        window.dispatchEvent(new CustomEvent('section:rendered', { detail: { sectionId } }));
+      });
+    }
 
     if (viewTransition) {
-      startViewTransition(() => sectionRenderer.renderSection(this.sectionId), ['product-grid']);
-    } else {
-      sectionRenderer.renderSection(this.sectionId);
+      startViewTransition(() => renderPromise, ['product-grid']);
     }
   }
 
@@ -455,6 +461,7 @@ class FacetRemoveComponent extends Component {
 
     if (!(facetsForm instanceof FacetsFormComponent)) return;
 
+    window._zoneFilterCleared = true;
     facetsForm.updateFiltersByURL(url);
   }
 
