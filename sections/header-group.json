@@ -199,8 +199,8 @@
         "mega_menu_panel_align": "page-width",
         "mega_menu_image": "shopify://shop_images/44944c4c4ab577f140052f86a9d101a2fb106d06_ba88edfc-7db4-44f3-b4e6-362d51c8ca63.jpg",
         "mega_menu_image_position": "first",
-        "mega_menu_image_title": "",
-        "mega_menu_image_subtitle": "",
+        "mega_menu_image_title": "Need Help  Choosing?",
+        "mega_menu_image_subtitle": "Use our Match Maker",
         "mega_menu_image_link": "",
         "mega_menu_bg_color": "#fdfcfc",
         "show_flower_match_maker": true,
@@ -215,7 +215,7 @@
         "show_search": true,
         "section_width": "full-width",
         "background_color": "#faefe9",
-        "text_color": "#6b1a2a"
+        "text_color": "#c12f41"
       }
     }
   },

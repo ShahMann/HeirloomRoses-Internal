@@ -67,7 +67,7 @@
                 "inherit_color_scheme": true,
                 "color_scheme": "",
                 "heading": "$10 off your  first order.",
-                "banner_text_alignment": "center",
+                "banner_text_alignment": "left",
                 "banner_subheading": "",
                 "banner_subheading_preset": "paragraph",
                 "banner_text_color": "",
@@ -494,62 +494,6 @@
     },
     "hero_3jed6g": {
       "type": "hero",
-      "blocks": {
-        "text_KAekdP": {
-          "type": "text",
-          "settings": {
-            "text": "",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "h1",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "text_t49fwL": {
-          "type": "text",
-          "settings": {
-            "text": "",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 32,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_KAekdP",
-        "text_t49fwL"
-      ],
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
@@ -571,7 +515,7 @@
         "vertical_alignment_flex_direction_column": "center",
         "gap": 16,
         "section_width": "page-width",
-        "section_height": "large",
+        "section_height": "auto",
         "section_height_custom": 50,
         "color_scheme": "scheme-143a8631-0804-4fc4-922a-9f46128d1704",
         "toggle_overlay": true,

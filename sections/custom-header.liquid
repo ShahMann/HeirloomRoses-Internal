@@ -653,9 +653,10 @@
 
 {% stylesheet %}
   .custom-header {
-    background-color: var(--custom-header-bg);
+    background-color: var(--custom-header-bg) !important;
     color: var(--custom-header-text);
-    border-bottom: 1px solid rgba(107, 26, 42, 0.12);
+    /* border-bottom: 1px solid rgba(107, 26, 42, 0.12); */
+    font-family: "SeasonSans-Medium";
   }
 
   .custom-header__container {
@@ -704,20 +705,24 @@
     color: var(--custom-header-text);
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.9375rem;
+    font-size: 14px;
     letter-spacing: 0.02em;
   }
 
   .custom-header__summary {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
     cursor: pointer;
     background: none;
     border: none;
     padding: 0.25rem 0;
     font-family: inherit;
     list-style: none;
+    text-transform: uppercase;
+  }
+  .custom-header__summary:hover {
+    color: var(--color-brown);
   }
 
   .custom-header__summary::-webkit-details-marker { display: none; }
@@ -767,7 +772,7 @@
     visibility: visible;
     left: 0;
     right: 0;
-    top: 90px;
+    top: 80px;
     z-index: 111;
   }
 
@@ -788,7 +793,7 @@
     max-width: var(--page-width);
     width: 100%;
     padding: 64px;
-    gap: 120px;
+    gap: 30px 120px;
   }
 
   .custom-header__mega-inner--center {
@@ -799,7 +804,7 @@
 
   .custom-header__mega-columns {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 120px;
     /* flex: 1; */
     min-width: 0;
@@ -834,7 +839,7 @@
   .custom-header__mega-column-link {
     display: block;
     text-transform: uppercase;
-    color: var(--color-brown);
+    color: var(--custom-header-text);
     font-family: "SeasonMix-Regular", sans-serif;
     font-weight: 420;
     font-size: 32px;
@@ -853,7 +858,7 @@
     flex-shrink: 0;
     width: 320px;
     height: auto;
-    min-height: 320px;
+    aspect-ratio: 320 / 360;
   }
 
   .custom-header__mega-image-link {
@@ -866,11 +871,9 @@
     position: relative;
     border-radius: var(--style-border-radius-popover, 12px);
     overflow: hidden;
-    aspect-ratio: 3 / 4;
+    width: auto;
+    height: 100%;
     background: rgba(107, 26, 42, 0.06);
-    min-height: 320px;
-    height: 320px;
-    width: 320px;
   }
 
   .custom-header__mega-image-img {
@@ -904,6 +907,7 @@
     line-height: 90%;
     letter-spacing: 0%;
     color: var(--color-brown);
+    text-align: center;
   }
 
   .custom-header__mega-image-subtitle {
@@ -923,15 +927,25 @@
 
   .custom-header__dropdown-panel {
     position: absolute;
-    top: 180%;
-    left: 0;
+    top: 170%;
+    left: -30px;
     right: 0;
-    min-width: 200px;
+    min-width: 220px;
     background: var(--color-white);
     border-radius: 0;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     z-index: var(--layer-raised);
     padding: 32px;
+  }
+  .custom-header__details .custom-header__dropdown-panel {
+    opacity: 0;
+    transform: translateY(5px);
+    transition: all 0.3s ease;
+  }
+  .custom-header__details[open] .custom-header__dropdown-panel {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: all 0.3s ease;
   }
 
   .custom-header__dropdown-list {
@@ -1024,9 +1038,9 @@
     padding: 0.25rem;
   }
 
-  .custom-header__search .svg-wrapper {
-    width: 22px;
-    height: 22px;
+  .custom-header__search .svg-wrapper, .custom-header__search .svg-wrapper svg {
+    width: 26px !important;
+    height: 26px !important;
   }
 
   .custom-header__hamburger {
@@ -1046,7 +1060,7 @@
     inset: 0;
     top: 0px;
     z-index: var(--layer-overlay);
-    background: var(--custom-header-bg);
+    background: #fff;
     overflow-y: auto;
     padding: 16px 32px;
     left: 100%;
@@ -1092,6 +1106,9 @@
   .custom-header__drawer-search {
     margin-top: 0.5rem;
   }
+  .custom-header__drawer .location_detector-wrapper .setup_zone p {
+    color: inherit;
+  }
 
   .custom-header__hamburger-icon-mobile {
     display: flex;
@@ -1108,6 +1125,22 @@
   .custom-header__hamburger-icon-mobile svg {
     height: 24px;
     width: 24px;
+  }
+
+  .custom-header__details:after {
+    height: 0px;
+    width: 59px;
+    background-color: var(--color-brown);
+    position: absolute;
+    content: "";
+    bottom: -21px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition-duration: 0.3s;
+  }
+
+  .custom-header__details[open]:after {
+      height: 4px;
   }
 
   @media screen and (max-width: 749px) {
@@ -1132,6 +1165,12 @@
       display: block;
       left: 42px;
     }
+  }
+
+  @media screen and (max-width: 875px) {
+    .custom-header__dropdown-panel { 
+      top: 130%;
+     }
   }
 
   @media screen and (max-width: 749px) {

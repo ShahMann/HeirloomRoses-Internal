@@ -791,7 +791,7 @@
         "products_limit": "6",
         "cards_desktop": 3,
         "cards_mobile": "2",
-        "card_spacing": 20,
+        "card_spacing": 30,
         "background_color": "#ffffff",
         "color_scheme": "scheme-143a8631-0804-4fc4-922a-9f46128d1704",
         "use_theme_colors": true

@@ -173,8 +173,9 @@
     }
 
     .shop-by-color__grid .shop-by-color__item {
-      flex: 0 0 calc(100% / var(--shop-by-color-columns-desktop));
-      max-width: calc(100% / var(--shop-by-color-columns-desktop));
+      /* flex: 0 0 calc(100% / var(--shop-by-color-columns-desktop)); */
+      flex: 1 0 auto;
+      max-width: 100%;
     }
   }
 
@@ -253,12 +254,12 @@
     letter-spacing: 2%;
     padding: 8px;
   }
-  @media screen and (max-width: 749px) {
+  /* @media screen and (max-width: 749px) {
     .shop-by-color__label {
       font-size: 16px;
       letter-spacing: 3%;
     }
-  }
+  } */
 
   /* Carousel layout */
   .shop-by-color--carousel .shop-by-color__carousel {
