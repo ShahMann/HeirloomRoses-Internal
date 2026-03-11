@@ -195,6 +195,7 @@ class LocatorForm extends HTMLElement {
         localStorage.setItem(this.storageKey, JSON.stringify(zoneDetail));
         this.session = zoneDetail;
         this.setSessionValue();
+        document.dispatchEvent(new CustomEvent("zoneUpdated", { detail: { zone: zoneDetail.zone }, bubbles: true }));
         this.setFilterStickyPosition();
         if (window.CustomerData?.id) {
             const zipList = Array.isArray(window.CustomerData.hardiness_zipcode)

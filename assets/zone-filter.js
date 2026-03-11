@@ -237,8 +237,20 @@
       link.removeEventListener('click', link._zoneUpdateHandler);
       link._zoneUpdateHandler = function (e) {
         e.preventDefault();
+        // Use the same LocationDetector trigger as the announcement bar (opens the same popup)
         const trigger = document.querySelector('tool-tip-trigger.location-zone-popup, tool-tip-trigger[data-tool-tip="LocationDetector"]');
-        if (trigger) trigger.click();
+        if (!trigger) return;
+        const contentEl = trigger.querySelector('[data-tool-tip-trigger-content]');
+        const context = trigger.getAttribute('data-tool-tip') || 'LocationDetector';
+        const toolTipClasses = trigger.getAttribute('data-tool-tip-classes') || 'location-add-grow-zone';
+        const content = contentEl ? contentEl.innerHTML : '';
+        trigger.classList.add('is-open');
+        document.dispatchEvent(
+          new CustomEvent('tooltip:open', {
+            detail: { context, content, tool_tip_classes: toolTipClasses },
+            bubbles: true
+          })
+        );
       };
       link.addEventListener('click', link._zoneUpdateHandler);
     });
@@ -272,6 +284,12 @@
       initZoneToggle();
       runSync();
     }
+  });
+
+  document.addEventListener('zoneUpdated', function () {
+    updateZoneDisplay(getUserHardinessZone());
+    initZoneToggle();
+    runSync();
   });
 
   window.addEventListener('section:rendered', function (e) {

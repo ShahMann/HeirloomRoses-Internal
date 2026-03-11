@@ -50,7 +50,7 @@
 
     {% paginate collection.products by products_per_page %}
       {% capture children %}
-        {% if section.settings.promo_card_enable and section.settings.promo_card_image != blank and paginate.current_page == 1 %}
+        {% if section.settings.promo_card_enable and section.settings.promo_card_image != blank %}
           {% render 'promo-card',
             section: section,
             promo_image: section.settings.promo_card_image,

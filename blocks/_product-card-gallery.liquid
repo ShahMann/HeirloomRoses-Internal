@@ -29,6 +29,11 @@
     {%  if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add', product: product, section_id: section.id %}
     {% endif %}
+    {% if product.available and product.selected_or_first_available_variant.id %}
+      <div class="zone-quick-add-overlay" aria-hidden="true">
+        <button type="button" class="zone-quick-add-btn" data-variant-id="{{ product.selected_or_first_available_variant.id }}" data-product-title="{{ product.title | escape }}">Add to bag</button>
+      </div>
+    {% endif %}
   {% endunless %}
 {% endcapture %}
 
@@ -85,6 +90,63 @@
   .product-badges__badge--rectangle {
     padding-block: var(--badge-rectangle-padding-block);
     padding-inline: var(--badge-rectangle-padding-inline);
+  }
+
+  .card-gallery:has(.zone-quick-add-overlay) {
+    position: relative;
+  }
+
+  .card-gallery .zone-quick-add-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 16px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  product-card:hover .card-gallery .zone-quick-add-overlay,
+  product-card:focus-within .card-gallery .zone-quick-add-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .card-gallery .zone-quick-add-btn {
+    pointer-events: auto;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 9999px;
+    background: #fff;
+    color: var(--color-brown, #5c3d2e);
+    font-size: 10px;
+    font-weight: 550;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .card-gallery .zone-quick-add-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-gallery .zone-quick-add-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.9;
+  }
+
+  @media (max-width: 749px) {
+    .card-gallery .zone-quick-add-btn {
+      padding: 10px 20px;
+      font-size: 13px;
+    }
   }
 {% endstylesheet %}
 

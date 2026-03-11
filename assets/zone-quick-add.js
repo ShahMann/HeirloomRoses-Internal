@@ -97,6 +97,48 @@
       });
   }
 
+  /**
+   * Handle click on any .zone-quick-add-btn (product card or zone collection).
+   */
+  function handleQuickAddClick(btn) {
+    var variantId = btn.getAttribute('data-variant-id');
+    if (!variantId) return;
+    var label = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Adding…';
+    addToCart(variantId, 1)
+      .then(function (result) {
+        if (result.success) {
+          btn.textContent = 'Added';
+          setTimeout(function () {
+            btn.textContent = label;
+            btn.disabled = false;
+          }, 1500);
+        } else {
+          btn.textContent = result.error || 'Error';
+          setTimeout(function () {
+            btn.textContent = label;
+            btn.disabled = false;
+          }, 2000);
+        }
+      })
+      .catch(function () {
+        btn.textContent = 'Error';
+        setTimeout(function () {
+          btn.textContent = label;
+          btn.disabled = false;
+        }, 2000);
+      });
+  }
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target && e.target.closest('.zone-quick-add-btn');
+    if (!btn || btn.disabled) return;
+    e.preventDefault();
+    e.stopPropagation();
+    handleQuickAddClick(btn);
+  }, true);
+
   window.ZoneQuickAdd = {
     addToCart: addToCart,
   };
