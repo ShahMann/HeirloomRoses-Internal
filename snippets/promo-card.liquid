@@ -1,0 +1,114 @@
+{%- doc -%}
+  Renders a promotional card that matches product card dimensions and sits in the first grid slot.
+  Used in the collection product grid before the first product.
+
+  @param {object} section - The section object (for section.id and styling)
+  @param {object} promo_image - The background image for the card
+  @param {string} promo_url - Link URL for the card
+  @param {string} promo_headline - Headline text
+  @param {string} promo_subtitle - Subtitle text
+{%- enddoc -%}
+
+{% liquid
+  assign promo_image = promo_image | default: nil
+  assign promo_url = promo_url | default: '#'
+  assign promo_headline = promo_headline | default: ''
+  assign promo_subtitle = promo_subtitle | default: ''
+  assign widths = '416, 600, 832, 1200, 1600'
+  assign sizes = '(min-width: 750px) 50vw, 100vw'
+%}
+
+<li
+  class="product-grid__item product-grid__item--promo"
+  data-promo-card="true"
+>
+  <a
+    href="{{ promo_url }}"
+    class="promo-card__link"
+  >
+    <span class="visually-hidden">{{ promo_headline }}</span>
+    <div class="promo-card__media">
+      {% if promo_image != blank %}
+        {{
+          promo_image
+          | image_url: width: 1200
+          | image_tag:
+            loading: 'eager',
+            widths: widths,
+            sizes: sizes,
+            class: 'promo-card__image',
+            alt: ''
+        }}
+      {% endif %}
+    </div>
+    <div class="promo-card__content">
+      {% if promo_headline != blank %}
+        <span class="promo-card__headline">{{ promo_headline }}</span>
+      {% endif %}
+      {% if promo_subtitle != blank %}
+        <span class="promo-card__subtitle">{{ promo_subtitle }}</span>
+      {% endif %}
+      <span class="promo-card__arrow" aria-hidden="true">→</span>
+    </div>
+  </a>
+</li>
+
+{% stylesheet %}
+  .promo-card__link {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--border-radius, 0.375rem);
+    text-decoration: none;
+    color: inherit;
+    padding: 0;
+    aspect-ratio: 1;
+    min-height: 0;
+  }
+
+  .promo-card__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .promo-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+  }
+
+  .promo-card__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--padding-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--padding-xs);
+    background: linear-gradient(to top, rgb(0 0 0 / 0.55) 0%, transparent 60%);
+    color: #fff;
+    text-align: left;
+  }
+
+  .promo-card__headline {
+    font-family: var(--font-heading--family), serif;
+    font-size: clamp(1.125rem, 2.5vw + 0.75rem, 1.5rem);
+    font-weight: var(--font-heading--weight);
+    line-height: 1.2;
+  }
+
+  .promo-card__subtitle {
+    font-family: var(--font-body--family), sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+  }
+
+  .promo-card__arrow {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+{% endstylesheet %}

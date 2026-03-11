@@ -50,6 +50,15 @@
 
     {% paginate collection.products by products_per_page %}
       {% capture children %}
+        {% if section.settings.promo_card_enable and section.settings.promo_card_image != blank and paginate.current_page == 1 %}
+          {% render 'promo-card',
+            section: section,
+            promo_image: section.settings.promo_card_image,
+            promo_url: section.settings.promo_card_url | default: '#',
+            promo_headline: section.settings.promo_card_headline,
+            promo_subtitle: section.settings.promo_card_subtitle
+          %}
+        {% endif %}
         {% for product in collection.products %}
           <li
             id="{{ section.id }}-{{ product.id }}"
@@ -93,6 +102,38 @@
     "templates": ["collection"]
   },
   "settings": [
+    {
+      "type": "header",
+      "content": "Promotional card"
+    },
+    {
+      "type": "checkbox",
+      "id": "promo_card_enable",
+      "label": "Show promotional card",
+      "info": "Displays a custom card in the first grid position before products. Requires an image to be set.",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "promo_card_image",
+      "label": "Promotional card image",
+      "info": "Background image for the card. Card only shows when this is set and promotional card is enabled."
+    },
+    {
+      "type": "url",
+      "id": "promo_card_url",
+      "label": "Promotional card link"
+    },
+    {
+      "type": "text",
+      "id": "promo_card_headline",
+      "label": "Promotional card headline"
+    },
+    {
+      "type": "text",
+      "id": "promo_card_subtitle",
+      "label": "Promotional card subtitle"
+    },
     {
       "type": "select",
       "id": "layout_type",

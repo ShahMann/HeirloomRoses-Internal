@@ -57,6 +57,7 @@
         "text_twGGkJ": {
           "type": "text",
           "name": "Description",
+          "disabled": true,
           "settings": {
             "text": "{{ closest.collection.description }}",
             "width": "fit-content",
@@ -229,11 +230,16 @@
         }
       },
       "settings": {
+        "promo_card_enable": true,
+        "promo_card_image": "shopify://shop_images/Letter_302be822-ffc4-45af-98c1-d520067401a9.png",
+        "promo_card_url": "shopify://policies/privacy-policy",
+        "promo_card_headline": "12",
+        "promo_card_subtitle": "Mann",
         "layout_type": "grid",
         "product_card_size": "medium",
         "mobile_product_card_size": "small",
-        "enable_infinite_scroll": true,
-        "products_per_page": 24,
+        "enable_infinite_scroll": false,
+        "products_per_page": 15,
         "product_grid_width": "centered",
         "full_width_on_mobile": true,
         "columns_gap_horizontal": 16,

@@ -7,57 +7,79 @@
 -%}
 
 {% if banner_collection != blank %}
+  {% assign is_all_collection = false %}
+  {% if banner_collection.handle == 'all' %}
+    {% assign is_all_collection = true %}
+  {% elsif banner_collection.handle == 'all-roses' %}
+    {% assign is_all_collection = true %}
+  {% endif %}
+
   <div
-    class="collection-banner collection-banner--{{ block.id }} spacing-style"
+    class="collection-banner collection-banner--{{ block.id }} {% if is_all_collection %}collection-banner--title-only{% endif %} spacing-style"
     style="{% render 'spacing-style', settings: block_settings %}"
     {{ block.shopify_attributes }}
   >
-    <div
-      class="collection-banner__inner collection-banner__inner--height-{{ block_settings.banner_height }}"
-      style="--collection-banner-height: var(--collection-banner-height-{{ block_settings.banner_height }});"
-    >
-      <div class="collection-banner__grid">
-        <div
-          class="collection-banner__panel collection-banner__panel--text"
-          style="
-            {% if banner_bg != blank %}background-color: {{ banner_bg }};{% endif %}
-            --collection-banner-text-color: {{ block_settings.text_color }};
-            --collection-banner-heading-size: var(--collection-banner-heading-{{ block_settings.heading_size }});
-            --collection-banner-padding-inline: var(--padding-lg);
-            --collection-banner-padding-block: var(--padding-xl);
-          "
-        >
-          <div class="collection-banner__content">
-            <h1 class="collection-banner__heading">{{ banner_collection.title }}</h1>
-            {% if block_settings.show_description and banner_collection.description != blank %}
-              <div class="collection-banner__description rte">
-                {{ banner_collection.description }}
+    {% if is_all_collection %}
+      <div
+        class="collection-banner__inner collection-banner__inner--title-only"
+        style="
+          {% if banner_bg != blank %}background-color: {{ banner_bg }};{% endif %}
+          --collection-banner-text-color: {{ block_settings.text_color }};
+          --collection-banner-heading-size: var(--collection-banner-heading-{{ block_settings.heading_size }});
+        "
+      >
+        <div class="collection-banner__content">
+          <h1 class="collection-banner__heading">{{ banner_collection.title }}</h1>
+        </div>
+      </div>
+    {% else %}
+      <div
+        class="collection-banner__inner collection-banner__inner--height-{{ block_settings.banner_height }}"
+        style="--collection-banner-height: var(--collection-banner-height-{{ block_settings.banner_height }});"
+      >
+        <div class="collection-banner__grid">
+          <div
+            class="collection-banner__panel collection-banner__panel--text"
+            style="
+              {% if banner_bg != blank %}background-color: {{ banner_bg }};{% endif %}
+              --collection-banner-text-color: {{ block_settings.text_color }};
+              --collection-banner-heading-size: var(--collection-banner-heading-{{ block_settings.heading_size }});
+              --collection-banner-padding-inline: var(--padding-lg);
+              --collection-banner-padding-block: var(--padding-xl);
+            "
+          >
+            <div class="collection-banner__content">
+              <h1 class="collection-banner__heading">{{ banner_collection.title }}</h1>
+              {% if block_settings.show_description and banner_collection.description != blank %}
+                <div class="collection-banner__description rte">
+                  {{ banner_collection.description }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="collection-banner__panel collection-banner__panel--image">
+            {% if banner_collection.featured_image != blank %}
+              {{
+                banner_collection.featured_image
+                | image_url: width: 2560
+                | image_tag:
+                  loading: 'eager',
+                  fetchpriority: 'high',
+                  widths: widths,
+                  sizes: sizes_desktop,
+                  class: 'collection-banner__image',
+                  alt: banner_collection.featured_image.alt | default: banner_collection.title
+              }}
+            {% else %}
+              <div class="collection-banner__placeholder">
+                {{ 'collection-1' | placeholder_svg_tag: 'collection-banner__placeholder-svg' }}
               </div>
             {% endif %}
           </div>
         </div>
-
-        <div class="collection-banner__panel collection-banner__panel--image">
-          {% if banner_collection.featured_image != blank %}
-            {{
-              banner_collection.featured_image
-              | image_url: width: 2560
-              | image_tag:
-                loading: 'eager',
-                fetchpriority: 'high',
-                widths: widths,
-                sizes: sizes_desktop,
-                class: 'collection-banner__image',
-                alt: banner_collection.featured_image.alt | default: banner_collection.title
-            }}
-          {% else %}
-            <div class="collection-banner__placeholder">
-              {{ 'collection-1' | placeholder_svg_tag: 'collection-banner__placeholder-svg' }}
-            </div>
-          {% endif %}
-        </div>
       </div>
-    </div>
+    {% endif %}
   </div>
 {% endif %}
 
@@ -69,6 +91,18 @@
     border-radius: var(--border-radius, 0.375rem);
     overflow: hidden;
     min-height: var(--collection-banner-height);
+  }
+
+  #shopify-section-{{ section.id }} .collection-banner--title-only .collection-banner__inner--title-only {
+    min-height: 0;
+    padding: var(--padding-lg) var(--padding-xl);
+    color: var(--collection-banner-text-color);
+    display: flex;
+    align-items: center;
+  }
+
+  #shopify-section-{{ section.id }} .collection-banner--title-only .collection-banner__content {
+    width: 100%;
   }
 
   #shopify-section-{{ section.id }} .collection-banner__grid {
