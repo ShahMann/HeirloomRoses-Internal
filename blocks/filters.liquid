@@ -12,6 +12,11 @@
   type="module"
   fetchpriority="low"
 ></script>
+<script
+  src="{{ 'zone-filter.js' | asset_url }}"
+  defer
+  fetchpriority="low"
+></script>
 
 <script
   src="{{ 'scrolling.js' | asset_url }}"
@@ -25,6 +30,15 @@
   assign sort_by = results.sort_by | default: results.default_sort_by
   assign filters = filters | default: results.filters
   assign total_active_values = 0
+
+  assign hardiness_zone_filter = null
+  for filter in filters
+    assign filter_handle = filter.label | handleize
+    if filter_handle == 'hardiness-zone'
+      assign hardiness_zone_filter = filter
+      break
+    endif
+  endfor
 
   # Calculate facets margin style
   capture facets_margin_style
@@ -154,6 +168,9 @@
           ref="facetsForm"
         >
           {% if should_show_pane %}
+            {% if request.page_type == 'collection' and hardiness_zone_filter %}
+              {% render 'zone-filter', filter_style: block_settings.filter_style, zone_filter: hardiness_zone_filter, in_drawer: false %}
+            {% endif %}
             {% render 'filter-remove-buttons',
               filters: filters,
               results_url: results_url,
@@ -421,6 +438,9 @@
             class="facets-drawer__filters"
           >
             {% if block_settings.enable_filtering %}
+              {% if request.page_type == 'collection' and hardiness_zone_filter %}
+                {% render 'zone-filter', filter_style: 'vertical', zone_filter: hardiness_zone_filter, in_drawer: true %}
+              {% endif %}
               {% render 'filter-remove-buttons',
                 filters: filters,
                 results_url: results_url,
