@@ -123,14 +123,13 @@
     --email-signup-banner-radius: 0;
     --email-signup-banner-radius-mobile: 0;
 
-    /* min-width: fit-content; */
-
-    @media screen and (max-width: 749px) {
+  }
+  @media screen and (max-width: 768px) {
+    .email-signup-block.size-style {
       width: 100%;
-      min-width: unset;
+      padding: 64px 24px;
     }
   }
-
   .email-signup-banner {
     border-radius: var(--email-signup-banner-radius);
     overflow: hidden;

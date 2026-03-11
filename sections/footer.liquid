@@ -45,6 +45,12 @@
 </div>
 
 {% stylesheet %}
+  footer .hero {
+    padding: 8px 0px 0px 0px;
+  }
+  footer .hero__container {
+    border-radius: 0;
+  } 
   .footer-content {
     contain: content;
     content-visibility: auto;
@@ -52,6 +58,17 @@
     grid-template-columns: 1fr;
     gap: var(--footer-gap);
     padding: 64px;
+  }
+  @media screen and (max-width: 768px) {
+    .footer-content {
+      padding: 64px 40px;
+    }
+  }
+  @media (max-width: 749px) {
+    .footer-content {
+      padding: 64px 16px;
+    }
+    
   }
   .footer-content .group-block {
     width: 100%;
