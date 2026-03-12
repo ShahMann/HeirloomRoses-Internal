@@ -48,7 +48,9 @@
       {% if promo_subtitle != blank %}
         <span class="promo-card__subtitle">{{ promo_subtitle }}</span>
       {% endif %}
-      <span class="promo-card__arrow" aria-hidden="true">→</span>
+      <span class="promo-card__arrow" aria-hidden="true">
+          {{- 'icon-arrow.svg' | inline_asset_content -}}
+      </span>
     </div>
   </a>
 </li>
