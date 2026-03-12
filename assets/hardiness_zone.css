@@ -84,11 +84,12 @@
 }
 
 /* Popup container */
-.zone-popup{
+.zone-popup {
   position:relative;
   display:flex;
   width:1200px;
-  max-width:1200px;
+  max-width:95%;
+  max-height:95vh;
   background:#ffffff;
   border-radius: 32px;
   overflow:hidden;
@@ -98,8 +99,8 @@
 /* CLOSE BUTTON (FIXED) */
 .zone-close-btn{
   position:absolute;
-  top:50px;
-  right:50px;
+  top:25px;
+  right:25px;
 
   width:40px;
   height:40px;
@@ -133,7 +134,9 @@
 
 /* LEFT IMAGE SIDE */
 .zone-img-box{
-  width: 485px;
+  width: 100%;
+  max-width: 485px;
+  flex-grow: 1;
   background:var(--color-cream-two);
   display:flex;
   align-items:center;
@@ -149,11 +152,13 @@
 /* RIGHT CONTENT */
 .zone-content-box{
   width:100%;
+  max-height: 90vh;
   padding:64px;
   background:var(--color-white);
   display:flex;
   flex-direction:column;
   gap: 32px;
+  overflow: auto;
 }
 
 /* Title */
@@ -163,6 +168,10 @@
   font-size: 36px !important;
   line-height: 90% !important;
   letter-spacing: 0% !important;
+  color: var(--color-brown) !important;
+}
+
+.zone-popup .zone-content-box .zipcode-info .zipcode-input-wrapper .zone-msg {
   color: var(--color-brown);
 }
 
@@ -303,24 +312,48 @@
 }
 
 /* Mobile responsive */
+@media(max-width:992px) {
+  .zone-close-btn {
+    top: 10px;
+    right: 10px;
+  }
+  .zone-content-box {
+    padding: 40px;
+  }
+  .zone-img-box {
+    max-width: 375px;
+  }
+}
 @media(max-width:768px){
 
   .zone-popup{
-    flex-direction:column;
+    display: block;
+    overflow: auto;
   }
 
   .zone-img-box{
     width:100%;
+    max-width: 100%;
     padding:25px;
   }
 
   .zone-content-box{
     width:100%;
     padding:25px;
+    gap: 1rem;
   }
 
   .zipcode-btns-wrapper{
     flex-direction:column;
+    gap: 1rem;
+  }
+  .zone-msg {
+    margin-top: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .zipcode-input-wrapper {
+    margin-bottom: 1rem;
   }
 
   .btn{
@@ -328,7 +361,10 @@
   }
 
   .location-info h2{
-    font-size:22px;
+    font-size:22px !important;
+  }
+  .location-info p{
+    font-size:16px !important;
   }
 
   .custom-header__drawer .location-content {
