@@ -176,21 +176,29 @@
           "type": "mega_menu_column",
           "settings": {
             "heading": "ALL FLOWERS",
-            "menu": "main-menu"
+            "menu": "bv-horizon-menu-1"
           }
         },
         "mega_menu_column_NCQh8y": {
           "type": "mega_menu_column",
           "settings": {
             "heading": "PLANT CARE",
-            "menu": "main-menu"
+            "menu": "bv-horizon-menu-2"
+          }
+        },
+        "mega_menu_column_n9mrj6": {
+          "type": "mega_menu_column",
+          "settings": {
+            "heading": "GIFTS",
+            "menu": "bv-horizon-menu-3"
           }
         }
       },
       "block_order": [
         "mega_menu_column_tkkRRC",
         "mega_menu_column_QwNiwg",
-        "mega_menu_column_NCQh8y"
+        "mega_menu_column_NCQh8y",
+        "mega_menu_column_n9mrj6"
       ],
       "name": "Custom Header",
       "settings": {
