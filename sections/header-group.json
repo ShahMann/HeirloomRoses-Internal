@@ -169,7 +169,7 @@
           "type": "mega_menu_column",
           "settings": {
             "heading": "COLLECTIONS",
-            "menu": "main-menu"
+            "menu": "bv-horizon-menu"
           }
         },
         "mega_menu_column_QwNiwg": {
@@ -210,8 +210,8 @@
         "logo_text": "HEIRLOOM",
         "show_logo_flower_icon": false,
         "logo_height": 40,
-        "menu_learn": "main-menu",
-        "menu_about": "main-menu",
+        "menu_learn": "bv-learn",
+        "menu_about": "bv-about",
         "show_search": true,
         "section_width": "full-width",
         "background_color": "#faefe9",
