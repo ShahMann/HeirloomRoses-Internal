@@ -460,28 +460,75 @@
       {% endif %}
       {% if menu_learn.links.size > 0 %}
         <div class="custom-header__drawer-block drawer-other-div">
-          <span class="custom-header__drawer-title drawer-other-span">{{ menu_learn.title | default: 'LEARN' }}</span>
+          <span class="custom-header__drawer-title drawer-other-span">
+            {{ menu_learn.title | default: 'LEARN' }}
+          </span>
+
           <ul class="list-unstyled menu-items-mobile drawer-other-ul" role="list">
             {% for link in menu_learn.links %}
-              <li>
-                <a href="{{ link.url }}" class="custom-header__drawer-link drawer-other-link">{{ link.title }}</a>
+              <li class="{% if link.links.size > 0 %}has-submenu{% endif %}">
+                {% if link.links.size > 0 %}
+                  <span class="custom-header__drawer-link drawer-other-link submenu-title">
+                    {{ link.title }}
+                  </span>
+                {% else %}
+                  <a href="{{ link.url }}" class="custom-header__drawer-link drawer-other-link">
+                    {{ link.title }}
+                  </a>
+                {% endif %}
+
+                {% if link.links.size > 0 %}
+                  <ul class="submenu">
+                    {% for childlink in link.links %}
+                      <li>
+                        <a href="{{ childlink.url }}" class="custom-header__drawer-link">
+                          {{ childlink.title }}
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
               </li>
             {% endfor %}
           </ul>
         </div>
       {% endif %}
       {% if menu_about.links.size > 0 %}
-        <div class="custom-header__drawer-block drawer-other-div">
-          <span class="custom-header__drawer-title drawer-other-span">{{ menu_about.title | default: 'ABOUT' }}</span>
-          <ul class="list-unstyled menu-items-mobile drawer-other-ul" role="list">
-            {% for link in menu_about.links %}
-              <li>
-                <a href="{{ link.url }}" class="custom-header__drawer-link drawer-other-link">{{ link.title }}</a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
+				<div class="custom-header__drawer-block drawer-other-div">
+					<span class="custom-header__drawer-title drawer-other-span">
+						{{ menu_about.title | default: 'ABOUT' }}
+					</span>
+					<ul class="list-unstyled menu-items-mobile drawer-other-ul" role="list">
+						{% for link in menu_about.links %}
+						<li class="{% if link.links.size > 0 %}has-submenu{% endif %}">
+
+							{% if link.links.size > 0 %}
+							<span class="custom-header__drawer-link drawer-other-link submenu-title">
+								{{ link.title }}
+							</span>
+							{% else %}
+							<a href="{{ link.url }}" class="custom-header__drawer-link drawer-other-link">
+								{{ link.title }}
+							</a>
+							{% endif %}
+
+							{% if link.links.size > 0 %}
+							<ul class="submenu">
+								{% for childlink in link.links %}
+								<li>
+									<a href="{{ childlink.url }}" class="custom-header__drawer-link">
+										{{ childlink.title }}
+									</a>
+								</li>
+								{% endfor %}
+							</ul>
+							{% endif %}
+
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
     </div>
     <div class="divider"></div>
 
@@ -730,6 +777,22 @@
     const backBtn = header.querySelector('.header-back-button');
     const drawerBlocks = document.querySelectorAll('.drawer-other-div');
 
+    document.querySelectorAll('.has-submenu > a').forEach((link) => {
+      link.addEventListener('click', function (e) {
+        // apply only on mobile screens
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+
+          const parentLi = this.parentElement;
+          const submenu = parentLi.querySelector('.submenu');
+
+          if (submenu) {
+            submenu.classList.toggle('active');
+          }
+        }
+      });
+    });
+
     function closeMegaMenu() {
       if (!mega) return;
 
@@ -737,18 +800,18 @@
       mega.classList.remove('active');
 
       // reset columns
-      columns.forEach(col => {
+      columns.forEach((col) => {
         col.classList.remove('active');
         col.style.display = 'none';
       });
 
       // hide all mobile menu lists
-      mega.querySelectorAll('.menu-items-mobile').forEach(menu => {
+      mega.querySelectorAll('.menu-items-mobile').forEach((menu) => {
         menu.style.display = 'none';
       });
 
       // restore headings
-      headings.forEach(h => {
+      headings.forEach((h) => {
         h.style.display = 'block';
       });
     }
@@ -855,15 +918,32 @@
             closeMegaMenu();
           }
 
-          // Restore other menus
+          // Restore other menus: remove the inline `display` property so any
+          // `display: none !important` set earlier is cleared and the blocks
+          // can return to their stylesheet-controlled state.
           drawerBlocks.forEach((b) => {
-            b.style.display = ''; // <-- important fix
+            try {
+              b.style.removeProperty('display');
+            } catch (err) {
+              // Fallback: clear the display value
+              b.style.display = '';
+            }
 
             const ul = b.querySelector('.drawer-other-ul');
-            if (ul) ul.style.display = '';
+            if (ul) {
+              try {
+                ul.style.removeProperty('display');
+              } catch (err) {
+                ul.style.display = '';
+              }
+            }
 
             b.querySelectorAll('.submenu').forEach((s) => {
-              s.style.display = '';
+              try {
+                s.style.removeProperty('display');
+              } catch (err) {
+                s.style.display = '';
+              }
             });
           });
 
@@ -894,8 +974,7 @@
         const opening = !block.classList.contains('active');
 
         if (opening) {
-          // Close Mega Menu
-          if (mega.classList.contains('active')) {
+          if (typeof closeMegaMenu === 'function') {
             closeMegaMenu();
           }
 
@@ -927,62 +1006,73 @@
 
       submenus.forEach((subTitle) => {
         subTitle.addEventListener('click', (e) => {
-          e.stopPropagation(); // Prevent parent toggle
           const parentLi = subTitle.parentElement;
           const submenu = parentLi.querySelector('.submenu');
-          submenu.classList.toggle('active');
+
+          if (!submenu) return;
+
+          const isOpen = submenu.classList.contains('active');
+
+          // close other submenus
+          block.querySelectorAll('.submenu').forEach((menu) => {
+            menu.classList.remove('active');
+            menu.style.display = 'none';
+          });
+
+          if (!isOpen) {
+            submenu.classList.add('active');
+            submenu.style.display = 'block';
+          }
         });
       });
     });
     document.addEventListener('click', function (e) {
+      const closeBtn = e.target.closest('.mobile-drawer-close');
+      if (!closeBtn) return;
 
-    const closeBtn = e.target.closest('.mobile-drawer-close');
-    if (!closeBtn) return;
+      if (drawer) {
+        // Use the same mechanism as the open toggle: set hidden to true
+        try {
+          drawer.hidden = true;
+        } catch (e) {}
 
-    if (drawer) {
-      // Use the same mechanism as the open toggle: set hidden to true
-      try {
-        drawer.hidden = true;
-      } catch (e) {}
+        // Keep a fallback to remove any 'active' class older code may use
+        drawer.classList.remove('active');
 
-      // Keep a fallback to remove any 'active' class older code may use
-      drawer.classList.remove('active');
+        // Reset mobile toggle button state if present
+        const mobileToggle = header.querySelector('[data-mobile-toggle]');
+        if (mobileToggle) {
+          mobileToggle.setAttribute('aria-expanded', 'false');
+          const openIcon = mobileToggle.querySelector('.custom-header__hamburger-icon--open');
+          const closeIcon = mobileToggle.querySelector('.custom-header__hamburger-icon--close');
+          if (openIcon) openIcon.hidden = false;
+          if (closeIcon) closeIcon.hidden = true;
+        }
 
-      // Reset mobile toggle button state if present
-      const mobileToggle = header.querySelector('[data-mobile-toggle]');
-      if (mobileToggle) {
-        mobileToggle.setAttribute('aria-expanded', 'false');
-        const openIcon = mobileToggle.querySelector('.custom-header__hamburger-icon--open');
-        const closeIcon = mobileToggle.querySelector('.custom-header__hamburger-icon--close');
-        if (openIcon) openIcon.hidden = false;
-        if (closeIcon) closeIcon.hidden = true;
+        // restore body scroll
+        document.body.style.overflow = '';
       }
 
-      // restore body scroll
-      document.body.style.overflow = '';
-    }
+      // reset mega menu
+      if (typeof closeMegaMenu === 'function') {
+        closeMegaMenu();
+      }
 
-    // reset mega menu
-    if (typeof closeMegaMenu === 'function') {
-      closeMegaMenu();
-    }
+      // close other menus
+      if (typeof drawerBlocks !== 'undefined') {
+        drawerBlocks.forEach((b) => {
+          b.classList.remove('active');
 
-    // close other menus
-    if (typeof drawerBlocks !== 'undefined') {
-      drawerBlocks.forEach(b => {
-        b.classList.remove('active');
+          const ul = b.querySelector('.drawer-other-ul');
+          if (ul) ul.style.display = 'none';
 
-        const ul = b.querySelector('.drawer-other-ul');
-        if (ul) ul.style.display = 'none';
-
-        b.querySelectorAll('.submenu').forEach(s => {
-          s.classList.remove('active');
-          s.style.display = 'none';
+          b.querySelectorAll('.submenu').forEach((s) => {
+            s.classList.remove('active');
+            s.style.display = 'none';
+          });
         });
-      });
-    }
-
-  });
+      }
+    });
   })();
 </script>
 
@@ -1503,6 +1593,13 @@
       display: block;
       left: 42px;
     }
+    .submenu {
+      display: none;
+    }
+
+    .submenu.active {
+      display: block;
+    }
   }
 
   @media screen and (max-width: 875px) {
@@ -1723,6 +1820,15 @@
   /* hide SHOP title when submenu open */
   .custom-header__drawer-mega.active .custom-header__drawer-title {
     display: none;
+  }
+
+  .submenu {
+    display: none;
+    padding-left: 20px;
+  }
+
+  .submenu.active {
+    display: block;
   }
 
   .drawer-other-ul,
