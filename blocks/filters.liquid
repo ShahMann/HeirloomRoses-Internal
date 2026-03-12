@@ -189,11 +189,9 @@
               show_filter_label: block_settings.show_filter_label,
               should_show_clear_all: true
             %}
-
             {% if request.page_type == 'collection' and hardiness_zone_filter %}
               {% render 'zone-filter', filter_style: block_settings.filter_style, zone_filter: hardiness_zone_filter, in_drawer: false %}
             {% endif %}
-
             {% if block_settings.enable_filtering %}
               {% assign total_active_values = 0 %}
 
@@ -488,12 +486,11 @@
                 filters: filters,
                 results_url: results_url,
                 show_filter_label: block_settings.show_filter_label,
-                should_show_clear_all: false
+                should_show_clear_all: true
               %}
               {% if request.page_type == 'collection' and hardiness_zone_filter %}
                 {% render 'zone-filter', filter_style: 'vertical', zone_filter: hardiness_zone_filter, in_drawer: true %}
               {% endif %}
-
               <div class="facets__filters-wrapper">
                 {% assign total_active_values = 0 %}
                 {% assign is_active = false %}
@@ -1136,7 +1133,7 @@
   }
 
   .facets__clear-all-link {
-    display: none;
+    /* display: none; */
     cursor: pointer;
     padding: var(--padding-xs);
     color: var(--button-color);
