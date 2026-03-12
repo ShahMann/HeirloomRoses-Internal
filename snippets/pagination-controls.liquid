@@ -35,19 +35,21 @@
           <a
             href="{{ paginate.previous.url }}"
             aria-label="{{ 'content.pagination.previous' | t }}"
-            class="pagination__link pagination__link--arrow"
+            class="pagination__link pagination__link--arrow pagination__link--arrow-left"
             {% if on_click_handler != blank %}
               on:click="{{ on_click_handler }}?{{ prev_params }}"
             {% endif %}
           >
+            Previous
             {{ 'icon-chevron-left.svg' | inline_asset_content }}
           </a>
         {%- else -%}
           <span
             aria-label="{{ 'content.pagination.previous' | t }}"
-            class="pagination__link pagination__link--arrow pagination__link--disabled"
+            class="pagination__link pagination__link--arrow pagination__link--disabled pagination__link--arrow-left-disabled"
             aria-disabled="true"
           >
+            Previous
             {{ 'icon-chevron-left.svg' | inline_asset_content }}
           </span>
         {%- endif -%}
@@ -140,19 +142,21 @@
           <a
             href="{{ paginate.next.url }}"
             aria-label="{{ 'content.pagination.next' | t }}"
-            class="pagination__link pagination__link--arrow"
+            class="pagination__link pagination__link--arrow pagination__link--arrow-right"
             {% if on_click_handler != blank %}
               on:click="{{ on_click_handler }}?{{ next_params }}"
             {% endif %}
           >
+            Next
             {{ 'icon-chevron-right.svg' | inline_asset_content }}
           </a>
         {%- else -%}
           <span
             aria-label="{{ 'content.pagination.next' | t }}"
-            class="pagination__link pagination__link--arrow pagination__link--disabled"
+            class="pagination__link pagination__link--arrow pagination__link--disabled pagination__link--arrow-right-disabled"
             aria-disabled="true"
           >
+            Next
             {{ 'icon-chevron-right.svg' | inline_asset_content }}
           </span>
         {%- endif -%}
@@ -186,7 +190,7 @@
 
   .pagination__item {
     width: var(--pagination-size);
-    aspect-ratio: 1;
+    /* aspect-ratio: 1; */
     display: grid;
     place-items: center;
   }
