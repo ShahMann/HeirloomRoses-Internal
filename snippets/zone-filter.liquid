@@ -19,7 +19,7 @@
     <span class="zone-filter__label">
       Show products in Zone <span class="zone-filter__zone-number" data-zone-number id="{% if in_drawer %}currentZoneDisplayMobile{% else %}currentZoneDisplay{% endif %}">–</span>
     </span>
-    <label class="zone-filter__toggle-wrap zone-toggle-switch" aria-label="Show only products for your hardiness zone">
+    <label class="zone-filter__toggle-wrap zone-toggle-switch" aria-label="Show only products for your hardiness Zone">
       <input
         type="checkbox"
         id="{% if in_drawer %}zoneFilterToggleMobile{% else %}zoneFilterToggle{% endif %}"
@@ -35,7 +35,7 @@
       href="#"
       class="zone-filter__update-link"
       data-update-hardiness-zone
-      aria-label="Update my hardiness zone"
+      aria-label="Update my hardiness Zone"
     >
       Update my hardiness zone.
     </a>
@@ -58,9 +58,14 @@
   }
 
   .zone-filter__label {
-    color: rgb(var(--color-foreground-rgb));
+    color: var(--color-brown);
     font-size: var(--font-paragraph--size, 1rem);
     font-weight: var(--font-paragraph--weight, 400);
+    font-family: "SeasonSans-Regular", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 120%;
+    letter-spacing: 3%;
   }
 
   .zone-filter__zone-number {
@@ -122,10 +127,13 @@
   }
 
   .zone-filter__update-link {
-    font-size: var(--font-size--xs, 0.875rem);
-    color: #c41f3e;
+    color: #c12f41;
     text-decoration: underline;
-    text-underline-offset: 2px;
+    font-family: "SeasonSans-Regular", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 120%;
+    letter-spacing: 4%;
   }
 
   .zone-filter__update-link:hover {

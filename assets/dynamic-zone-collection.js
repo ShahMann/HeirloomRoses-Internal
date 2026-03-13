@@ -103,7 +103,7 @@ class DynamicZoneCollection extends HTMLElement {
 			}
 
 			if (!zone) {
-				this.showError("Unable to detect your hardiness zone");
+				this.showError("Unable to detect your hardiness Zone");
 				this.hide();
 				return;
 			}
