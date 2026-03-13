@@ -1355,7 +1355,7 @@
   .custom-header__dropdown-panel {
     position: absolute;
     top: 170%;
-    left: -30px;
+    left: -85%;
     right: 0;
     min-width: 220px;
     background: var(--color-white);
@@ -1380,13 +1380,18 @@
     padding: 0;
   }
 
+  .custom-header__dropdown-list li:last-child {
+    margin-bottom: 0px;
+  }
+
   .custom-header__dropdown-list > li {
     margin: 0;
+    margin-bottom: 16px;
   }
 
   .custom-header__dropdown-link {
     display: block;
-    margin-bottom: 16px;
+    
     transition: background 0.15s ease;
     font-family: 'SeasonSans-Regular', sans-serif;
     font-weight: 400;

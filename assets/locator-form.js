@@ -65,7 +65,7 @@ class LocatorForm extends HTMLElement {
             document.querySelector(".toolbar-section")?.classList.add("toolbar-top-61");
 
             this.hardinessZonemsg.forEach(msg => {
-                msg.innerText = "Hardiness zone: " + this.session.zone;
+                msg.innerText = "Hardiness Zone: " + this.session.zone;
                 msg.classList.remove("hide")
             });
             if (![1, 2, 12].includes(parseInt(this.session.zone, 10))) {
@@ -408,7 +408,7 @@ async function getUserZipCodeAndZone() {
 
                 const hardinessZoneMsg = document.querySelectorAll(".success-message-hardiness-zone");
                 hardinessZoneMsg.forEach(msg => {
-                    msg.innerText = "Hardiness zone: " + hardinessZone;
+                    msg.innerText = "Hardiness Zone: " + hardinessZone;
                     msg.classList.remove("hide");
                 });
 
@@ -493,7 +493,7 @@ async function getUserZipCodeAndZone() {
                     currency: data.currency?.code
                 };
             } else {
-                console.error('No hardiness zone data found for ZIP code:', zipCode);
+                console.error('No hardiness Zone data found for ZIP code:', zipCode);
                 return null;
             }
         }

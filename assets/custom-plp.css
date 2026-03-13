@@ -168,6 +168,10 @@
   .icon-checkmark {
   background-color: var(--color-brown);
 }
+.collection .checkbox.checkbox--disabled {
+  text-decoration: line-through;
+  opacity: .5;
+}
 .collection .filter .facets__pill-label {
   padding: 8px;
   background: var(--color-white);

@@ -289,7 +289,7 @@
   font-family: "SeasonSans-Medium", sans-serif;
   font-weight: 550;
   font-size: 14px;
-  line-height: 140%;
+  /* line-height: 140%; */
   letter-spacing: 12%;
 }
 
