@@ -42,10 +42,12 @@
       results_size: collection.products_count
     %}
 
-    {% assign products_per_page = 24 %}
+    {% comment %} {% assign products_per_page = 16 %} {% endcomment %}
 
     {% if section.settings.enable_infinite_scroll == false %}
       {% assign products_per_page = section.settings.products_per_page %}
+    {% else %}
+      {% assign products_per_page = section.settings.products_per_page_scroll %}
     {% endif %}
 
     {% paginate collection.products by products_per_page %}
@@ -196,6 +198,16 @@
       "id": "enable_infinite_scroll",
       "label": "t:settings.auto_load_products",
       "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_page_scroll",
+      "label": "t:settings.products_per_page",
+      "min": 8,
+      "max": 36,
+      "step": 1,
+      "default": 16,
+      "visible_if": "{{ section.settings.enable_infinite_scroll == true }}"
     },
     {
       "type": "range",

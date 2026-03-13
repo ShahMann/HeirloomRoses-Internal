@@ -1,19 +1,16 @@
 {%- liquid
   assign block_settings = block.settings
-  assign banner_collection = collection | default: block.settings.collection
-  assign banner_bg = banner_collection.metafields.custom.banner_background_color | default: block_settings.fallback_background_color
+  assign banner_collection = collection
+  assign banner_bg = banner_collection.metafields.custom.banner_background_color
   assign sizes_desktop = '(min-width: 768px) 50vw, 100vw'
   assign widths = '416, 600, 832, 1200, 1600, 1920, 2560'
 -%}
 
 {% if banner_collection != blank %}
   {% assign is_all_collection = false %}
-  {% if banner_collection.handle == 'all' %}
-    {% assign is_all_collection = true %}
-  {% elsif banner_collection.handle == 'all-roses' %}
+  {% if banner_bg == blank %}
     {% assign is_all_collection = true %}
   {% endif %}
-
   <div
     class="collection-banner collection-banner--{{ block.id }} {% if is_all_collection %}collection-banner--title-only{% endif %} spacing-style"
     style="{% render 'spacing-style', settings: block_settings %}"
@@ -247,20 +244,8 @@
   "tag": null,
   "settings": [
     {
-      "type": "collection",
-      "id": "collection",
-      "label": "t:settings.collection"
-    },
-    {
       "type": "header",
       "content": "t:content.colors"
-    },
-    {
-      "type": "color",
-      "id": "fallback_background_color",
-      "label": "t:settings.background_color",
-      "info": "Used when collection metafield custom.banner_background_color is not set",
-      "default": "#e8e4f0"
     },
     {
       "type": "color",
