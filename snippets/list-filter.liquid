@@ -31,11 +31,11 @@
     data-close-with-escape="true"
   {% endif %}
 
-  {% if filter_style == 'vertical' %}
+  {% comment %} {% if filter_style == 'vertical' %}
     open
     open-by-default-on-mobile
     open-by-default-on-desktop
-  {% endif %}
+  {% endif %} {% endcomment %}
   data-filter-param-name="{{ filter.param_name | escape | replace: '.', '-' }}"
 >
   <details
@@ -44,9 +44,9 @@
     {% if filter_style == 'horizontal' %}
       data-auto-close-details="desktop"
     {% endif %}
-    {% if filter_style == 'vertical' %}
+    {% comment %} {% if filter_style == 'vertical' %}
       open
-    {% endif %}
+    {% endif %} {% endcomment %}
   >
     <summary class="facets__summary">
       <span class="facets__label">{{ filter.label }}</span>

@@ -16,20 +16,20 @@
     data-close-with-escape="true"
   {% endif %}
 
-  {% if filter_style == 'vertical' %}
+  {% comment %} {% if filter_style == 'vertical' %}
     open
     open-by-default-on-mobile
     open-by-default-on-desktop
-  {% endif %}
+  {% endif %} {% endcomment %}
 >
   <details
     class="facets__panel"
     {% if filter_style == 'horizontal' %}
       data-auto-close-details="desktop"
     {% endif %}
-    {% if filter_style == 'vertical' %}
+    {% comment %} {% if filter_style == 'vertical' %}
       open
-    {% endif %}
+    {% endif %} {% endcomment %}
   >
     <summary
       class="facets__summary"
