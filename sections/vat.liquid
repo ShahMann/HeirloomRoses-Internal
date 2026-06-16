@@ -1,0 +1,65 @@
+<section class="vat_certification">
+  <div class="vat-container container">
+    <h2 class="vat_title">{{ section.settings.title }}</h2>
+    <p>{{ section.settings.corporate_label }} : {{ section.settings.corporate_name }}</p>
+    <p>{{ section.settings.registration_label }} : {{ section.settings.registration_number }}</p>
+    <div class="vat-image-container">
+      <center>
+        {% if section.settings.vat_1 %}
+          <p>{{ section.settings.vat_1 | image_url: width: 550 | image_tag }}</p>
+        {% endif %}
+        {% if section.settings.vat_2 %}
+          <p>{{ section.settings.vat_2 | image_url: width: 550 | image_tag }}</p>
+        {% endif %}
+      </center>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Vat",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Enter Title"
+    },
+    {
+      "type": "text",
+      "id": "corporate_label",
+      "label": "Enter Corporate Label"
+    },
+    {
+      "type": "text",
+      "id": "corporate_name",
+      "label": "Enter Corporate Name"
+    },
+    {
+      "type": "text",
+      "id": "registration_label",
+      "label": "Enter Registration Label"
+    },
+    {
+      "type": "text",
+      "id": "registration_number",
+      "label": "Enter Registration Number"
+    },
+    {
+      "type": "image_picker",
+      "id": "vat_1",
+      "label": "First Vat Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "vat_2",
+      "label": "Second Vat Image"
+    }
+  ]
+}
+{% endschema %}
+<style>
+    .vat-container {
+      padding-top: 100px;
+      padding-bottom: 100px;
+  }
+</style>

@@ -1,0 +1,53 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "employee-card",
+      "blocks": {
+        "template_wEh4TB": {
+          "type": "template",
+          "settings": {
+            "template_name": "Template 1",
+            "template_image": "shopify://shop_images/Empty_Employee_Eidyah_1080x1350_1caf5a35-6661-41e5-beb8-e8ed849bc471.png",
+            "text_position_top": "70.5%",
+            "text_position_left": "50%",
+            "text_font_size": "40px",
+            "text_color": "#53c29a"
+          }
+        },
+        "template_ijLYwA": {
+          "type": "template",
+          "settings": {
+            "template_name": "Template 2",
+            "template_image": "shopify://shop_images/Image_20250603_115403_826.jpg",
+            "text_position_top": "38%",
+            "text_position_left": "50%",
+            "text_font_size": "40px",
+            "text_color": "#53c29a"
+          }
+        }
+      },
+      "block_order": [
+        "template_wEh4TB",
+        "template_ijLYwA"
+      ],
+      "settings": {
+        "template_selection_title": "Choose Template",
+        "employee_placeholder": "Enter Name",
+        "employee_png": "Download PNG",
+        "employee_pdf": "Download PDF"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

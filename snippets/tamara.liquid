@@ -1,0 +1,105 @@
+<script>
+  const currentLang = "{{ request.locale.iso_code }}";
+  const imageUrl = currentLang === "ar" 
+    ? "{{ 'AR Wordmark Gradient.svg' | asset_url }}" 
+    : "{{ 'Wordmark Gradient.svg' | asset_url }}";
+
+  window.tamaraWidgetConfig = {
+    lang: currentLang,
+    country: "SA",
+    publicKey: "e4a350ad-329c-47c4-95c4-1fe28a0a24c9",
+    css : `:host {
+      --font-primary: inherit !important;
+      --font-secondary: inherit !important;
+    }
+    .tamara-summary-widget__amount {
+      font-weight: 700 !important;
+    }
+    `,
+    style: {
+        fontSize: '14px',
+        badgeRatio: 1.2,
+    }
+  }
+
+  function updateTamaraImage() {
+    let tamaraWidget = document.getElementById('tamara-widget-custom');
+    if (tamaraWidget && tamaraWidget.shadowRoot) {
+      let badgeImage = tamaraWidget.shadowRoot.querySelector('.tamara-inline-badge.tamara-badge');
+      if (badgeImage) {
+        badgeImage.src = imageUrl;
+      }
+    }
+  }
+
+  function applyShadowDOMStyles() {
+    let tamaraWidget = document.getElementById('tamara-widget-custom');
+    if (tamaraWidget && tamaraWidget.shadowRoot) {
+      let existingStyle = tamaraWidget.shadowRoot.querySelector('#custom-tamara-styles');
+      if (!existingStyle) {
+        let styleElement = document.createElement('style');
+        styleElement.id = 'custom-tamara-styles';
+        styleElement.textContent = `
+          .tamara-summary-widget__container .summary-widget-content.badge-right .badge-wrapper {
+            width: 60px !important;
+          }
+        `;
+        tamaraWidget.shadowRoot.appendChild(styleElement);
+      }
+    }
+  }
+
+  function priceUpdate() {
+    let priceElement = document.querySelector('.price__current');
+    let price = priceElement ? priceElement.textContent.replace(/[^\d.]/g, '') : '0';
+    let tamaraWidget = document.getElementById('tamara-widget-custom');
+    
+    if (tamaraWidget && tamaraWidget.shadowRoot) {
+        let widgetAmount = tamaraWidget.shadowRoot.querySelector(".tamara-summary-widget__amount");
+        console.log(widgetAmount)
+        if (widgetAmount) {
+            let updatedprice = price / 4;
+            let roundedPrice = updatedprice.toFixed(2);
+            widgetAmount.innerHTML = Shopify.currency.active + " " + roundedPrice;
+            tamaraWidget.setAttribute('amount', price);
+            
+            updateTamaraImage();
+            applyShadowDOMStyles();
+            return true;
+        }
+    }
+    return false;
+  }
+
+  let attempts = 0
+  let interval = setInterval(() => {
+    let tamaraWidget = document.getElementById('tamara-widget-custom');
+    let widgetAmount = tamaraWidget.shadowRoot?.querySelector(".tamara-summary-widget__amount");
+    if (tamaraWidget && tamaraWidget.shadowRoot && widgetAmount) {
+      priceUpdate();
+      updateTamaraImage(); 
+      applyShadowDOMStyles(); 
+      clearInterval(interval);
+    }
+  }, 100);
+
+  window.addEventListener('tamara:priceUpdate', () => {
+    setTimeout(() => {
+      priceUpdate();
+      updateTamaraImage();
+      applyShadowDOMStyles();
+    }, 50);
+  });
+</script>
+<script defer type="text/javascript" src="https://cdn.tamara.co/widget-v2/tamara-widget.js"></script>
+
+<div>
+  <tamara-widget
+    id="tamara-widget-custom"
+    type="tamara-summary"
+    amount="{{product.price | money_without_currency | remove: ','}}"
+    config='{"badgePosition":"right","showExtraContent":""}'
+    inline-type="2"
+  >
+  </tamara-widget>
+</div>

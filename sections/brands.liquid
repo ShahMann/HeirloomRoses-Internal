@@ -1,0 +1,123 @@
+{% render 'breadcrumbs' %}
+<script src="{{ 'brands.js' | asset_url }}" defer="defer"></script>
+<div class="container">
+  <section class="brand-list-container">
+    <section class="letter-action-menu">
+      <div class="letter-action-menu-sidescroll">
+        <div class="letter-action-menu-item active" data-trigger-letter="{{ settings.all_label }}">{{ settings.all_brands }}</div>
+        
+        <!-- Conditionally set alphabets based on language -->
+        {% if request.locale.iso_code == 'ar' %}
+          {% assign all_alphabets = 'أ,ب,ت,ث,ج,ح,خ,د,ذ,ر,ز,س,ش,ص,ض,ط,ظ,ع,غ,ف,ق,ك,ل,م,ن,هـ,و,ي' | split: ',' %}
+        {% else %}
+          {% assign all_alphabets = settings.all_alphabets | split: ',' %}
+        {% endif %}
+        
+        {% for alphabet in all_alphabets %}
+          <div class="letter-action-menu-item" data-trigger-letter="{{ alphabet }}">{{ alphabet }}</div>
+        {% endfor %}
+      </div>
+    </section>
+    <h3 class="search-header" style="display: none;">Search Results</h3>
+    <div class="search-brands-container">
+      <input type="text" id="brand-search" placeholder="{{ settings.brand_search_placeholder }}" autocomplete="one-time-code">
+    </div>
+
+    <ul class="brand-list-auto">
+      {% assign currentBrand = 'all' %}
+      {%- assign sorted_collections = section.settings.collection_list | sort: 'title' -%}
+      {%- assign current_letter = '' -%}
+      {% assign catFlag = 0 %}
+      
+      {% if currentBrand contains 'all' %}
+        {% assign catFlag = 1 %}
+      {% endif %}
+
+      {% assign numberInput = '0,1,2,3,4,5,6,7,8,9' %}
+      {% assign arabic_letters = 'أ,ب,ت,ث,ج,ح,خ,د,ذ,ر,ز,س,ش,ص,ض,ط,ظ,ع,غ,ف,ق,ك,ل,م,ن,هـ,و,ي' %}
+      {%- assign brand_count = 0 -%}
+
+      {%- for collection in collections -%}
+        {% assign brand_value = collection.metafields.custom.brand %} 
+
+        {% if brand_value == true %}
+          {% assign brand_count = brand_count | plus: 1 %}   
+          
+          {% if catFlag == 1 %}
+            {%- capture first_letter -%}{{ collection.title | strip_html | slice: 0 | upcase }}{%- endcapture -%}
+            
+            {% if numberInput contains first_letter %}
+              {% assign first_letter = '0-9' %}
+            {% elsif arabic_letters contains first_letter %}
+              {% assign first_letter = first_letter %}
+            {% else %}
+              {% assign first_letter = first_letter %}
+            {% endif %}
+
+            {%- unless current_letter == first_letter -%}
+              {%- assign current_letter = first_letter -%}
+              <h3 class="brand-letter-heading" style="font-weight:500; direction: rtl;" data-letter="{{ current_letter }}">
+                {{ current_letter }}
+              </h3>
+            {%- endunless -%}
+
+            <li class="brand-list-item" data-letter="{{ current_letter }}" style="direction: rtl; text-align: right;">
+              <span>{{ collection.products_count }} </span>
+              <a href="{{ collection.url }}">
+                <img src="{{ collection.featured_image | img_url: 'master' }}">
+                <span>{{ collection.title }}</span>
+              </a>
+            </li>
+          {% endif %}
+        {% endif %}
+      {%- endfor -%}
+    </ul>
+
+    <p style="display:none;">Total Brand Collections: {{ brand_count }}</p>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Brands List",
+  "settings": [
+    {
+      "type": "collection_list",
+      "id": "collection_list",
+      "label": "Collections"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brands List"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Get all letter-action-menu-item elements
+    const menuItems = document.querySelectorAll(".letter-action-menu-item");
+
+    // Get all data-letter values from the brand list
+    const brandLetters = new Set();
+    document.querySelectorAll("[data-letter]").forEach(function(brandItem) {
+        brandLetters.add(brandItem.getAttribute("data-letter").toLowerCase());
+    });
+
+    // Loop through each menu item and disable it if its data-trigger-letter is not found in the brand list
+    menuItems.forEach(function(menuItem) {
+        const triggerLetter = menuItem.getAttribute("data-trigger-letter").toLowerCase();
+        
+        // Skip the 'all' trigger letter
+        if (triggerLetter === "all" || triggerLetter === 'جميع الأقسام') return;
+
+        if (!brandLetters.has(triggerLetter)) {
+            menuItem.classList.add("disabled"); // Add a disabled class
+            menuItem.style.pointerEvents = "none"; // Optionally, make it non-clickable
+            menuItem.style.opacity = "0.5"; // Optionally, reduce opacity to visually indicate disabled
+        }
+    });
+  });
+</script>

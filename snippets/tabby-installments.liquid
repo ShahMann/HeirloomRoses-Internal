@@ -1,0 +1,66 @@
+{%- liquid
+    assign currency = localization.country.currency.iso_code
+    assign locale = localization.language.iso_code
+-%}
+
+<div id="TabbyPromo"></div>
+
+<script>
+  (function() {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.tabby.ai/tabby-promo.js';
+    script.async = true;
+    script.onload = () => {
+      const currency = '{{ currency }}';
+      const locale = '{{ locale }}';
+      const installmentsCount = 4;
+      let lastUpdatedPrice = null;
+
+      const getPriceFromPage = () => {
+        const priceRegExp = /\b[0-9\.,']+\b/;
+        const priceElement = document.querySelector('.price__current');
+        if (!priceElement) return 0;
+
+        const [layoutPrice] = priceElement.textContent?.match(priceRegExp) || [];
+        if (!layoutPrice) return 0;
+
+        return parseFloat(layoutPrice.replace(/[^0-9.]/g, ''));
+      };
+
+      const initializeTabbyPromo = (price) => {
+        if (price !== lastUpdatedPrice) { 
+          document.querySelector('#TabbyPromo').innerHTML = '';
+          new TabbyPromo({
+            selector: '#TabbyPromo',
+            currency,
+            price,
+            locale,
+            installmentsCount,
+          });
+          lastUpdatedPrice = price;
+          console.log("Tabby price updated:", price);
+        } else {
+          console.log("Error :", price);
+        }
+      };
+
+      const initialPrice = getPriceFromPage();
+      initializeTabbyPromo(initialPrice);
+
+      window.addEventListener('tabby:priceUpdate', () => {
+        setTimeout(() => { 
+          const updatedPrice = getPriceFromPage();
+          initializeTabbyPromo(updatedPrice);
+        }, 50);
+      });
+    };
+
+    document.body.appendChild(script);
+  })();
+</script>
+
+<style>
+  #TabbyPromo div:empty, #TabbyDialogContainer div:empty {
+    display: block;
+  }
+</style>

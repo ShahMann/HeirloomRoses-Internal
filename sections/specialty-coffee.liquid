@@ -1,0 +1,23 @@
+<section class="specialty-coffee">
+  <div class="specialty-coffee-container container">
+      {{ section.settings.rich_text }}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Specialty Coffee",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "rich_text",
+      "label": "Specialty Coffee Content",
+    }
+  ],
+  "presets": [
+    {
+      "name": "Specialty Coffee"
+    }
+  ]
+}
+{% endschema %}

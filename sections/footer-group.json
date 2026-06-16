@@ -1,0 +1,140 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer Group",
+  "sections": {
+    "icons-with-text": {
+      "type": "icons-with-text",
+      "blocks": {
+        "icons-with-text-1": {
+          "type": "item",
+          "settings": {
+            "icon": "chat_bubble",
+            "heading": "Visit our support center",
+            "text": "<p>Expert help & advice</p>",
+            "link": ""
+          }
+        },
+        "icons-with-text-2": {
+          "type": "item",
+          "settings": {
+            "icon": "box",
+            "heading": "Check your order status",
+            "text": "<p>Updates & tracking</p>",
+            "link": ""
+          }
+        },
+        "icons-with-text-3": {
+          "type": "item",
+          "settings": {
+            "icon": "return",
+            "heading": "Returns & exchanges",
+            "text": "<p>All you need to know</p>",
+            "link": ""
+          }
+        },
+        "icons-with-text-4": {
+          "type": "item",
+          "settings": {
+            "icon": "credit_card",
+            "heading": "Flexible payment",
+            "text": "<p>Plenty of options to make your purchase, including flexible installment plans.</p>",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "icons-with-text-1",
+        "icons-with-text-2",
+        "icons-with-text-3",
+        "icons-with-text-4"
+      ],
+      "settings": {
+        "heading": "",
+        "heading_align": "text-start",
+        "icon_size": 36,
+        "title_type_scale": "medium",
+        "text_type_scale": "medium",
+        "icon_position": "beside",
+        "mobile_stack": false,
+        "section_height": "small",
+        "color_scheme": "2",
+        "full_width": true,
+        "dividers": "border-top",
+        "prevent_animation": false
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "link-list-1": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Information",
+            "menu": "cms"
+          }
+        },
+        "newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Newsletter",
+            "text": "<p>Sign up for our newsletter to receive updates and exclusive discounts</p>",
+            "collapse_mobile": true
+          }
+        },
+        "link_list_gBwXkB": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Visit Our Store",
+            "menu": "footer"
+          }
+        },
+        "text": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "image_width": 150,
+            "heading": "",
+            "text": "<p>2329 Makkah Al Mukarramah Branch Road Store #2 Ground floor, Najm al Qurais Building, Riyadh 12821</p>",
+            "google_maps_src": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d35189.031697824066!2d46.748294!3d24.705542!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f053ded08e019%3A0x47baea5401db03e8!2sSulalat%20Coffee!5e1!3m2!1sen!2ssa!4v1728047042469!5m2!1sen!2ssa",
+            "button_label": "Direction",
+            "button_link": "https://maps.app.goo.gl/5rRLucD4ksNp2jUU7",
+            "enable_follow_on_shop": false,
+            "show_social": true,
+            "text_align": "text-start"
+          }
+        }
+      },
+      "block_order": [
+        "link-list-1",
+        "newsletter",
+        "link_list_gBwXkB",
+        "text"
+      ],
+      "settings": {
+        "show_back_to_top": true,
+        "show_payment_icons": true,
+        "show_powered_by": false,
+        "start_year": 2013,
+        "footer_text": "Sulalat.com Store. All rights reserved.",
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "secondary_menu": "",
+        "bg_color": "#f4f4f4",
+        "text_color": "#070707"
+      }
+    }
+  },
+  "order": [
+    "icons-with-text",
+    "footer"
+  ]
+}

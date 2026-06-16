@@ -1,0 +1,75 @@
+<section class="about-us">
+  <div class="about-us-container container">
+    {% if section.settings.image %}
+      {% if section.settings.show_image_ar_only %}
+        {% if request.locale.iso_code == 'ar' %}
+          <div class="about-us-image-container">
+            {{ section.settings.image | image_url: width: 320 | image_tag: alt: section.settings.alt_text }}
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="about-us-image-container">
+          {{ section.settings.image | image_url: width: 320 | image_tag: alt: section.settings.alt_text }}
+        </div>
+      {% endif %}
+    {% endif %}
+    <div class="about-us-text">
+      {{ section.settings.rich_text }}
+    </div>
+  </div>
+</section>
+
+<style>
+    .about-us-container {
+      display: flex;
+      gap: 40px;
+      padding-top:100px;
+      padding-bottom:100px;
+  }
+
+  .about-us-image-container {
+      width: 30%;
+  }
+
+  .about-us-text {
+      width: 70%;
+  }
+
+  .about-us-image-container img {
+      width: 100%;
+      object-fit: cover;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "About Us",
+  "settings": [
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "Image Alt Text",
+    },
+    {
+      "type": "richtext",
+      "id": "rich_text",
+      "label": "About Us Content",
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "About Us Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image_ar_only",
+      "label": "Show image only in Arabic store"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Us"
+    }
+  ]
+}
+{% endschema %}

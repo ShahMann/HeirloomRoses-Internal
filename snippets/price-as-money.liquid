@@ -1,0 +1,50 @@
+{%- comment -%}
+  Parameters:
+  - price {Price} - Price
+  - show_money_with_currency {Boolean} - Force the price to show/not show with currency. If not provided, defaults to settings.show_currency_code
+
+  Usage:
+  {%- render 'price-with-supercents', price: price -%}
+{%- endcomment -%}
+{%- liquid
+  if show_money_with_currency == null
+    assign show_money_with_currency = settings.show_currency_code
+  endif
+
+  if show_money_with_currency
+    assign money_price = price | money_with_currency
+  else
+    assign money_price = price | money
+  endif
+
+  if settings.superscript_decimals
+    unless shop.money_format contains 'money' or shop.money_format contains '.'
+      assign separator = '.'
+      if shop.money_format contains '{{amount_with_comma_separator}}' or shop.money_format contains '{{ amount_with_comma_separator }}'
+        assign separator = ','
+      endif
+
+      assign money_price = money_price | replace: separator, '<sup>'
+      if show_money_with_currency
+        assign money_price = money_price | replace: ' ', '</sup> '
+      else
+        assign money_price = money_price | concat: '</sup>'
+      endif
+    endunless
+  endif
+
+  assign percentage = settings.tax_value
+  assign adjustment_amount = price | times: percentage
+%}
+{% comment %} echo adjustment_amount | money   {% endcomment %}
+<img
+  src="{{ 'Saudi_Riyal_Symbol-1.png' | asset_url }}"
+  class="currency"
+  alt="Currency"
+  style="vertical-align: middle;"
+  height="auto"
+  width="20px"
+>
+<span>{{ adjustment_amount | money_without_currency }}</span>
+
+{% comment %} <span>{{ adjustment_amount | money }}</span> {% endcomment %}
