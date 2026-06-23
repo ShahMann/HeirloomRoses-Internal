@@ -1,0 +1,651 @@
+{%- liquid
+  assign form_id = 'pre-registration-form-' | append: section.id
+  assign variant = product.selected_or_first_available_variant
+-%}
+
+<div class="pre-registration" id="shopify-section-{{ section.id }}">
+  <div class="pre-registration__container">
+    {%- if section.settings.form_title != blank -%}
+      <h1 class="pre-registration__title">{{ section.settings.form_title | escape }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.form_description != blank -%}
+      <div class="pre-registration__description rte">
+        {{ section.settings.form_description }}
+      </div>
+    {%- endif -%}
+
+    <form
+      id="{{ form_id }}"
+      class="pre-registration__form"
+      action="{{ routes.cart_add_url }}"
+      method="post"
+      novalidate
+    >
+      <input type="hidden" name="id" value="{{ variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="return_to" value="/checkout">
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'field' and block.settings.label != blank -%}
+          {%- liquid
+            assign field_id = form_id | append: '-field-' | append: forloop.index
+            assign property_name = block.settings.label | escape | prepend: 'properties[' | append: ']'
+            assign is_required = block.settings.required
+            assign field_type = block.settings.field_type
+          -%}
+
+          <div
+            class="pre-registration__field{% if field_type == 'signature' %} pre-registration__field--signature{% endif %}{% if field_type == 'checkbox' %} pre-registration__field--checkbox{% endif %}"
+            data-field-type="{{ field_type }}"
+            {% if is_required %}data-required="true"{% endif %}
+            {{ block.shopify_attributes }}
+          >
+            {%- unless field_type == 'checkbox' -%}
+              <label class="pre-registration__label" for="{{ field_id }}">
+                {{ block.settings.label | escape }}
+                {%- if is_required -%}
+                  <span class="pre-registration__required" aria-hidden="true">*</span>
+                {%- endif -%}
+              </label>
+            {%- endunless -%}
+
+            {%- case field_type -%}
+              {%- when 'textarea' -%}
+                <textarea
+                  id="{{ field_id }}"
+                  class="pre-registration__input pre-registration__textarea"
+                  name="{{ property_name }}"
+                  rows="4"
+                  placeholder="{{ block.settings.placeholder | escape }}"
+                  {% if is_required %}
+                    required
+                    aria-required="true"
+                  {% endif %}
+                ></textarea>
+
+              {%- when 'dropdown' -%}
+                {%- assign dropdown_options = block.settings.dropdown_options | split: ',' -%}
+                <select
+                  id="{{ field_id }}"
+                  class="pre-registration__input pre-registration__select"
+                  name="{{ property_name }}"
+                  {% if is_required %}
+                    required
+                    aria-required="true"
+                  {% endif %}
+                >
+                  <option value="">{{ block.settings.placeholder | default: 'Select an option' | escape }}</option>
+                  {%- for option in dropdown_options -%}
+                    {%- assign option_value = option | strip -%}
+                    {%- if option_value != blank -%}
+                      <option value="{{ option_value | escape }}">{{ option_value | escape }}</option>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </select>
+
+              {%- when 'checkbox' -%}
+                <div class="pre-registration__checkbox-wrapper">
+                  <input
+                    type="checkbox"
+                    id="{{ field_id }}"
+                    class="pre-registration__checkbox"
+                    name="{{ property_name }}"
+                    value="Yes"
+                    {% if is_required %}
+                      required
+                      aria-required="true"
+                    {% endif %}
+                  >
+                  <label class="pre-registration__checkbox-label" for="{{ field_id }}">
+                    {{ block.settings.label | escape }}
+                    {%- if is_required -%}
+                      <span class="pre-registration__required" aria-hidden="true">*</span>
+                    {%- endif -%}
+                  </label>
+                </div>
+
+              {%- when 'signature' -%}
+                <canvas
+                  id="signature-pad-{{ forloop.index }}"
+                  class="pre-registration__signature-canvas"
+                  data-signature-index="{{ forloop.index }}"
+                  aria-label="{{ block.settings.label | escape }}"
+                ></canvas>
+                <input
+                  type="hidden"
+                  id="{{ field_id }}"
+                  class="pre-registration__signature-input"
+                  name="{{ property_name }}"
+                  data-signature-index="{{ forloop.index }}"
+                >
+                <button
+                  type="button"
+                  class="pre-registration__clear-signature"
+                  data-signature-index="{{ forloop.index }}"
+                >
+                  Clear
+                </button>
+
+              {%- when 'tel' -%}
+                <input
+                  type="tel"
+                  id="{{ field_id }}"
+                  class="pre-registration__input pre-registration__input--tel"
+                  name="{{ property_name }}"
+                  placeholder="{{ block.settings.placeholder | escape }}"
+                  inputmode="tel"
+                  autocomplete="tel"
+                  pattern="[0-9+\-\s()]{7,}"
+                  title="Please enter a valid phone number"
+                  {% if is_required %}
+                    required
+                    aria-required="true"
+                  {% endif %}
+                >
+
+              {%- else -%}
+                <input
+                  type="{{ field_type }}"
+                  id="{{ field_id }}"
+                  class="pre-registration__input"
+                  name="{{ property_name }}"
+                  placeholder="{{ block.settings.placeholder | escape }}"
+                  {% if is_required %}
+                    required
+                    aria-required="true"
+                  {% endif %}
+                >
+            {%- endcase -%}
+
+            <p class="pre-registration__error" role="alert" hidden></p>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      <button type="submit" class="pre-registration__submit">
+        {{ section.settings.submit_button_label | default: 'Register & Pay' | escape }}
+      </button>
+    </form>
+  </div>
+</div>
+
+<script src="{{ 'signature-pad.js' | asset_url }}" defer></script>
+
+<style>
+  #shopify-section-{{ section.id }} .pre-registration {
+    padding: 2rem 1rem;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__container {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__title {
+    margin: 0 0 1rem;
+    font-size: 1.75rem;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__description {
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__field {
+    margin-bottom: 1.25rem;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__required {
+    color: #c00;
+    font-weight: bold;
+    margin-left: 0.15rem;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__input,
+  #shopify-section-{{ section.id }} .pre-registration__textarea,
+  #shopify-section-{{ section.id }} .pre-registration__select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font: inherit;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__input--error,
+  #shopify-section-{{ section.id }} .pre-registration__textarea--error,
+  #shopify-section-{{ section.id }} .pre-registration__select--error,
+  #shopify-section-{{ section.id }} .pre-registration__signature-canvas--error {
+    border-color: #c00;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__error {
+    margin: 0.35rem 0 0;
+    color: #c00;
+    font-size: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__checkbox-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__checkbox {
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__checkbox-label {
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__signature-canvas {
+    display: block;
+    width: 100%;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    touch-action: none;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__clear-signature {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__submit {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 4px;
+    background: #2a2b2a;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__submit:hover {
+    opacity: 0.9;
+  }
+
+  #shopify-section-{{ section.id }} .pre-registration__submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .pre-registration {
+      padding: 1.5rem 1rem;
+    }
+
+    #shopify-section-{{ section.id }} .pre-registration__title {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+{% javascript %}
+  (function () {
+    document.querySelectorAll('.pre-registration__form').forEach((form) => {
+      const sectionRoot = form.closest('.pre-registration');
+      if (!sectionRoot || sectionRoot.dataset.preRegInitialized === 'true') return;
+
+      const signaturePads = {};
+      const errorMessage = 'This field is required.';
+      const phoneErrorMessage = 'Please enter a valid phone number.';
+      const phonePattern = /^[0-9+\-\s()]{7,}$/;
+
+      function sanitizePhoneInput(input) {
+        input.value = input.value.replace(/[^0-9+\-\s()]/g, '');
+      }
+
+    function resizeCanvas(canvas) {
+      const ratio = Math.max(window.devicePixelRatio || 1, 1);
+      const width = canvas.offsetWidth;
+      const height = canvas.offsetHeight;
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+      const context = canvas.getContext('2d');
+      context.scale(ratio, ratio);
+    }
+
+    function initSignaturePads() {
+      if (typeof SignaturePad === 'undefined') return;
+
+      sectionRoot.querySelectorAll('.pre-registration__signature-canvas').forEach((canvas) => {
+        const index = canvas.dataset.signatureIndex;
+        resizeCanvas(canvas);
+        const pad = new SignaturePad(canvas, {
+          backgroundColor: 'rgb(255, 255, 255)',
+          penColor: 'rgb(0, 0, 0)'
+        });
+        signaturePads[index] = pad;
+      });
+    }
+
+    function clearFieldError(field) {
+      const errorEl = field.querySelector('.pre-registration__error');
+      if (errorEl) {
+        errorEl.hidden = true;
+        errorEl.textContent = '';
+      }
+
+      field.querySelectorAll(
+        '.pre-registration__input, .pre-registration__textarea, .pre-registration__select, .pre-registration__signature-canvas'
+      ).forEach((input) => {
+        input.classList.remove('pre-registration__input--error');
+        input.classList.remove('pre-registration__textarea--error');
+        input.classList.remove('pre-registration__select--error');
+        input.classList.remove('pre-registration__signature-canvas--error');
+      });
+    }
+
+    function showFieldError(field, message) {
+      const errorEl = field.querySelector('.pre-registration__error');
+      if (errorEl) {
+        errorEl.textContent = message;
+        errorEl.hidden = false;
+      }
+
+      const input = field.querySelector(
+        '.pre-registration__input, .pre-registration__textarea, .pre-registration__select, .pre-registration__signature-canvas'
+      );
+      if (input) {
+        if (input.classList.contains('pre-registration__signature-canvas')) {
+          input.classList.add('pre-registration__signature-canvas--error');
+        } else if (input.classList.contains('pre-registration__textarea')) {
+          input.classList.add('pre-registration__textarea--error');
+        } else if (input.classList.contains('pre-registration__select')) {
+          input.classList.add('pre-registration__select--error');
+        } else {
+          input.classList.add('pre-registration__input--error');
+        }
+      }
+    }
+
+    function validateField(field) {
+      const fieldType = field.dataset.fieldType;
+      const isRequired = field.dataset.required === 'true';
+      clearFieldError(field);
+
+      if (fieldType === 'checkbox') {
+        if (!isRequired) return true;
+        const checkbox = field.querySelector('.pre-registration__checkbox');
+        if (!checkbox || !checkbox.checked) {
+          showFieldError(field, errorMessage);
+          return false;
+        }
+        return true;
+      }
+
+      if (fieldType === 'signature') {
+        if (!isRequired) return true;
+        const index = field.querySelector('.pre-registration__signature-canvas')?.dataset.signatureIndex;
+        const pad = signaturePads[index];
+        if (!pad || pad.isEmpty()) {
+          showFieldError(field, errorMessage);
+          return false;
+        }
+        return true;
+      }
+
+      const input = field.querySelector(
+        '.pre-registration__input, .pre-registration__textarea, .pre-registration__select'
+      );
+
+      if (fieldType === 'tel' && input) {
+        sanitizePhoneInput(input);
+        const value = input.value.trim();
+
+        if (!value) {
+          if (isRequired) {
+            showFieldError(field, errorMessage);
+            return false;
+          }
+          return true;
+        }
+
+        if (!phonePattern.test(value)) {
+          showFieldError(field, phoneErrorMessage);
+          return false;
+        }
+        return true;
+      }
+
+      if (!isRequired) return true;
+
+      if (!input || !input.value.trim()) {
+        showFieldError(field, errorMessage);
+        return false;
+      }
+
+      return true;
+    }
+
+    function populateSignatureValues() {
+      sectionRoot.querySelectorAll('.pre-registration__field--signature').forEach((field) => {
+        const canvas = field.querySelector('.pre-registration__signature-canvas');
+        const hiddenInput = field.querySelector('.pre-registration__signature-input');
+        const index = canvas?.dataset.signatureIndex;
+        const pad = signaturePads[index];
+
+        if (hiddenInput && pad && !pad.isEmpty()) {
+          hiddenInput.value = pad.toDataURL('image/png');
+        }
+      });
+    }
+
+    sectionRoot.querySelectorAll('.pre-registration__input--tel').forEach((input) => {
+      input.addEventListener('input', () => sanitizePhoneInput(input));
+      input.addEventListener('paste', (event) => {
+        event.preventDefault();
+        const pasted = (event.clipboardData || window.clipboardData).getData('text');
+        input.value = (input.value + pasted).replace(/[^0-9+\-\s()]/g, '');
+      });
+    });
+
+    sectionRoot.querySelectorAll('.pre-registration__clear-signature').forEach((button) => {
+      button.addEventListener('click', () => {
+        const index = button.dataset.signatureIndex;
+        const pad = signaturePads[index];
+        if (pad) {
+          pad.clear();
+        }
+        const field = button.closest('.pre-registration__field');
+        if (field) {
+          clearFieldError(field);
+          const hiddenInput = field.querySelector('.pre-registration__signature-input');
+          if (hiddenInput) {
+            hiddenInput.value = '';
+          }
+        }
+      });
+    });
+
+    form.addEventListener('submit', (event) => {
+      let isValid = true;
+
+      sectionRoot.querySelectorAll('.pre-registration__field').forEach((field) => {
+        if (!validateField(field)) {
+          isValid = false;
+        }
+      });
+
+      if (!isValid) {
+        event.preventDefault();
+        return;
+      }
+
+      populateSignatureValues();
+    });
+
+      function setup() {
+        if (sectionRoot.dataset.preRegInitialized === 'true') return;
+        sectionRoot.dataset.preRegInitialized = 'true';
+        initSignaturePads();
+
+        window.addEventListener('resize', () => {
+          Object.keys(signaturePads).forEach((index) => {
+            const pad = signaturePads[index];
+            const canvas = sectionRoot.querySelector(`[data-signature-index="${index}"].pre-registration__signature-canvas`);
+            if (!canvas || !pad) return;
+            const data = pad.isEmpty() ? null : pad.toDataURL('image/png');
+            resizeCanvas(canvas);
+            pad.clear();
+            if (data) {
+              pad.fromDataURL(data);
+            }
+          });
+        });
+      }
+
+      if (typeof SignaturePad !== 'undefined') {
+        setup();
+      } else {
+        window.addEventListener('load', setup);
+      }
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Product pre-registration",
+  "tag": "section",
+  "class": "cc-product-pre-registration",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "form_title",
+      "label": "Form title",
+      "default": "Pre-Registration"
+    },
+    {
+      "type": "richtext",
+      "id": "form_description",
+      "label": "Form description"
+    },
+    {
+      "type": "text",
+      "id": "submit_button_label",
+      "label": "Submit button label",
+      "default": "Register & Pay"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "field",
+      "name": "Field",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "info": "Used as the line item property key and field label."
+        },
+        {
+          "type": "select",
+          "id": "field_type",
+          "label": "Field type",
+          "default": "text",
+          "options": [
+            { "value": "text", "label": "Text" },
+            { "value": "email", "label": "Email" },
+            { "value": "number", "label": "Number" },
+            { "value": "tel", "label": "Phone" },
+            { "value": "date", "label": "Date" },
+            { "value": "textarea", "label": "Textarea" },
+            { "value": "dropdown", "label": "Dropdown" },
+            { "value": "checkbox", "label": "Checkbox" },
+            { "value": "signature", "label": "Signature" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": true
+        },
+        {
+          "type": "textarea",
+          "id": "dropdown_options",
+          "label": "Dropdown options",
+          "info": "Comma-separated values. Only used when field type is dropdown."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "Product pre-registration",
+      "blocks": [
+        {
+          "type": "field",
+          "settings": {
+            "label": "Full Name",
+            "field_type": "text",
+            "placeholder": "Enter your full name",
+            "required": true
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "label": "Email",
+            "field_type": "email",
+            "placeholder": "you@example.com",
+            "required": true
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "label": "Phone",
+            "field_type": "tel",
+            "placeholder": "+1 555 000 0000",
+            "required": true
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "label": "Signature",
+            "field_type": "signature",
+            "required": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

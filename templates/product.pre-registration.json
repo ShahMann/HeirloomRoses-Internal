@@ -1,0 +1,160 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product-pre-registration",
+      "blocks": {
+        "field_3gpiBB": {
+          "type": "field",
+          "name": "Name",
+          "settings": {
+            "label": "Name",
+            "field_type": "text",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": ""
+          }
+        },
+        "field_GE7Y9P": {
+          "type": "field",
+          "name": "Email",
+          "settings": {
+            "label": "Email",
+            "field_type": "email",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": ""
+          }
+        },
+        "field_mfiwAy": {
+          "type": "field",
+          "name": "Prefix",
+          "settings": {
+            "label": "Prefix",
+            "field_type": "dropdown",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": "Mr,Mrs,Miss"
+          }
+        },
+        "field_w3QrMQ": {
+          "type": "field",
+          "name": "Birthday",
+          "settings": {
+            "label": "Birthday",
+            "field_type": "date",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": ""
+          }
+        },
+        "field_G9hmrQ": {
+          "type": "field",
+          "name": "Age",
+          "settings": {
+            "label": "Age",
+            "field_type": "number",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": ""
+          }
+        },
+        "field_khUckL": {
+          "type": "field",
+          "name": "Cell phone",
+          "settings": {
+            "label": "Cell phone",
+            "field_type": "tel",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": ""
+          }
+        },
+        "field_fd4Lc9": {
+          "type": "field",
+          "name": "Home address",
+          "settings": {
+            "label": "Home address",
+            "field_type": "textarea",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": ""
+          }
+        },
+        "field_Y3zTxL": {
+          "type": "field",
+          "name": "Job title",
+          "settings": {
+            "label": "Job title",
+            "field_type": "text",
+            "placeholder": "",
+            "required": false,
+            "dropdown_options": ""
+          }
+        },
+        "field_DTBt4f": {
+          "type": "field",
+          "name": "Company / Organization",
+          "settings": {
+            "label": "Company / Organization",
+            "field_type": "text",
+            "placeholder": "",
+            "required": false,
+            "dropdown_options": ""
+          }
+        },
+        "field_cEgwJh": {
+          "type": "field",
+          "name": "Passport",
+          "settings": {
+            "label": "Passport",
+            "field_type": "text",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": ""
+          }
+        },
+        "field_jVCYyU": {
+          "type": "field",
+          "name": "Acknowledgment",
+          "settings": {
+            "label": "Acknowledgment",
+            "field_type": "signature",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": ""
+          }
+        }
+      },
+      "block_order": [
+        "field_3gpiBB",
+        "field_GE7Y9P",
+        "field_mfiwAy",
+        "field_w3QrMQ",
+        "field_G9hmrQ",
+        "field_khUckL",
+        "field_fd4Lc9",
+        "field_Y3zTxL",
+        "field_DTBt4f",
+        "field_cEgwJh",
+        "field_jVCYyU"
+      ],
+      "settings": {
+        "form_title": "Pre-Registration",
+        "form_description": "",
+        "submit_button_label": "Register & Pay"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
