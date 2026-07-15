@@ -21,7 +21,7 @@
 {%- endif -%} {% endcomment %}
 
 {% assign canonical_url = canonical_url | split: "?" | first %}
-<link rel="canonical" href="{{ canonical_url }}">
+      <link rel="canonical" href="{{ canonical_url }}">
 
 {%- if settings.favicon != blank -%}
   {%- liquid

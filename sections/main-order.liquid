@@ -54,11 +54,6 @@
           <address>
             {{ order.shipping_address | format_address }}
           </address>
-          {% if order.metafields.checkoutblocks.enter_address_short_code %}
-          <div class="short-address">
-            <p> Address Short Code : {{ order.metafields.checkoutblocks.enter_address_short_code }} </p>
-          </div>
-        {% endif %}
         </div>
       </div>
     </div>

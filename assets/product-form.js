@@ -27,7 +27,7 @@ if (!customElements.get('product-form')) {
 
       evt.preventDefault();
 
-      if (this.submitBtn.getAttribute('aria-disabled') === 'true') return;
+      // if (this.submitBtn.getAttribute('aria-disabled') === 'true') return;
 
       if (theme.settings.vibrateOnATC && window.navigator.vibrate) {
         window.navigator.vibrate(100);

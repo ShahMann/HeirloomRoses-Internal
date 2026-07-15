@@ -1,7 +1,6 @@
 const input = document.getElementById("nameInput");
 const textOverlay = document.getElementById("textOverlay");
 const editor = document.getElementById("editor");
-const eidImage = document.getElementById("eidImage");
 
 function isArabic(text) {
   const arabicRange = /[\u0600-\u06FF]/;
@@ -14,51 +13,10 @@ function applyFont(name) {
   textOverlay.style.fontFamily = fontFamily;
 }
 
-// Handle name input
 input.addEventListener("input", function () {
   const name = this.value.trim();
   textOverlay.textContent = name;
   applyFont(name);
-});
-
-// Handle template selection
-function handleTemplateChange() {
-  const selectedTemplate = document.querySelector('input[name="template"]:checked');
-  if (selectedTemplate) {
-    const newImageSrc = selectedTemplate.dataset.image;
-    const textTop = selectedTemplate.dataset.textTop || '70.5%';
-    const textLeft = selectedTemplate.dataset.textLeft || '50%';
-    const fontSize = selectedTemplate.dataset.fontSize || '40px';
-    const textColor = selectedTemplate.dataset.textColor || 'rgb(83, 194, 149)';
-    
-    eidImage.src = newImageSrc;
-    
-    // Update text overlay position and styling
-    textOverlay.style.top = textTop;
-    textOverlay.style.left = textLeft;
-    textOverlay.style.fontSize = fontSize;
-    textOverlay.style.color = textColor;
-    
-    // Update visual selection
-    document.querySelectorAll('.template-option').forEach(option => {
-      option.classList.remove('selected');
-    });
-    selectedTemplate.closest('.template-option').classList.add('selected');
-  }
-}
-
-// Add event listeners to all template radio buttons
-document.addEventListener('DOMContentLoaded', function() {
-  const templateRadios = document.querySelectorAll('input[name="template"]');
-  templateRadios.forEach(radio => {
-    radio.addEventListener('change', handleTemplateChange);
-  });
-  
-  // Initialize with first template if available
-  if (templateRadios.length > 0) {
-    templateRadios[0].checked = true;
-    handleTemplateChange();
-  }
 });
 
 function ensureImageLoaded(img, callback) {
@@ -87,15 +45,14 @@ function downloadCanvas(canvas, filename, asPDF = false) {
 }
 
 function downloadImageOrPDF(asPDF = false) {
-  const name = input.value.trim() || "employee-card";
-  const currentImage = document.getElementById("eidImage");
+  const name = input.value.trim() || "eid-card";
+  const eidImage = document.getElementById("eidImage");
 
-  ensureImageLoaded(currentImage, () => {
+  ensureImageLoaded(eidImage, () => {
     document.fonts.ready.then(() => {
       html2canvas(editor, {
         useCORS: true,
-        backgroundColor: null,
-        scale: 2 // Higher quality export
+        backgroundColor: null
       }).then(canvas => {
         downloadCanvas(canvas, name, asPDF);
       });

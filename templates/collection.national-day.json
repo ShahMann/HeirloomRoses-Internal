@@ -22,18 +22,71 @@
         "color_scheme": "default"
       }
     },
+    "image_banner_cXbkDX": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_hmyiKL": {
+          "type": "heading",
+          "settings": {
+            "heading": "Image banner",
+            "heading_size": "h1",
+            "heading_h1": false
+          }
+        },
+        "text_PAJ3JN": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "enlarge_text": true
+          }
+        },
+        "button_BLNgwX": {
+          "type": "button",
+          "settings": {
+            "button_1_label": "Optional button",
+            "button_1_link": "",
+            "button_1_style": "btn btn--primary",
+            "button_2_label": "Optional button",
+            "button_2_link": "",
+            "button_2_style": "btn btn--primary"
+          }
+        }
+      },
+      "block_order": [
+        "heading_hmyiKL",
+        "text_PAJ3JN",
+        "button_BLNgwX"
+      ],
+      "name": "Image banner",
+      "settings": {
+        "url": "",
+        "height_mode": "auto",
+        "fixed_height_desktop": 600,
+        "fixed_height_mobile": 350,
+        "overlay_position": "justify-center items-center",
+        "overlay_text_align": "text-center",
+        "mob_center_text": false,
+        "mobile_stacked": false,
+        "color_scheme": "white",
+        "full_width": true,
+        "transparent_content_color": "#ffffff",
+        "tint_color": "#000000",
+        "tint_opacity": 40,
+        "prevent_animation": false
+      }
+    },
     "promo_grid_kUCY6Q": {
       "type": "promo-grid",
       "blocks": {
         "media_Phkjqa": {
           "type": "media",
           "settings": {
-            "link_url": "",
+            "link_url": "shopify://collections/specialty-coffee",
             "columns": 4,
-            "rows": 3,
-            "line1_text": "Save up to",
+            "rows": 2,
+            "line1_text": "Save",
             "line1_text_type_scale": "text-h6",
-            "line2_text": "50%",
+            "line2_text": "20%",
             "line2_text_type_scale": "text-h0",
             "line3_text": "",
             "line3_text_type_scale": "text-h6",
@@ -42,7 +95,7 @@
             "promo_circle": false,
             "background_color": "#e32b2b",
             "text_color": "#ffffff",
-            "subheading": "Subheading",
+            "subheading": "Speciality Coffee",
             "link_text": "",
             "text_type_scale": "h6",
             "tint_color": "#000000",
@@ -52,21 +105,21 @@
         "media_KMDD6R": {
           "type": "media",
           "settings": {
-            "link_url": "",
+            "link_url": "shopify://collections/national-day-95",
             "columns": 2,
             "rows": 1,
-            "line1_text": "Save up to",
+            "line1_text": "",
             "line1_text_type_scale": "text-h6",
-            "line2_text": "25%",
+            "line2_text": "9.5%",
             "line2_text_type_scale": "text-h0",
             "line3_text": "off",
-            "line3_text_type_scale": "text-h6",
+            "line3_text_type_scale": "text-h4",
             "overlay_position": "justify-start items-start",
             "text_alignment": "text-center",
             "promo_circle": false,
             "background_color": "#e32b2b",
             "text_color": "#ffffff",
-            "subheading": "Subheading",
+            "subheading": "Coffee Tools",
             "link_text": "",
             "text_type_scale": "h6",
             "tint_color": "#000000",
@@ -121,7 +174,7 @@
     "collection-products": {
       "type": "main-collection-products",
       "settings": {
-        "products_per_page": 20,
+        "products_per_page": 18,
         "card_size_mobile": "large",
         "card_size": "medium",
         "show_layout_toggle": true,
@@ -139,6 +192,7 @@
   },
   "order": [
     "collection-banner",
+    "image_banner_cXbkDX",
     "promo_grid_kUCY6Q",
     "collection-products"
   ]

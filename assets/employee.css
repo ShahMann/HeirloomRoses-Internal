@@ -59,26 +59,17 @@
   max-width: 600px;
   margin: 0 auto;
 }
-
-.employee-page input[type="text"] {
+.employee-page input {
   padding: 10px 20px;
   border: 1px solid gray;
   width: 100%;
 }
-
 .employee-page button {
   background-color: #fff;
   padding: 8px 20px;
   border: 1px solid #53bd94;
   color: #53bd94;
-  cursor: pointer;
 }
-
-.employee-page button:hover {
-  background-color: #53bd94;
-  color: #fff;
-}
-
 .form-feild {
   margin-bottom: 20px;
   display: flex;
@@ -86,60 +77,18 @@
   gap: 10px;
   justify-content: center;
 }
+@media screen and (max-width: 480px) {
+  #textOverlay {
+    font-size: 5vw;
+  }
 
-/* Template Selection Styles */
-.template-selection {
-  margin-bottom: 30px;
-}
+  .employee-page {
+    padding: 20px 10px;
+  }
 
-.template-selection h3 {
-  margin-bottom: 15px;
-  font-size: 18px;
-  color: #333;
-}
-
-.template-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  justify-content: center;
-  align-items: center;
-}
-
-.template-option {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 15px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background-color: #fff;
-}
-
-.template-option:hover {
-  border-color: #53bd94;
-  background-color: #f8f9fa;
-}
-
-.template-option input[type="radio"] {
-  margin: 0;
-  accent-color: #53bd94;
-}
-
-.template-option.selected {
-  border-color: #53bd94;
-  background-color: #e8f5f0;
-}
-
-.template-option label {
-  cursor: pointer;
-  margin: 0;
-  font-weight: 500;
-  color: #333;
-}
-
-.template-option.selected label {
-  color: #53bd94;
+  .employee-page input,
+  .employee-page button {
+    width: 100%;
+    font-size: 14px;
+  }
 }

@@ -124,11 +124,12 @@
       -%}
       {%- if sale_label_text -%}
         <div class="product-label-wrapper flex{% if settings.product_label_card_position contains "end" %} justify-end{% endif %}">
+          {% assign get_off_percentage = product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | times: 100.0 | divided_by: product.selected_or_first_available_variant.compare_at_price | money_without_currency | times: 100 | remove: '.0' | times: 1 %}
           <span class="product-label product-label--sale">
             {% if settings.sale_label_icon != "none" %}
               {% render 'icon', icon: settings.sale_label_icon, width: 14, height: 14 %}
             {% endif %}
-            {{ sale_label_text }}
+            {{ sale_label_text }} {{ get_off_percentage }}%
           </span>
         </div>
       {%- endif -%}

@@ -281,6 +281,8 @@
                 {%- endif -%}
               {%- endif -%}
 
+              {% render 'add-ons' %}
+              
               {%- assign instalments_form_id = 'instalments-form-' | append: section.id -%}
               {%- form 'product', product, class: 'js-instalments-form  text-sm mt-2', id: instalments_form_id -%}
                 <input type="hidden" name="id" value="{{ current_variant.id }}">
@@ -358,7 +360,8 @@
                     hidden
                   ></div>
 
-                  <input type="hidden" name="id" value="{{ current_variant.id }}" disabled>
+                  <input type="hidden" name="id" value="{{ current_variant.id }}" disabled>                 
+
                   <div class="product-info__add-to-cart flex{% if enable_dynamic_checkout %} qty-input--secondary-btn{% endif %}">
                     {%- if block.settings.show_qty_selector -%}
                       {% render 'quantity-input', layout_style: 'combined' %}

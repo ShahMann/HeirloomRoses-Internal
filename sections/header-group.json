@@ -1,1 +1,169 @@
-{"type":"header","name":"Header Group","sections":{"reset_password_7LPyB7":{"type":"reset-password","disabled":true,"settings":{"reset-password-text":"We are excited to announce the launch of our newly updated website, designed to enhance your shopping experience! We kindly ask that you update your password to easily access your account and fully enjoy the new improvements.","reset-password-url":"https:\/\/sulalat.com\/en\/account\/login#recover","reset-password-url-text":"Click here to Reset"}},"announcement":{"type":"announcement","blocks":{"announcement-1":{"type":"announcement","disabled":true,"settings":{"text":"<p><a href=\"https:\/\/wa.me\/966564400407\" target=\"_blank\" title=\"https:\/\/wa.me\/966564400407\">966564400407 <\/a>اتصل بنا<br\/><\/p>"}}},"block_order":["announcement-1"],"settings":{"show_social":true,"link1":"","link1_label":"","link2":"","link2_label":"","enable_country_selector":true,"enable_language_selector":true,"bg_color":"#53bd94","text_color":"#ffffff","text_type_scale":"small","read_time":7}},"scrolling_banner_RP8eLj":{"type":"scrolling-banner","blocks":{"text_KpMibb":{"type":"text","disabled":true,"settings":{"text":"Dear Valued Customer, all orders placed today will be fulfilled after Eid.","link":"","font":"body","heading_size":"h6"}}},"block_order":["text_KpMibb"],"settings":{"section_height":"xsmall","spacing":40,"speed":24,"direction":"reverse","pausable":true,"color_scheme":"1","dividers":"none","prevent_animation":false}},"header":{"type":"header","settings":{"enable_sticky":true,"mobile_menu_position":"burger-right","logo_text":"","logo_type_scale":"2","logo":"shopify:\/\/shop_images\/sulalat.png","logo_width":150,"logo_h1":false,"logo_center":true,"enable_search":true,"minimise_search_mobile":true,"minimise_search_desktop":false,"menu":"main-menu","menu_center":false,"repeat_links":true,"menu_featured_link":"Sale","quicklinks_menu":"","cta_show":false,"cta_icon":"phone","cta_label":"Call us","cta_link":"","cta_border_color":"#333333","cta_bg_color":"#333333","cta_text_color":"#ffffff","bg_color":"#ffffff","text_color":"#616059","accent_color":"#53bd94"}},"promo-strip":{"type":"promo-strip","blocks":{"text-1":{"type":"text","settings":{"text":"<p>Buy 4 or more 250g bags of coffee, get 15% discount on each<\/p>","enlarge_text":false,"show_on_mobile":true,"show_on_desktop":true}}},"block_order":["text-1"],"settings":{"section_height":"xsmall","color_scheme":"1","full_width":true,"dividers":"border-top","prevent_animation":false}},"promo_strip_zHGtGk":{"type":"promo-strip","blocks":{"text_dR3wmJ":{"type":"text","disabled":true,"settings":{"text":"<p><strong>Founding Day Offer, 30% off on All Coffee bags<\/strong><\/p>","enlarge_text":false,"show_on_mobile":true,"show_on_desktop":true}}},"block_order":["text_dR3wmJ"],"disabled":true,"settings":{"section_height":"xsmall","color_scheme":"none","full_width":true,"dividers":"border-top","prevent_animation":false}}},"order":["reset_password_7LPyB7","announcement","scrolling_banner_RP8eLj","header","promo-strip","promo_strip_zHGtGk"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header Group",
+  "sections": {
+    "reset_password_7LPyB7": {
+      "type": "reset-password",
+      "disabled": true,
+      "settings": {
+        "reset-password-text": "We are excited to announce the launch of our newly updated website, designed to enhance your shopping experience! We kindly ask that you update your password to easily access your account and fully enjoy the new improvements.",
+        "reset-password-url": "https://sulalat.com/en/account/login#recover",
+        "reset-password-url-text": "Click here to Reset"
+      }
+    },
+    "announcement": {
+      "type": "announcement",
+      "blocks": {
+        "announcement-1": {
+          "type": "announcement",
+          "disabled": true,
+          "settings": {
+            "text": "<p><a href=\"https://wa.me/966564400407\" target=\"_blank\" title=\"https://wa.me/966564400407\">966564400407 </a>اتصل بنا<br/></p>"
+          }
+        }
+      },
+      "block_order": [
+        "announcement-1"
+      ],
+      "settings": {
+        "show_social": true,
+        "link1": "",
+        "link1_label": "",
+        "link2": "",
+        "link2_label": "",
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "bg_color": "#53bd94",
+        "text_color": "#ffffff",
+        "text_type_scale": "small",
+        "read_time": 7
+      }
+    },
+    "scrolling_banner_RP8eLj": {
+      "type": "scrolling-banner",
+      "blocks": {
+        "text_KpMibb": {
+          "type": "text",
+          "settings": {
+            "text": "Dear Valued Customer, all orders placed today will be fulfilled after Eid.",
+            "link": "",
+            "font": "body",
+            "heading_size": "h6"
+          }
+        }
+      },
+      "block_order": [
+        "text_KpMibb"
+      ],
+      "disabled": true,
+      "settings": {
+        "section_height": "xsmall",
+        "spacing": 40,
+        "speed": 24,
+        "direction": "reverse",
+        "pausable": true,
+        "color_scheme": "1",
+        "dividers": "none",
+        "prevent_animation": false
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "enable_sticky": true,
+        "mobile_menu_position": "burger-right",
+        "logo_text": "",
+        "logo_type_scale": "2",
+        "logo": "shopify://shop_images/sulalat.png",
+        "logo_width": 150,
+        "logo_h1": false,
+        "logo_center": true,
+        "enable_search": true,
+        "minimise_search_mobile": true,
+        "minimise_search_desktop": false,
+        "menu": "main-menu",
+        "menu_center": false,
+        "repeat_links": true,
+        "menu_featured_link": "Sale",
+        "quicklinks_menu": "",
+        "cta_show": false,
+        "cta_icon": "phone",
+        "cta_label": "Call us",
+        "cta_link": "",
+        "cta_border_color": "#333333",
+        "cta_bg_color": "#333333",
+        "cta_text_color": "#ffffff",
+        "bg_color": "#ffffff",
+        "text_color": "#616059",
+        "accent_color": "#53bd94"
+      }
+    },
+    "promo-strip": {
+      "type": "promo-strip",
+      "blocks": {
+        "text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Buy 4 or more 250g bags of coffee, get 15% discount on each</p>",
+            "enlarge_text": false,
+            "show_on_mobile": true,
+            "show_on_desktop": true
+          }
+        }
+      },
+      "block_order": [
+        "text-1"
+      ],
+      "settings": {
+        "section_height": "xsmall",
+        "color_scheme": "1",
+        "full_width": true,
+        "dividers": "border-top",
+        "prevent_animation": false
+      }
+    },
+    "promo_strip_zHGtGk": {
+      "type": "promo-strip",
+      "blocks": {
+        "text_dR3wmJ": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p><strong>Founding Day Offer, 30% off on All Coffee bags</strong></p>",
+            "enlarge_text": false,
+            "show_on_mobile": true,
+            "show_on_desktop": true
+          }
+        }
+      },
+      "block_order": [
+        "text_dR3wmJ"
+      ],
+      "disabled": true,
+      "settings": {
+        "section_height": "xsmall",
+        "color_scheme": "none",
+        "full_width": true,
+        "dividers": "border-top",
+        "prevent_animation": false
+      }
+    }
+  },
+  "order": [
+    "reset_password_7LPyB7",
+    "announcement",
+    "scrolling_banner_RP8eLj",
+    "header",
+    "promo-strip",
+    "promo_strip_zHGtGk"
+  ]
+}

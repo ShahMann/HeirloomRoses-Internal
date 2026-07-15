@@ -1,1 +1,81 @@
-{"sections":{"main":{"type":"main-page","settings":{"show_page_title":true,"heading_align":"text-start"}},"brands_WKRjKM":{"type":"brands","settings":{"collection_list":["acaia","ankomn","baratza","barista-hustle","chemex","aeropress","cafflano","la-marzocco","soy","able","acme-co","beko","bellman","bialetti","brewista","cafec","cafetto","clever","compak","created","crema-pro","drink-morning","filtropa","flair","fressko","graycano","hario","holzklotz","hottop","huskee","ikawa","ilsa","its-american-press","jibbijug","joefrex","kalita","keep-cup","kruve","libbey","lighttells","loveramics","mahlkonig","marco","melitta","moccamaster","motta","nitro-dp","nuova-simonelli","orphan-espresso","pesado"]}}},"order":["main","brands_WKRjKM"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_page_title": true,
+        "heading_align": "text-start"
+      }
+    },
+    "brands_WKRjKM": {
+      "type": "brands",
+      "settings": {
+        "collection_list": [
+          "acaia",
+          "ankomn",
+          "baratza",
+          "barista-hustle",
+          "chemex",
+          "aeropress",
+          "cafflano",
+          "la-marzocco",
+          "soy",
+          "able",
+          "acme-co",
+          "beko",
+          "bellman",
+          "bialetti",
+          "brewista",
+          "cafec",
+          "cafetto",
+          "clever",
+          "compak",
+          "created",
+          "crema-pro",
+          "drink-morning",
+          "filtropa",
+          "flair",
+          "fressko",
+          "graycano",
+          "hario",
+          "holzklotz",
+          "hottop",
+          "huskee",
+          "ikawa",
+          "ilsa",
+          "its-american-press",
+          "jibbijug",
+          "joefrex",
+          "kalita",
+          "keep-cup",
+          "kruve",
+          "libbey",
+          "lighttells",
+          "loveramics",
+          "mahlkoning",
+          "marco",
+          "melitta",
+          "moccamaster",
+          "motta",
+          "nitro-dp",
+          "nuova-simonelli",
+          "orphan-espresso",
+          "pesado"
+        ]
+      }
+    }
+  },
+  "order": [
+    "main",
+    "brands_WKRjKM"
+  ]
+}

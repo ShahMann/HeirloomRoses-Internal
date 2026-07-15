@@ -6,9 +6,12 @@
   {% render 'structured-data-product', product: product %}
 {%- endcomment -%}
 
-{% comment %} <script type="application/ld+json">
+{%- comment -%}
+<script type="application/ld+json">
   {{ product | structured_data }}
-</script>  {% endcomment %}
+</script>
+{%- endcomment -%}
+
 <script type="application/ld+json">
   {
     "@context": "http://schema.org/",
@@ -40,7 +43,7 @@
           "@id": "{{ product.url }}?variant={{ variant.id }}#offer",
           "@type": "Offer",
           "availability": "{% if variant.available %}http://schema.org/InStock{% else %}http://schema.org/OutOfStock{% endif %}",
-          "price": "{{ variant.price | times: settings.tax_value | money_without_currency }}",
+          "price": "{{ variant.price | divided_by: 100.0 | times: settings.tax_value }}",
           "priceCurrency": "{{ cart.currency.iso_code }}",
           "url": "{{ shop.url }}{{ product.url }}?variant={{ variant.id }}"
         },
@@ -55,7 +58,7 @@
       "@id": "{{ product.url }}?variant={{ product.selected_or_first_available_variant.id }}#offer",
       "@type": "Offer",
       "availability": "{% if product.selected_or_first_available_variant.available %}http://schema.org/InStock{% else %}http://schema.org/OutOfStock{% endif %}",
-      "price": "{{ product.selected_or_first_available_variant.price| times: settings.tax_value | money_without_currency }}",
+      "price": "{{ product.selected_or_first_available_variant.price | divided_by: 100.0 | times: settings.tax_value }}",
       "priceCurrency": "{{ cart.currency.iso_code }}",
       "url": "{{ shop.url }}{{ product.url }}?variant={{ product.selected_or_first_available_variant.id }}"
     },

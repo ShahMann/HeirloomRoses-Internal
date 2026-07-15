@@ -3145,21 +3145,9 @@
       },
       {
         "type": "text",
-        "id": "employee_placeholder",
-        "label": "Enter Employee placeholder",
-        "default" : "Enter Name"
-      },
-      {
-        "type": "text",
-        "id": "employee_png",
-        "label": "Enter Label for PNG button",
-        "default" : "Download PNG"
-      },
-      {
-        "type": "text",
-        "id": "employee_pdf",
-        "label": "Enter Label for PDF button",
-        "default" : "Download PDF"
+        "id": "tax_included",
+        "label": "Enter Tax Included Label",
+        "default" : "Tax included "
       }
     ]
   }

@@ -1,0 +1,249 @@
+{% if product.metafields.custom.add_ons_product %}
+  <div id="product-addons-section">
+    <h3 class="addon-section-title">Available Add-ons</h3>
+
+    {% assign main_variant_id = product.variants.first.id %}
+
+    {% for addon_variant in product.metafields.custom.add_ons_product.value %}
+      {% assign addon_product = addon_variant.product %}
+      {% assign price = addon_variant.price %}
+      {% assign adjustment_amount = price | times: settings.tax_value %}
+
+      <div class="addon-container">
+        <input
+          type="checkbox"
+          class="addon-checkbox"
+          id="addon-{{ addon_variant.id }}"
+          data-variant-id="{{ addon_variant.id }}"
+          data-parent-id="{{ main_variant_id }}"
+          {% unless addon_variant.available %}disabled data-disabled="true"{% endunless %}
+        >
+        <img
+          src="{{ addon_product.featured_image | image_url: width: 80 }}"
+          alt="{{ addon_product.title }}"
+          class="addon-image"
+          width="auto"
+          height="auto"
+        >
+        <div class="addon-details">
+          <a href="{{ addon_product.url }}" class="addon-title" target="_blank" rel="noopener">
+            {{ addon_product.title }}
+          </a>
+          <span class="addon-price">
+            <img src="{{ 'Saudi_Riyal_Symbol-1.png' | asset_url }}" class="currency" alt="Currency" width="20px" height="auto">
+            {{ adjustment_amount | money_without_currency }}
+            {% unless addon_variant.available %}<span class="sold-out-label">– Sold out</span>{% endunless %}
+          </span>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const addonCheckboxes = document.querySelectorAll('.addon-checkbox');
+      const addToCartBtn = document.querySelector('form[action="/cart/add"] [type="submit"]');
+      const productForm = document.querySelector('form[action="/cart/add"]');
+      const mainPriceEl = document.querySelector('.price__current');
+    
+      if (!addToCartBtn || !productForm || !mainPriceEl) return;
+    
+      const basePrice = parseFloat(mainPriceEl.textContent.replace(/[^\d.]/g, ''));
+    
+      const getAddonPrice = cb => {
+        const priceText = cb.closest('.addon-container')
+          .querySelector('.addon-price')
+          .textContent.replace(/[^\d.]/g, '');
+        return parseFloat(priceText) || 0;
+      };
+    
+      const updatePriceDisplay = () => {
+        const total = [...addonCheckboxes].reduce((sum, cb) => cb.checked && !cb.disabled ? sum + getAddonPrice(cb) : sum, 0);
+        const newPrice = (basePrice + total).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+        mainPriceEl.innerHTML = `
+          <img src="{{ 'Saudi_Riyal_Symbol-1.png' | asset_url }}" class="currency" alt="Currency" width="20px" style="vertical-align: middle; display: inline-block; margin-right: 4px;">
+          ${newPrice}
+        `;
+        window.dispatchEvent(new Event('tamara:priceUpdate'));
+        window.dispatchEvent(new Event('tabby:priceUpdate'));
+      };
+    
+      addonCheckboxes.forEach(cb => {
+        const id = 'addon-' + cb.dataset.variantId;
+        if (cb.dataset.disabled === 'true') {
+          cb.checked = false;
+          cb.disabled = true;
+        } else if (localStorage.getItem(id) === 'true') {
+          cb.checked = true;
+        }
+        cb.addEventListener('change', () => {
+          if (!cb.disabled) {
+            updatePriceDisplay();
+            localStorage.setItem(id, cb.checked);
+          }
+        });
+      });
+    
+      const buildAddonItems = (mainProductId, quantity, parentKey) =>
+        [...addonCheckboxes].filter(cb => cb.checked && !cb.disabled).map(cb => ({
+          id: cb.dataset.variantId,
+          quantity,
+          properties: {
+            _addon_for: mainProductId,
+            _addon_parent_key: parentKey
+          }
+        }));
+    
+      const resetAddons = () => {
+        addonCheckboxes.forEach(cb => {
+          localStorage.removeItem('addon-' + cb.dataset.variantId);
+          cb.checked = false;
+        });
+        updatePriceDisplay();
+      };
+    
+      const getQuantity = () => {
+        const input = productForm.querySelector('input[name="quantity"]') ||
+                      document.querySelector('input[name="quantity"]');
+        return input ? parseInt(input.value) || 1 : 1;
+      };
+    
+      const addItemsToCart = items =>
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ items })
+        }).then(res => res.json());
+    
+      addToCartBtn.addEventListener('click', async e => {
+        e.preventDefault();
+        addToCartBtn.setAttribute('aria-disabled', 'true');
+        addToCartBtn.classList.add('is-loading');
+    
+        const formData = new FormData(productForm);
+        const mainProductId = formData.get('id');
+        const quantity = getQuantity();
+    
+        try {
+          const data = await addItemsToCart([{ id: mainProductId, quantity }]);
+          const parentKey = data.items.find(i => i.variant_id == mainProductId)?.key;
+    
+          if (!parentKey) throw new Error('Parent key missing');
+    
+          const addonItems = buildAddonItems(mainProductId, quantity, parentKey);
+          if (addonItems.length > 0) await addItemsToCart(addonItems);
+    
+          resetAddons();
+          document.dispatchEvent(new CustomEvent('dispatch:cart-drawer:refresh'));
+          setTimeout(() => document.dispatchEvent(new CustomEvent('dispatch:cart-drawer:open')), 300);
+        } catch (err) {
+          console.error("Add to cart failed:", err);
+        } finally {
+          setTimeout(() => {
+            addToCartBtn.classList.remove('is-loading');
+            addToCartBtn.removeAttribute('aria-disabled');
+          }, 1400);
+        }
+      });
+    
+      // Buy Now logic
+      const buyNowButtons = document.querySelectorAll('[data-shopify-payment-button] button, .shopify-payment-button button');
+    
+      buyNowButtons.forEach(buyNowBtn => {
+        buyNowBtn.addEventListener('click', async e => {
+          const selectedAddons = [...addonCheckboxes].filter(cb => cb.checked && !cb.disabled);
+          if (!selectedAddons.length) return;
+    
+          e.preventDefault();
+          buyNowBtn.disabled = true;
+          buyNowBtn.textContent = 'Adding to cart...';
+    
+          try {
+            const mainProductId = new FormData(productForm).get('id');
+            const quantity = getQuantity();
+            const data = await addItemsToCart([{ id: mainProductId, quantity }]);
+            const parentKey = data.items.find(i => i.variant_id == mainProductId)?.key;
+    
+            if (!parentKey) throw new Error('Parent key missing');
+    
+            const addonItems = buildAddonItems(mainProductId, quantity, parentKey);
+            if (addonItems.length) await addItemsToCart(addonItems);
+    
+            resetAddons();
+            window.location.href = '/checkout';
+          } catch (err) {
+            alert('Something went wrong. Please try again.');
+            console.error('Buy Now failed:', err);
+          } finally {
+            buyNowBtn.disabled = false;
+            buyNowBtn.textContent = 'Buy it now';
+          }
+        });
+      });
+    
+      updatePriceDisplay();
+    });
+    </script>
+    <style>
+      .addon-section-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 12px;
+      }
+    
+      .addon-container {
+        margin-top: 15px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        max-width: 320px;
+      }
+    
+      .addon-checkbox {
+        width: 20px;
+        height: 20px;
+      }
+    
+      .addon-image {
+        width: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+    
+      .addon-details {
+        display: flex;
+        flex-direction: column;
+      }
+    
+      .addon-title {
+        font-weight: 500;
+        font-size: 14px;
+        text-decoration: underline;
+      }
+    
+      .addon-price {
+        font-weight: bold;
+        font-size: 16px;
+        vertical-align: none !important;
+      }
+    
+      .sold-out-label {
+        color: red;
+        font-size: 13px;
+        margin-left: 5px;
+      }
+    
+      .addon-container input:disabled + img,
+      .addon-container input:disabled ~ .addon-details {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+    </style>
+        
+{% endif %}

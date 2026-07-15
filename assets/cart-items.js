@@ -51,7 +51,32 @@ if (!customElements.get('cart-items')) {
     }
 
     /**
-     * Updates the quantity of a line item.
+     * Helper function to get current cart data
+     */
+    async getCurrentCart() {
+      try {
+        const response = await fetch('/cart.js');
+        return await response.json();
+      } catch (error) {
+        console.error('Error fetching cart data:', error);
+        return null;
+      }
+    }
+
+    /**
+     * Helper function to find addon items for a parent variant
+     */
+    findAddonItems(cartData, parentVariantId) {
+      if (!cartData || !cartData.items) return [];
+      
+      return cartData.items.filter(item => {
+        const properties = item.properties || {};
+        return properties._addon_for == parentVariantId;
+      });
+    }
+
+    /**
+     * Updates the quantity of a line item and handles addon removal in one call.
      * @param {number} line - Line item index.
      * @param {number} quantity - Quantity to set.
      * @param {string} name - Active element name.
@@ -71,19 +96,74 @@ if (!customElements.get('cart-items')) {
         el.hidden = true;
       });
 
-      const sections = this.getSectionsToRender().map((section) => section.section);
-      this.fetchRequestOpts.body = JSON.stringify({
-        line,
-        quantity,
-        sections: [...new Set(sections)],
-        sections_url: window.location.pathname
-      });
+      // Get the item being modified before deletion
+      const lineItem = document.getElementById(`cart-item-${line}`);
+      const variantId = Number(lineItem.dataset.variantId);
+      
+      // Check if this is a parent item being deleted (quantity = 0)
+      const isParentBeingDeleted = quantity == 0;
 
       try {
-        const lineItem = document.getElementById(`cart-item-${line}`);
-        const variantId = Number(lineItem.dataset.variantId);
+        let updatePayload;
+        
+        if (isParentBeingDeleted && variantId) {
+          // Get current cart data to find addons BEFORE making any changes
+          console.log(`🔍 Parent item being deleted, finding addons for variant ${variantId}`);
+          const cartData = await this.getCurrentCart();
+          const addonItems = this.findAddonItems(cartData, variantId);
+          
+          if (addonItems.length > 0) {
+            console.log(`📦 Found ${addonItems.length} addon items to remove with parent`);
+            
+            // Use bulk update to remove parent and all addons in one call
+            const updates = {};
+            
+            // Add parent variant to updates
+            updates[variantId] = 0;
+            
+            // Add all addon variants to updates
+            addonItems.forEach(item => {
+              updates[item.variant_id] = 0;
+            });
+
+            updatePayload = {
+              updates: updates,
+              sections: [...new Set(this.getSectionsToRender().map(section => section.section))],
+              sections_url: window.location.pathname
+            };
+          } else {
+            // No addons found, use regular line item update
+            updatePayload = {
+              line,
+              quantity,
+              sections: [...new Set(this.getSectionsToRender().map(section => section.section))],
+              sections_url: window.location.pathname
+            };
+          }
+        } else {
+          // Regular update (not deleting parent or quantity > 0)
+          updatePayload = {
+            line,
+            quantity,
+            sections: [...new Set(this.getSectionsToRender().map(section => section.section))],
+            sections_url: window.location.pathname
+          };
+        }
+
         const oldTotalQuantity = this.currentTotalItemCount;
-        const response = await fetch(theme.routes.cartChange, this.fetchRequestOpts);
+        
+        // Choose the appropriate endpoint based on payload type
+        const endpoint = updatePayload.updates ? '/cart/update.js' : theme.routes.cartChange;
+        
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatePayload)
+        });
+
         const data = await response.json();
 
         if (!response.ok) throw new Error(data.errors || response.status);
@@ -151,6 +231,11 @@ if (!customElements.get('cart-items')) {
 
         lineErrors.innerHTML = '';
         lineErrors.hidden = true;
+
+        if (isParentBeingDeleted && variantId) {
+          console.log(`✅ Successfully removed parent and addons for variant ${variantId}`);
+        }
+
       } catch (error) {
         if (/^[0-9]+$/.test(error.message)) {
           lineErrors.textContent = theme.strings.cartError;
@@ -370,7 +455,7 @@ if (!customElements.get('cart-items')) {
       if (this.cartDrawer) {
         if (lineItem && activeEl) {
           trapFocus(this.cartDrawer, activeEl);
-        } else if (itemCount === 0) {
+        } else if (itemCount === 0) { 
           trapFocus(
             this.cartDrawer.querySelector('.js-cart-empty'),
             this.cartDrawer.querySelector('a')

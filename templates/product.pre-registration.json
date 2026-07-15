@@ -9,9 +9,41 @@
  */
 {
   "sections": {
+    "image_banner_hQFPAN": {
+      "type": "image-banner",
+      "name": "Image banner",
+      "settings": {
+        "image_desktop": "shopify://shop_images/image.webp",
+        "url": "",
+        "height_mode": "auto",
+        "fixed_height_desktop": 600,
+        "fixed_height_mobile": 350,
+        "overlay_position": "justify-center items-center",
+        "overlay_text_align": "text-center",
+        "mob_center_text": false,
+        "mobile_stacked": false,
+        "color_scheme": "white",
+        "full_width": true,
+        "transparent_content_color": "#ffffff",
+        "tint_color": "#000000",
+        "tint_opacity": 40,
+        "prevent_animation": false
+      }
+    },
     "main": {
       "type": "product-pre-registration",
       "blocks": {
+        "field_mfiwAy": {
+          "type": "field",
+          "name": "Prefix",
+          "settings": {
+            "label": "Prefix",
+            "field_type": "dropdown",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": "Mr,Mrs,Miss"
+          }
+        },
         "field_3gpiBB": {
           "type": "field",
           "name": "Name",
@@ -34,15 +66,26 @@
             "dropdown_options": ""
           }
         },
-        "field_mfiwAy": {
+        "field_khUckL": {
           "type": "field",
-          "name": "Prefix",
+          "name": "Cell phone",
           "settings": {
-            "label": "Prefix",
-            "field_type": "dropdown",
+            "label": "Mobile Number",
+            "field_type": "tel",
             "placeholder": "",
             "required": true,
-            "dropdown_options": "Mr,Mrs,Miss"
+            "dropdown_options": ""
+          }
+        },
+        "field_3p4bXe": {
+          "type": "field",
+          "name": "Acknowledgment",
+          "settings": {
+            "label": "Make sure the email and mobile number are entered correctly",
+            "field_type": "checkbox",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": ""
           }
         },
         "field_w3QrMQ": {
@@ -67,23 +110,35 @@
             "dropdown_options": ""
           }
         },
-        "field_khUckL": {
-          "type": "field",
-          "name": "Cell phone",
-          "settings": {
-            "label": "Cell phone",
-            "field_type": "tel",
-            "placeholder": "",
-            "required": true,
-            "dropdown_options": ""
-          }
-        },
         "field_fd4Lc9": {
           "type": "field",
-          "name": "Home address",
+          "name": "Nationality",
           "settings": {
-            "label": "Home address",
-            "field_type": "textarea",
+            "label": "Nationality",
+            "field_type": "dropdown",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": "Saudi,Bahraini,Emirati,Kuwaiti,Qatari,Omani,Afghan,Albanian,Algerian,American,Andorran,Angolan,Antiguans,Argentinean,Armenian,Australian,Austrian,Azerbaijani,Bahamian,Bangladeshi,Barbadian,Barbudans,Batswana,Belarusian,Belgian,Belizean,Beninese,Bhutanese,Bolivian,Bosnian,Brazilian,British,Bruneian,Bulgarian,BFurkinabe,Burmese,Burundian,Cambodian,Cameroonian,Canadian,Cape Verdean,Central African,Chadian,Chilean,Chinese,Colombian,Comoran,Congolese,Costa Rican,Croatian,Cuban,Cypriot,Czech,Danish,Djibouti,Dominican,Dutch,East Timorese,Ecuadorean,Egyptian,Equatorial Guinean,Eritrean,Estonian,Ethiopian,Fijian,Filipino,Finnish,French,Gabonese,Gambian,Georgian,German,Ghanaian,Greek,Grenadian,Guatemalan,Guinea-Bissauan,Guinean,Guyanese,Haitian,Herzegovinian,Honduran,Hungarian,I-Kiribati,Icelander,Indian,Indonesian,Iranian,Iraqi,Irish,Italian,Ivorian,Jamaican,Japanese,Jordanian,Kazakhstani,Kenyan,Kittian and Nevisian,Kyrgyz,Laotian,Latvian,Lebanese,Liberian,Libyan,Liechtensteiner,Lithuanian,Luxembourger,Macedonian,Malagasy,Malawian,Malaysian,Maldivian,Malian,Maltese,Marshallese,Mauritanian,Mauritian,Mexican,Micronesian,Moldovan,Monacan,Mongolian,Moroccan,Mosotho,Motswana,Mozambican,Namibian,Nauruan,Nepalese,New Zealander,Ni-Vanuatu,Nicaraguan,Nigerian,Nigerien,North Korean,Northern Irish,Norwegian,Pakistani,Palauan,Panamanian,Papua New Guinean,Paraguayan,Peruvian,Polish,Portuguese,Romanian,Russian,Rwandan,Saint Lucian,Salvadoran,Samoan,San Marinese,Sao Tomean,Scottish,Senegalese,Serbian,Seychellois,Sierra Leonean,Singaporean,Slovakian,Slovenian,Solomon Islander,Somali,South African,South Korean,Spanish,Sri Lankan,Sudanese,Surinamer,Swazi,Swedish,Swiss,Syrian,Taiwanese,Tajik,Tanzanian,Thai,Togolese,Tongan,Trinidadian or Tobagonian,Tunisian,Turkish,Tuvaluan,Ugandan,Ukrainian,Uruguayan,Uzbekistani,Venezuelan,Vietnamese,Welsh,Yemenite,Zambian,Zimbabwean"
+          }
+        },
+        "field_ei6TYi": {
+          "type": "field",
+          "name": "City",
+          "settings": {
+            "label": "City",
+            "field_type": "dropdown",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": "Riyadh: Sulalat, Khobar: Slope Roastery, Jubail: Latte Works Café, Madinah: Kiffa Roasters, Abha:Camel Step, Buraidah: Caffeine Club, Tabuk: C&B"
+          }
+        },
+        "field_T7xgaq": {
+          "type": "field",
+          "name": "Country",
+          "disabled": true,
+          "settings": {
+            "label": "Country",
+            "field_type": "text",
             "placeholder": "",
             "required": true,
             "dropdown_options": ""
@@ -116,7 +171,25 @@
           "name": "Passport",
           "settings": {
             "label": "Passport",
-            "field_type": "text",
+            "field_type": "dropdown",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": "Yes,No"
+          }
+        },
+        "info_text_LaCCqW": {
+          "type": "info_text",
+          "settings": {
+            "heading": "Terms & Conditions",
+            "content": "<p>إقرار وتعهد بالالتزام بشروط السفر<br/>بالضغط على زر \"أوافق وأتعهد\" أدناه، فإنني أقر بكامل أهليتي النظامية بالآتي:<br/>التزامي بحمل جواز سفر سعودي (أو جواز سفر ساري المفعول لمدة لا تقل عن عام) يمنحني حق السفر إلى جمهورية المكسيك.<br/>التزامي بتقديم الإثباتات الرسمية فور الفوز بالتصفيات، وفي حال عدم تقديمها يتم استبعادي من النهائيات.<br/>في حال تحقيقي لأحد المراكز الأولى وعدم جاهزية إجراءات سفري للمكسيك خلال المهلة المحددة، يسقط حقي في السفر ويحق للجهة المنظمة تلقائياً تصعيد المتسابق في المركز التالي ليحل محلي دون أدنى مسؤولية على الجهة المنظمة.<br/></p>"
+          }
+        },
+        "field_a3gHdX": {
+          "type": "field",
+          "name": "Acknowledgment",
+          "settings": {
+            "label": "I accept all terms & Condition",
+            "field_type": "checkbox",
             "placeholder": "",
             "required": true,
             "dropdown_options": ""
@@ -124,7 +197,8 @@
         },
         "field_jVCYyU": {
           "type": "field",
-          "name": "Acknowledgment",
+          "name": "Sign Acknowledgment",
+          "disabled": true,
           "settings": {
             "label": "Acknowledgment",
             "field_type": "signature",
@@ -135,26 +209,32 @@
         }
       },
       "block_order": [
+        "field_mfiwAy",
         "field_3gpiBB",
         "field_GE7Y9P",
-        "field_mfiwAy",
+        "field_khUckL",
+        "field_3p4bXe",
         "field_w3QrMQ",
         "field_G9hmrQ",
-        "field_khUckL",
         "field_fd4Lc9",
+        "field_ei6TYi",
+        "field_T7xgaq",
         "field_Y3zTxL",
         "field_DTBt4f",
         "field_cEgwJh",
+        "info_text_LaCCqW",
+        "field_a3gHdX",
         "field_jVCYyU"
       ],
       "settings": {
-        "form_title": "Pre-Registration",
+        "form_title": "Registration Form",
         "form_description": "",
         "submit_button_label": "Register & Pay"
       }
     }
   },
   "order": [
+    "image_banner_hQFPAN",
     "main"
   ]
 }
