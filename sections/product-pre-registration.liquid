@@ -65,7 +65,8 @@
                 ></textarea>
 
               {%- when 'dropdown' -%}
-                {%- assign dropdown_options = block.settings.dropdown_options | split: ',' -%}
+                {%- assign dropdown_options = block.settings.dropdown_options | replace: '،', ',' | split: ',' -%}
+                {%- assign select_placeholder_default = 'general.labels.please_select' | t -%}
                 <select
                   id="{{ field_id }}"
                   class="pre-registration__input pre-registration__select"
@@ -75,7 +76,7 @@
                     aria-required="true"
                   {% endif %}
                 >
-                  <option value="">{{ block.settings.placeholder | default: 'Select an option' | escape }}</option>
+                  <option value="">{{ block.settings.placeholder | default: select_placeholder_default | escape }}</option>
                   {%- for option in dropdown_options -%}
                     {%- assign option_value = option | strip -%}
                     {%- if option_value != blank -%}
