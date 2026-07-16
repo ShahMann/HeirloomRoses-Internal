@@ -46,9 +46,20 @@
         },
         "field_3gpiBB": {
           "type": "field",
-          "name": "Name",
+          "name": "English Name",
           "settings": {
             "label": "Name",
+            "field_type": "text",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": ""
+          }
+        },
+        "field_8gmegc": {
+          "type": "field",
+          "name": "Arabic Name",
+          "settings": {
+            "label": "Arabic Name",
             "field_type": "text",
             "placeholder": "",
             "required": true,
@@ -211,6 +222,7 @@
       "block_order": [
         "field_mfiwAy",
         "field_3gpiBB",
+        "field_8gmegc",
         "field_GE7Y9P",
         "field_khUckL",
         "field_3p4bXe",
