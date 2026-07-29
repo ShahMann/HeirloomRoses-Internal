@@ -120,6 +120,13 @@
     {%- endif -%}
   {%- endif -%}
 
+  {%- comment -%} Undo custom-style.css's global ".image-banner__image img { height: 280px !important; }" for this instance so the aspect-ratio-based height above isn't clipped. {%- endcomment -%}
+  @media (max-width: 767px) {
+    #{{ section.id }} .image-banner__image img {
+      height: 100% !important;
+    }
+  }
+
   {%- if section.settings.tint_opacity > 0 -%}
     #{{ section.id }} .media::after {
       background-color: rgba({{ section.settings.tint_color.red }}, {{ section.settings.tint_color.green }}, {{ section.settings.tint_color.blue }}, {{ section.settings.tint_opacity | divided_by: 100.0 }});
