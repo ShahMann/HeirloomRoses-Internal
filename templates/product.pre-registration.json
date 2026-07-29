@@ -58,7 +58,7 @@
       "settings": {
         "text_position": "justify-center",
         "text_align": "text-start",
-        "mob_center_text": true,
+        "mob_center_text": false,
         "wide": false,
         "color_scheme": "none",
         "full_width": true,
