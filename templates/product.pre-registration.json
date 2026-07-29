@@ -52,7 +52,8 @@
             "field_type": "text",
             "placeholder": "",
             "required": true,
-            "dropdown_options": ""
+            "dropdown_options": "",
+            "char_restriction": "english_only"
           }
         },
         "field_8gmegc": {
@@ -63,7 +64,8 @@
             "field_type": "text",
             "placeholder": "",
             "required": true,
-            "dropdown_options": ""
+            "dropdown_options": "",
+            "char_restriction": "arabic_only"
           }
         },
         "field_GE7Y9P": {

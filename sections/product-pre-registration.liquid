@@ -33,6 +33,7 @@
             assign property_name = block.settings.label | escape | prepend: 'properties[' | append: ']'
             assign is_required = block.settings.required
             assign field_type = block.settings.field_type
+            assign char_restriction = block.settings.char_restriction
           -%}
 
           <div
@@ -166,6 +167,15 @@
                   class="pre-registration__input"
                   name="{{ property_name }}"
                   placeholder="{{ block.settings.placeholder | escape }}"
+                  {% if field_type == 'text' and char_restriction == 'english_only' %}
+                    data-char-restriction="english_only"
+                    pattern="[A-Za-z\s'-]+"
+                    title="Only English letters are allowed"
+                  {% elsif field_type == 'text' and char_restriction == 'arabic_only' %}
+                    data-char-restriction="arabic_only"
+                    pattern="[؀-ۿ\s'-]+"
+                    title="Only Arabic letters are allowed"
+                  {% endif %}
                   {% if is_required %}
                     required
                     aria-required="true"
@@ -380,6 +390,14 @@
       const errorMessage = 'This field is required.';
       const phoneErrorMessage = 'Please enter a valid phone number.';
       const phonePattern = /^[0-9+\-\s()]{7,}$/;
+      const charRestrictionPatterns = {
+        english_only: /^[A-Za-z\s'-]+$/,
+        arabic_only: /^[؀-ۿ\s'-]+$/
+      };
+      const charRestrictionErrorMessages = {
+        english_only: 'Only English letters are allowed.',
+        arabic_only: 'يُسمح فقط بإدخال الأحرف العربية.'
+      };
 
       function sanitizePhoneInput(input) {
         input.value = input.value.replace(/[^0-9+\-\s()]/g, '');
@@ -498,6 +516,25 @@
         return true;
       }
 
+      const charRestriction = input && input.dataset.charRestriction;
+      if (charRestriction && charRestrictionPatterns[charRestriction]) {
+        const value = input.value.trim();
+
+        if (!value) {
+          if (isRequired) {
+            showFieldError(field, errorMessage);
+            return false;
+          }
+          return true;
+        }
+
+        if (!charRestrictionPatterns[charRestriction].test(value)) {
+          showFieldError(field, charRestrictionErrorMessages[charRestriction]);
+          return false;
+        }
+        return true;
+      }
+
       if (!isRequired) return true;
 
       if (!input || !input.value.trim()) {
@@ -520,6 +557,13 @@
         }
       });
     }
+
+    sectionRoot.querySelectorAll('[data-char-restriction]').forEach((input) => {
+      input.addEventListener('input', () => {
+        const field = input.closest('.pre-registration__field');
+        if (field) validateField(field);
+      });
+    });
 
     sectionRoot.querySelectorAll('.pre-registration__input--tel').forEach((input) => {
       input.addEventListener('input', () => sanitizePhoneInput(input));
@@ -718,6 +762,18 @@
           "id": "dropdown_options",
           "label": "Dropdown options",
           "info": "Comma-separated values. Only used when field type is dropdown."
+        },
+        {
+          "type": "select",
+          "id": "char_restriction",
+          "label": "Character restriction",
+          "info": "Only applies when field type is Text.",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "english_only", "label": "English letters only" },
+            { "value": "arabic_only", "label": "Arabic letters only" }
+          ]
         }
       ]
     },
