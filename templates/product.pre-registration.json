@@ -13,7 +13,8 @@
       "type": "image-banner",
       "name": "Image banner",
       "settings": {
-        "image_desktop": "shopify://shop_images/image.webp",
+        "image_desktop": "shopify://shop_images/Aeropress-Web-Banner-dektop.jpg",
+        "image_mobile": "shopify://shop_images/Aeropress-Web-Banner-750-02mobile.jpg",
         "url": "",
         "height_mode": "auto",
         "fixed_height_desktop": 600,
@@ -30,6 +31,40 @@
         "prevent_animation": false
       }
     },
+    "rich_text_tUUa7L": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_gXX6Q8": {
+          "type": "heading",
+          "settings": {
+            "heading": "Saudi Aeropress 2026 Qualifiers",
+            "heading_size": "h3",
+            "heading_h1": false
+          }
+        },
+        "text_DaDYCf": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Welcome to the 2026 Saudi Aeropress Championship</strong><br/><br/>Registration Note: In case less than 9 competitors or 4 judges, registrants will be transfered to nearest locationPlease select the city nearest you from the below list: Qualifiers will take place on Septmper 5th at:<br/>Jeddah: : Kiffa<br/> Riyadh: HOY8<br/> Khobar: Black Night<br/> Jubail: Latte Works<br/> Madinah: Kiffa <br/>Muhayil Asir: 30Wet<br/> Buraidah: Caffeine Club<br/> Tabuk: C&B<br/>The top three qualifiers from each region will compete in the Finals on September 12 at Camel Step in Riyadh.<br/><br/><br/>Please register only once to avoid disqualification.<br/>You are responsible to check your email as you will receive an email a week before the Qualifying round to collect sample of competition coffee, and you will receive another email of the Draw and Rounds starting time a day before Qualifying<br/>Please check the list below for competition rules. Please check before competition for any rule updates. ID required when receiving sample of competition coffee.<br/><br/>The World AeroPress Championship is about building community, making friends, and celebrating coffee. At its heart, the WAC exists to bring coffee-loving people together and focus on the taste of the coffee and only the taste in an open, inclusive, and fun environment with one important rule which is to have fun and the winner will be named the Saudi Arabia Aeropress champion and will be sponsored to represent Saudi Arabia at the world Aeropress championship in Mexico City, Mexico on 6th December.<br/><br/><br/><strong>Competition Rules<br/>FORMAT</strong><br/>• The competition is a multi-round, elimination tournament.<br/>• In each round, three competitors brew coffee simultaneously.<br/>• Competitors have 5 minutes in which to prepare, brew, and present their coffee.<br/>• When the time is up, the coffees are presented in identical vessels to a panel of three judges.<br/>• The judges blindly evaluate each coffee and make their own private assessment as to which is the best.<br/>• On the count of three, all judges simultaneously point to their preferred coffee.<br/>• The winner progresses to the next round. The losers are eliminated.<br/><br/><strong>JUDGING</strong><br/>• Each round is judged blind using the cupping technique of spoon, slurp, and spit.<br/>• Competitor’s names will be marked on the underside of the cups where they are completely hidden.<br/>• There is no scoresheet or formal judging criteria. Judges are simply answering: “Which cup would I prefer to drink all of?\"<br/>• Each judge will arrive at their own conclusion, without discussing the samples with their fellow judges.<br/>• On the count of three, all judges will point simultaneously, confidently, and definitively at the cup of their choosing.<br/>• After judging, the MC will lift the winning cup, revealing the name of the glorious round winner, while simultaneously shaming the losers.<br/>• In the event of all three judges pointing at different cups, the MC or a pre-determined Head Judge will taste the coffees, and decide the round. This decision is final.<br/><br/><br/><strong>Aeropress Championship Rules:</strong><br/>RULE #1<br/>The brewer used must be a genuine AeroPress Original or AeroPress Clear or Champions AeroPress, No other brewer may be used in the drink preparation. Other versions of AeroPress Coffee Makers, including but not limited to Go, XL, and Premium, are not permitted in the competition, <br/>Competitors may only use one AeroPress brewer in competition.<br/><br/>RULE #2<br/>All three parts of a genuine AeroPress brewer must be used: the chamber, the plunger, and the filter cap or Flow Control Filter Cap.<br/>Aftermarket or non-genuine parts are not allowed.<br/><br/>RULE #3<br/>Any type of filter is allowed, so long as it does not replace the filter cap itself (see rule #2). The filter can be made out of paper, metal, cloth, or any other material.<br/><br/>RULE #4<br/>No other coffee brewer is permitted for use in any aspect of competition. This includes, but is not limited to, brewing methods such as French presses, pour-overs, zero bypass brewers, syphons, or any other alternative brewing devices.<br/><br/>RULE #5<br/>Accessories that aid in coffee brewing, such as grinders, kettles, decanters, scales, stirrers, spoons, timers, thermometers, brewer stands, sifters, air blowers, RDT (Ross Droplet Technique) tools, WDT (Weiss Distribution Technique) tools, chilling rocks (frosty balls), and water dispersion aids, are allowed for use in competition.<br/><br/>RULE #6<br/>Ground coffee and water are the only ingredients allowed.<br/><br/>RULE #7<br/>Competitors may add bypass water of any temperature or ice to their brewed coffee.<br/><br/>RULE #8<br/>A coffee will be selected for the competition, and will be the only coffee that can be used.<br/><br/>RULE #9<br/>Competitors may use a maximum of 20g of roasted coffee in their recipe.<br/><br/>RULE #10<br/>Competitors must prepare a minimum of 150ml of brewed coffee.<br/><br/>RULE #11<br/>Coffees not presented within the time limit of 5 minutes will not be evaluated.<br/><br/>RULE #12<br/>Failure to comply with any of the above may result in disqualification.<br/><br/><br/><strong>Prizes</strong><br/>First place winner will be flown to Mexico for the world finals, full expenses paid. There are other prizes for second and third places from our sponsors.<br/>Competition is open to all, but winner must prove their passport allows them entry to Mexico.</p>",
+            "enlarge_text": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_gXX6Q8",
+        "text_DaDYCf"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "text_position": "justify-center",
+        "text_align": "text-start",
+        "mob_center_text": true,
+        "wide": false,
+        "color_scheme": "none",
+        "full_width": true,
+        "prevent_animation": false
+      }
+    },
     "main": {
       "type": "product-pre-registration",
       "blocks": {
@@ -41,14 +76,15 @@
             "field_type": "dropdown",
             "placeholder": "",
             "required": true,
-            "dropdown_options": "Mr,Mrs,Miss"
+            "dropdown_options": "Mr,Mrs,Miss",
+            "char_restriction": "none"
           }
         },
         "field_3gpiBB": {
           "type": "field",
           "name": "English Name",
           "settings": {
-            "label": "Name",
+            "label": "English Name",
             "field_type": "text",
             "placeholder": "",
             "required": true,
@@ -76,7 +112,8 @@
             "field_type": "email",
             "placeholder": "",
             "required": true,
-            "dropdown_options": ""
+            "dropdown_options": "",
+            "char_restriction": "none"
           }
         },
         "field_khUckL": {
@@ -87,7 +124,8 @@
             "field_type": "tel",
             "placeholder": "",
             "required": true,
-            "dropdown_options": ""
+            "dropdown_options": "",
+            "char_restriction": "none"
           }
         },
         "field_3p4bXe": {
@@ -98,7 +136,8 @@
             "field_type": "checkbox",
             "placeholder": "",
             "required": true,
-            "dropdown_options": ""
+            "dropdown_options": "",
+            "char_restriction": "none"
           }
         },
         "field_w3QrMQ": {
@@ -109,7 +148,8 @@
             "field_type": "date",
             "placeholder": "",
             "required": true,
-            "dropdown_options": ""
+            "dropdown_options": "",
+            "char_restriction": "none"
           }
         },
         "field_G9hmrQ": {
@@ -120,7 +160,8 @@
             "field_type": "number",
             "placeholder": "",
             "required": true,
-            "dropdown_options": ""
+            "dropdown_options": "",
+            "char_restriction": "none"
           }
         },
         "field_fd4Lc9": {
@@ -131,18 +172,20 @@
             "field_type": "dropdown",
             "placeholder": "",
             "required": true,
-            "dropdown_options": "Saudi,Bahraini,Emirati,Kuwaiti,Qatari,Omani,Afghan,Albanian,Algerian,American,Andorran,Angolan,Antiguans,Argentinean,Armenian,Australian,Austrian,Azerbaijani,Bahamian,Bangladeshi,Barbadian,Barbudans,Batswana,Belarusian,Belgian,Belizean,Beninese,Bhutanese,Bolivian,Bosnian,Brazilian,British,Bruneian,Bulgarian,BFurkinabe,Burmese,Burundian,Cambodian,Cameroonian,Canadian,Cape Verdean,Central African,Chadian,Chilean,Chinese,Colombian,Comoran,Congolese,Costa Rican,Croatian,Cuban,Cypriot,Czech,Danish,Djibouti,Dominican,Dutch,East Timorese,Ecuadorean,Egyptian,Equatorial Guinean,Eritrean,Estonian,Ethiopian,Fijian,Filipino,Finnish,French,Gabonese,Gambian,Georgian,German,Ghanaian,Greek,Grenadian,Guatemalan,Guinea-Bissauan,Guinean,Guyanese,Haitian,Herzegovinian,Honduran,Hungarian,I-Kiribati,Icelander,Indian,Indonesian,Iranian,Iraqi,Irish,Italian,Ivorian,Jamaican,Japanese,Jordanian,Kazakhstani,Kenyan,Kittian and Nevisian,Kyrgyz,Laotian,Latvian,Lebanese,Liberian,Libyan,Liechtensteiner,Lithuanian,Luxembourger,Macedonian,Malagasy,Malawian,Malaysian,Maldivian,Malian,Maltese,Marshallese,Mauritanian,Mauritian,Mexican,Micronesian,Moldovan,Monacan,Mongolian,Moroccan,Mosotho,Motswana,Mozambican,Namibian,Nauruan,Nepalese,New Zealander,Ni-Vanuatu,Nicaraguan,Nigerian,Nigerien,North Korean,Northern Irish,Norwegian,Pakistani,Palauan,Panamanian,Papua New Guinean,Paraguayan,Peruvian,Polish,Portuguese,Romanian,Russian,Rwandan,Saint Lucian,Salvadoran,Samoan,San Marinese,Sao Tomean,Scottish,Senegalese,Serbian,Seychellois,Sierra Leonean,Singaporean,Slovakian,Slovenian,Solomon Islander,Somali,South African,South Korean,Spanish,Sri Lankan,Sudanese,Surinamer,Swazi,Swedish,Swiss,Syrian,Taiwanese,Tajik,Tanzanian,Thai,Togolese,Tongan,Trinidadian or Tobagonian,Tunisian,Turkish,Tuvaluan,Ugandan,Ukrainian,Uruguayan,Uzbekistani,Venezuelan,Vietnamese,Welsh,Yemenite,Zambian,Zimbabwean"
+            "dropdown_options": "Saudi,Bahraini,Emirati,Kuwaiti,Qatari,Omani,Afghan,Albanian,Algerian,American,Andorran,Angolan,Antiguans,Argentinean,Armenian,Australian,Austrian,Azerbaijani,Bahamian,Bangladeshi,Barbadian,Barbudans,Batswana,Belarusian,Belgian,Belizean,Beninese,Bhutanese,Bolivian,Bosnian,Brazilian,British,Bruneian,Bulgarian,BFurkinabe,Burmese,Burundian,Cambodian,Cameroonian,Canadian,Cape Verdean,Central African,Chadian,Chilean,Chinese,Colombian,Comoran,Congolese,Costa Rican,Croatian,Cuban,Cypriot,Czech,Danish,Djibouti,Dominican,Dutch,East Timorese,Ecuadorean,Egyptian,Equatorial Guinean,Eritrean,Estonian,Ethiopian,Fijian,Filipino,Finnish,French,Gabonese,Gambian,Georgian,German,Ghanaian,Greek,Grenadian,Guatemalan,Guinea-Bissauan,Guinean,Guyanese,Haitian,Herzegovinian,Honduran,Hungarian,I-Kiribati,Icelander,Indian,Indonesian,Iranian,Iraqi,Irish,Italian,Ivorian,Jamaican,Japanese,Jordanian,Kazakhstani,Kenyan,Kittian and Nevisian,Kyrgyz,Laotian,Latvian,Lebanese,Liberian,Libyan,Liechtensteiner,Lithuanian,Luxembourger,Macedonian,Malagasy,Malawian,Malaysian,Maldivian,Malian,Maltese,Marshallese,Mauritanian,Mauritian,Mexican,Micronesian,Moldovan,Monacan,Mongolian,Moroccan,Mosotho,Motswana,Mozambican,Namibian,Nauruan,Nepalese,New Zealander,Ni-Vanuatu,Nicaraguan,Nigerian,Nigerien,North Korean,Northern Irish,Norwegian,Pakistani,Palauan,Panamanian,Papua New Guinean,Paraguayan,Peruvian,Polish,Portuguese,Romanian,Russian,Rwandan,Saint Lucian,Salvadoran,Samoan,San Marinese,Sao Tomean,Scottish,Senegalese,Serbian,Seychellois,Sierra Leonean,Singaporean,Slovakian,Slovenian,Solomon Islander,Somali,South African,South Korean,Spanish,Sri Lankan,Sudanese,Surinamer,Swazi,Swedish,Swiss,Syrian,Taiwanese,Tajik,Tanzanian,Thai,Togolese,Tongan,Trinidadian or Tobagonian,Tunisian,Turkish,Tuvaluan,Ugandan,Ukrainian,Uruguayan,Uzbekistani,Venezuelan,Vietnamese,Welsh,Yemenite,Zambian,Zimbabwean",
+            "char_restriction": "none"
           }
         },
         "field_ei6TYi": {
           "type": "field",
           "name": "City",
           "settings": {
-            "label": "City",
+            "label": "City (Please select your participation region. Note that coffee collection and the qualifiers will take place at the selected region's location.)",
             "field_type": "dropdown",
             "placeholder": "",
             "required": true,
-            "dropdown_options": "Riyadh: Sulalat, Khobar: Slope Roastery, Jubail: Latte Works Café, Madinah: Kiffa Roasters, Abha:Camel Step, Buraidah: Caffeine Club, Tabuk: C&B"
+            "dropdown_options": "Jeddah: : Kiffa، Riyadh: HOY8، Khobar: Black Night، Jubail: Latte Works، Madinah: Kiffa، Muhayil Asir: 30Wet، Buraidah: Caffeine Club، Tabuk: C&B",
+            "char_restriction": "none"
           }
         },
         "field_T7xgaq": {
@@ -154,7 +197,8 @@
             "field_type": "text",
             "placeholder": "",
             "required": true,
-            "dropdown_options": ""
+            "dropdown_options": "",
+            "char_restriction": "none"
           }
         },
         "field_Y3zTxL": {
@@ -165,7 +209,8 @@
             "field_type": "text",
             "placeholder": "",
             "required": false,
-            "dropdown_options": ""
+            "dropdown_options": "",
+            "char_restriction": "none"
           }
         },
         "field_DTBt4f": {
@@ -176,7 +221,8 @@
             "field_type": "text",
             "placeholder": "",
             "required": false,
-            "dropdown_options": ""
+            "dropdown_options": "",
+            "char_restriction": "none"
           }
         },
         "field_cEgwJh": {
@@ -187,25 +233,40 @@
             "field_type": "dropdown",
             "placeholder": "",
             "required": true,
-            "dropdown_options": "Yes,No"
+            "dropdown_options": "Yes,No",
+            "char_restriction": "none"
+          }
+        },
+        "field_kYXKyc": {
+          "type": "field",
+          "name": "Acknowledgment",
+          "disabled": true,
+          "settings": {
+            "label": "I Agree and Undertake",
+            "field_type": "checkbox",
+            "placeholder": "",
+            "required": true,
+            "dropdown_options": "",
+            "char_restriction": "none"
           }
         },
         "info_text_LaCCqW": {
           "type": "info_text",
           "settings": {
             "heading": "Terms & Conditions",
-            "content": "<p>إقرار وتعهد بالالتزام بشروط السفر<br/>بالضغط على زر \"أوافق وأتعهد\" أدناه، فإنني أقر بكامل أهليتي النظامية بالآتي:<br/>التزامي بحمل جواز سفر سعودي (أو جواز سفر ساري المفعول لمدة لا تقل عن عام) يمنحني حق السفر إلى جمهورية المكسيك.<br/>التزامي بتقديم الإثباتات الرسمية فور الفوز بالتصفيات، وفي حال عدم تقديمها يتم استبعادي من النهائيات.<br/>في حال تحقيقي لأحد المراكز الأولى وعدم جاهزية إجراءات سفري للمكسيك خلال المهلة المحددة، يسقط حقي في السفر ويحق للجهة المنظمة تلقائياً تصعيد المتسابق في المركز التالي ليحل محلي دون أدنى مسؤولية على الجهة المنظمة.<br/></p>"
+            "content": "<p><span style=\"text-decoration:underline\"><strong>Acknowledgment and Undertaking to Comply<br/>  with Travel Requirements</strong></span></p><p>By clicking the <strong>\"I Agree and Undertake\" </strong>button below, I acknowledge that I have full legal capacity and hereby declare the following:</p><p>1. I undertake to hold a Saudi passport (or a passport that remains valid for a period of no less than one year) that entitles me to travel to the United Mexican States.</p><p>2. I undertake to submit all official evidence and statutory requirements, regardless of their nature, immediately upon qualifying in the preliminary rounds. Failure to submit such documents shall result in my disqualification from the finals.</p><p>3. If I secure first place and my travel arrangements to Mexico are not completed within the prescribed period of sixty (60) days from the date of the conclusion of the competition, my entitlement to travel shall be forfeited. The organizing entity shall automatically be entitled to promote the contestant ranking immediately after me to take my place in representing the Kingdom internationally, without any liability whatsoever on the organizing entity.</p>"
           }
         },
         "field_a3gHdX": {
           "type": "field",
           "name": "Acknowledgment",
           "settings": {
-            "label": "I accept all terms & Condition",
+            "label": "I Agree and Undertake",
             "field_type": "checkbox",
             "placeholder": "",
             "required": true,
-            "dropdown_options": ""
+            "dropdown_options": "",
+            "char_restriction": "none"
           }
         },
         "field_jVCYyU": {
@@ -217,7 +278,8 @@
             "field_type": "signature",
             "placeholder": "",
             "required": true,
-            "dropdown_options": ""
+            "dropdown_options": "",
+            "char_restriction": "none"
           }
         }
       },
@@ -236,6 +298,7 @@
         "field_Y3zTxL",
         "field_DTBt4f",
         "field_cEgwJh",
+        "field_kYXKyc",
         "info_text_LaCCqW",
         "field_a3gHdX",
         "field_jVCYyU"
@@ -249,6 +312,7 @@
   },
   "order": [
     "image_banner_hQFPAN",
+    "rich_text_tUUa7L",
     "main"
   ]
 }
